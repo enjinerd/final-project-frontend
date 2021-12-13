@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+.header {
+  @apply fixed z-40 flex items-center justify-center w-full h-16 bg-green-500 shadow-md;
+}
+
+.header__container {
+  @apply flex items-center justify-between w-full h-full px-4 mx-auto sm:max-w-xl;
+}
