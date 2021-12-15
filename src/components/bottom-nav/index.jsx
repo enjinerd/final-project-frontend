@@ -1,10 +1,10 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   HomeIcon,
-  UserIcon,
-  ViewListIcon,
+  UserCircleIcon,
+  CollectionIcon,
   InformationCircleIcon,
 } from "@heroicons/react/solid";
 import clsx from "clsx";
@@ -19,12 +19,12 @@ const navItems = [
   {
     name: "Profil",
     href: "/user",
-    icon: UserIcon,
+    icon: UserCircleIcon,
   },
   {
     name: "Vaksinasi",
     href: "/vaksinasi",
-    icon: ViewListIcon,
+    icon: CollectionIcon,
   },
   {
     name: "Tentang",
@@ -42,7 +42,7 @@ const navigationClasses = (isActive) => {
 };
 
 export function BottomNav() {
-  const router = useRouteMatch();
+  const router = useLocation();
 
   const renderItem = (item) => {
     return (
@@ -62,12 +62,15 @@ export function BottomNav() {
         <ul className="flex items-center w-full justify-evenly">
           {navItems.map((item) => {
             const isActive = item.exact
-              ? item.href === router.path
-              : router.path.startsWith(item.href);
+              ? item.href === router.pathname
+              : router.pathname.startsWith(item.href);
 
             return (
               <li key={item.name} className="relative">
-                <Link to={item.href}>
+                <Link
+                  to={item.href}
+                  onClick={() => console.log(location.pathname)}
+                >
                   <a className={clsx(...navigationClasses(isActive))}>
                     {renderItem(item)}
                   </a>
