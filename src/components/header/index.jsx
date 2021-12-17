@@ -1,10 +1,14 @@
 import "@/components/header/styles.css";
+import Logo from "@/components/ui/header/logo";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <h1 className="text-lg font-bold">Vaksin</h1>
+        <Link to="/">
+          <Logo />
+        </Link>
       </div>
     </header>
   );

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+.bottom-nav {
+  @apply fixed bottom-0 z-40 flex items-center justify-center w-full h-16 px-2 bg-white border-t border-gray-300;
+}
+
+.bottom-nav_container {
+  @apply flex items-center justify-center w-full max-w-xl mx-auto;
+}
+
+.bottom-nav__item {
+  @apply inline-flex flex-col items-center justify-center h-12 px-2 text-center rounded-md;
+}

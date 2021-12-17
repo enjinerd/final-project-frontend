@@ -7,14 +7,17 @@ import {
   useParams,
 } from "react-router-dom";
 import { Home, NotFound } from "@/pages";
+import { LayoutRoot } from "@/components/layout/layout-root";
 
 export default function Routes() {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/*" component={NotFound} />
-      </Switch>
+      <LayoutRoot>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/*" component={NotFound} />
+        </Switch>
+      </LayoutRoot>
     </Router>
   );
 }
