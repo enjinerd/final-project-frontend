@@ -1,8 +1,7 @@
 export function NotFoundSvg() {
   return (
     <svg
-      width="374"
-      height="305"
+      className="w-3/4 h-3/4"
       viewBox="0 0 974 905"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

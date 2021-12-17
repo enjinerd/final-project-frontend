@@ -8,6 +8,7 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/solid";
 import clsx from "clsx";
+import "./styles.css";
 
 const navItems = [
   {
@@ -35,7 +36,7 @@ const navItems = [
 
 const navigationClasses = (isActive) => {
   return [
-    "inline-flex flex-col items-center justify-center text-center h-12 px-2 rounded-md",
+    "bottom-nav__item",
     isActive ? "text-green-500 font-semibold" : "text-gray-600",
     "hover:text-green-500",
   ];
@@ -57,8 +58,8 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 z-40 flex items-center justify-center w-full h-16 px-2 bg-white border-t border-gray-300">
-      <div className="flex items-center justify-center w-full max-w-xl mx-auto">
+    <nav className="bottom-nav">
+      <div className="bottom-nav_container">
         <ul className="flex items-center w-full justify-evenly">
           {navItems.map((item) => {
             const isActive = item.exact
