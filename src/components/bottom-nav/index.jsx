@@ -37,8 +37,8 @@ const navItems = [
 const navigationClasses = (isActive) => {
   return [
     "bottom-nav__item",
-    isActive ? "text-green-500 font-semibold" : "text-gray-600",
-    "hover:text-green-500",
+    isActive ? "text-emerald-500 font-semibold" : "text-gray-600",
+    "hover:text-emerald-500",
   ];
 };
 
