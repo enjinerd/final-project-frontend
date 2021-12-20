@@ -4,7 +4,7 @@
 @tailwind variants;
 
 .header {
-  @apply fixed z-40 flex items-center justify-center w-full h-16 bg-green-500 shadow-md;
+  @apply fixed z-40 flex items-center justify-center w-full h-16 shadow-md bg-emerald-500;
 }
 
 .header__container {
