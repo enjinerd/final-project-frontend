@@ -1,11 +1,59 @@
 import { useState } from "react";
+import { useFormik } from "formik";
 import { Page, PageContent } from "@/components/layout/page";
 import { Link } from "react-router-dom";
 import { ConfirmDialog } from "@/components/ui";
+import {
+  validateEmail,
+  validateNik,
+  validateConfirmPassword,
+  validateNotEmpty,
+  validateValue,
+} from "@/helpers";
 
 export function SignUp() {
   const [isNext, setNext] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      name: "",
+      nik: "",
+    },
+    validateOnBlur: true,
+    validate: (values) => {
+      let errors = {};
+      if (validateValue(values.email, validateNotEmpty)) {
+        errors.email = "Email is required";
+      } else if (validateValue(values.email, validateEmail)) {
+        errors.email = "Email is invalid";
+      }
+      if (validateValue(values.password, validateNotEmpty)) {
+        errors.password = "Password is required";
+      }
+      if (validateValue(values.confirmPassword, validateNotEmpty)) {
+        errors.confirmPassword = "Confirm password is required";
+      } else if (
+        validateConfirmPassword(values.password, values.confirmPassword)
+      ) {
+        errors.confirmPassword = "Password and confirm password is not match";
+      }
+      if (validateValue(values.name, validateNotEmpty)) {
+        errors.name = "Name is required";
+      }
+      if (validateValue(values.nik, validateNotEmpty)) {
+        errors.nik = "NIK is required";
+      } else if (validateValue(values.nik, validateNik)) {
+        errors.nik = "NIK is invalid";
+      }
+      return errors;
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
   const handleNext = () => {
     setNext(!isNext);
   };
@@ -30,7 +78,17 @@ export function SignUp() {
                 type="text"
                 placeholder="Nama lengkap sesuai KTP"
                 class="input input-bordered"
+                name="name"
+                onChange={formik.handleChange}
+                value={formik.values.name}
               />
+              {formik.errors.name ? (
+                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                  <div class="flex-1">
+                    <label>{formik.errors.name}</label>
+                  </div>
+                </div>
+              ) : null}
               <label class="label">
                 <span class="label-text font-bold">NIK</span>
               </label>
@@ -38,7 +96,17 @@ export function SignUp() {
                 type="text"
                 placeholder="NIK sesuai KTP"
                 class="input input-bordered"
+                name="nik"
+                onChange={formik.handleChange}
+                value={formik.values.nik}
               />
+              {formik.errors.nik ? (
+                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                  <div class="flex-1">
+                    <label>{formik.errors.nik}</label>
+                  </div>
+                </div>
+              ) : null}
             </div>
           ) : (
             <div class="form-control space-y-1">
@@ -49,23 +117,53 @@ export function SignUp() {
                 type="text"
                 placeholder="contoh@email.com"
                 class="input input-bordered"
+                name="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
               />
+              {formik.errors.email ? (
+                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                  <div class="flex-1">
+                    <label>{formik.errors.email}</label>
+                  </div>
+                </div>
+              ) : null}
               <label class="label">
                 <span class="label-text font-bold">Kata Sandi</span>
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="********"
                 class="input input-bordered"
+                name="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
               />
+              {formik.errors.password ? (
+                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                  <div class="flex-1">
+                    <label>{formik.errors.password}</label>
+                  </div>
+                </div>
+              ) : null}
               <label class="label">
                 <span class="label-text font-bold">Konfirmasi Kata Sandi</span>
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="********"
                 class="input input-bordered"
+                name="confirmPassword"
+                onChange={formik.handleChange}
+                value={formik.values.confirmPassword}
               />
+              {formik.errors.confirmPassword ? (
+                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                  <div class="flex-1">
+                    <label>Konfirmasi Kata sandi tidak cocok</label>
+                  </div>
+                </div>
+              ) : null}
             </div>
           )}
           {isNext ? (
@@ -76,7 +174,7 @@ export function SignUp() {
               <ConfirmDialog
                 isOpen={isOpen}
                 setOpen={setOpen}
-                handleConfirm={console.log("confirm")}
+                handleConfirm={formik.handleSubmit}
                 title="Konfirmasi Data"
                 message="Apakah anda benar-benar mengisi data sesuai dengan KTP yang anda miliki?"
                 titleAction="Daftar"
@@ -84,8 +182,12 @@ export function SignUp() {
               />
             </>
           ) : (
-            <button class="btn btn-block" onClick={handleNext}>
-              Proses
+            <button
+              class="btn btn-block"
+              onClick={handleNext}
+              disabled={formik.errors.email || formik.errors.confirmPassword}
+            >
+              Daftar
             </button>
           )}
         </div>
