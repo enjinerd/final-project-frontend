@@ -1,11 +1,24 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-const path = require('path');
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { readdirSync } from "fs";
+import path from "path";
 
-// https://vitejs.dev/config/
+// https://stackoverflow.com/questions/69424422/use-compileroptions-baseurl-with-vite-js-project
+const absolutePathAliases = {};
+// Root resources folder
+const srcPath = path.resolve("./src/");
+// Ajust the regex here to include .vue, .js, .jsx, etc.. files from the resources/ folder
+const srcRootContent = readdirSync(srcPath, {
+  withFileTypes: true,
+}).map((dirent) => dirent.name.replace(/(\.js){1}(x?)/, ""));
+
+srcRootContent.forEach((directory) => {
+  absolutePathAliases[directory] = path.join(srcPath, directory);
+});
+
 export default defineConfig({
-  resolve: {
-    alias: [{ find: '@', replacement: path.resolve(__dirname, '/src') }],
+  alias: {
+    ...absolutePathAliases,
   },
   plugins: [react()],
   build: {
