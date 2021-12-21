@@ -8,6 +8,7 @@ export function ConfirmDialog({
   title,
   className,
   titleAction,
+  disabled,
 }) {
   function closeModal() {
     setOpen(false);
@@ -19,7 +20,12 @@ export function ConfirmDialog({
 
   return (
     <>
-      <button type="btn btn-block" onClick={openModal} className={className}>
+      <button
+        type="btn btn-block"
+        onClick={openModal}
+        disabled={disabled}
+        className={className}
+      >
         {titleAction}
       </button>
 

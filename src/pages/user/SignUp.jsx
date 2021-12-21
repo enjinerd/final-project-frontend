@@ -26,27 +26,27 @@ export function SignUp() {
     validate: (values) => {
       let errors = {};
       if (validateValue(values.email, validateNotEmpty)) {
-        errors.email = "Email is required";
+        errors.email = "Email harus diisi";
       } else if (validateValue(values.email, validateEmail)) {
-        errors.email = "Email is invalid";
+        errors.email = "Email tidak valid";
       }
       if (validateValue(values.password, validateNotEmpty)) {
-        errors.password = "Password is required";
+        errors.password = "Kata sandi harus diisi";
       }
       if (validateValue(values.confirmPassword, validateNotEmpty)) {
-        errors.confirmPassword = "Confirm password is required";
+        errors.confirmPassword = "Konfirmasi kata sandi harus diisi";
       } else if (
         validateConfirmPassword(values.password, values.confirmPassword)
       ) {
-        errors.confirmPassword = "Password and confirm password is not match";
+        errors.confirmPassword = "Konfirmasi kata sandi belum sesuai";
       }
       if (validateValue(values.name, validateNotEmpty)) {
-        errors.name = "Name is required";
+        errors.name = "Nama lengkap harus diisi";
       }
       if (validateValue(values.nik, validateNotEmpty)) {
-        errors.nik = "NIK is required";
+        errors.nik = "NIK harus diisi";
       } else if (validateValue(values.nik, validateNik)) {
-        errors.nik = "NIK is invalid";
+        errors.nik = "NIK tidak valid";
       }
       return errors;
     },
@@ -83,7 +83,7 @@ export function SignUp() {
                 value={formik.values.name}
               />
               {formik.errors.name ? (
-                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
                   <div class="flex-1">
                     <label>{formik.errors.name}</label>
                   </div>
@@ -101,7 +101,7 @@ export function SignUp() {
                 value={formik.values.nik}
               />
               {formik.errors.nik ? (
-                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
                   <div class="flex-1">
                     <label>{formik.errors.nik}</label>
                   </div>
@@ -122,7 +122,7 @@ export function SignUp() {
                 value={formik.values.email}
               />
               {formik.errors.email ? (
-                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
                   <div class="flex-1">
                     <label>{formik.errors.email}</label>
                   </div>
@@ -140,7 +140,7 @@ export function SignUp() {
                 value={formik.values.password}
               />
               {formik.errors.password ? (
-                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
                   <div class="flex-1">
                     <label>{formik.errors.password}</label>
                   </div>
@@ -158,9 +158,9 @@ export function SignUp() {
                 value={formik.values.confirmPassword}
               />
               {formik.errors.confirmPassword ? (
-                <div class="bg-red-600 text-white rounded-md text-sm font-medium px-2 py-1">
+                <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
                   <div class="flex-1">
-                    <label>Konfirmasi Kata sandi tidak cocok</label>
+                    <label>{formik.errors.confirmPassword}</label>
                   </div>
                 </div>
               ) : null}
@@ -171,24 +171,44 @@ export function SignUp() {
               <button class="btn btn-block btn-info" onClick={handleNext}>
                 Kembali
               </button>
-              <ConfirmDialog
-                isOpen={isOpen}
-                setOpen={setOpen}
-                handleConfirm={formik.handleSubmit}
-                title="Konfirmasi Data"
-                message="Apakah anda benar-benar mengisi data sesuai dengan KTP yang anda miliki?"
-                titleAction="Daftar"
-                className="btn btn-block"
-              />
+              <div
+                data-tip="Pastikan semua data terisi dengan benar"
+                class="tooltip"
+              >
+                <ConfirmDialog
+                  isOpen={isOpen}
+                  setOpen={setOpen}
+                  handleConfirm={formik.handleSubmit}
+                  title="Konfirmasi Data"
+                  message="Apakah anda benar-benar mengisi data sesuai dengan KTP yang anda miliki?"
+                  titleAction="Daftar"
+                  className="btn btn-block"
+                  disabled={
+                    formik.isSubmitting ||
+                    formik.errors.nik ||
+                    formik.errors.name ||
+                    formik.values.nik == ""
+                  }
+                />
+              </div>
             </>
           ) : (
-            <button
-              class="btn btn-block"
-              onClick={handleNext}
-              disabled={formik.errors.email || formik.errors.confirmPassword}
+            <div
+              data-tip="Pastikan semua data terisi dengan benar"
+              class="tooltip"
             >
-              Daftar
-            </button>
+              <button
+                class="btn btn-block"
+                onClick={handleNext}
+                disabled={
+                  formik.errors.email ||
+                  formik.errors.confirmPassword ||
+                  formik.values.password == ""
+                }
+              >
+                Daftar
+              </button>
+            </div>
           )}
         </div>
       </PageContent>
