@@ -10,6 +10,7 @@ import { Home, NotFound } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
 import User from "./User";
 
+
 export default function Routes() {
   return (
     <Router>
