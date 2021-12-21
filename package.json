@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
+    "@material-ui/core": "^4.12.3",
     "clsx": "^1.1.1",
     "daisyui": "^1.16.6",
+    "material-table": "^1.69.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "5.2.0",

@@ -6,7 +6,7 @@ import {
   useRouteMatch,
   useParams,
 } from "react-router-dom";
-import { Home, NotFound } from "@/pages";
+import { Home, NotFound, Dashboard } from "@/pages";
 import { LayoutRoot } from "@/components/layout/layout-root";
 
 export default function Routes() {
@@ -16,6 +16,7 @@ export default function Routes() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/*" component={NotFound} />
+          <Route exact path="/admin" component={Dashboard} />
         </Switch>
       </LayoutRoot>
     </Router>
