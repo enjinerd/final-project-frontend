@@ -21,7 +21,7 @@ export function NotFound() {
                 </div>
                 <div className="flex mt-6 space-x-3 sm:border-l sm:border-transparent sm:pl-6">
                   <Link to="/">
-                    <a className="text-base font-medium text-green-600">
+                    <a className="text-base font-medium text-emerald-600">
                       <span aria-hidden="true"> &larr;</span> Kembali ke halaman
                       utama
                     </a>

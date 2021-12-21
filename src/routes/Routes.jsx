@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import { Home, NotFound } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
+import User from "./User";
+
 
 export default function Routes() {
   return (
@@ -15,6 +17,7 @@ export default function Routes() {
       <LayoutRoot>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/user" component={User} />
           <Route path="/*" component={NotFound} />
         </Switch>
       </LayoutRoot>
