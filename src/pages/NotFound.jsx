@@ -1,5 +1,5 @@
-import { Page, PageContent } from "@/components/layout/page";
-import { NotFoundSvg } from "@/components/ui/svg";
+import { Page, PageContent } from "components/layout/page";
+import { NotFoundSvg } from "components/ui/svg";
 import { Link } from "react-router-dom";
 export function NotFound() {
   return (

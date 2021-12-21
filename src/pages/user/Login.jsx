@@ -1,4 +1,4 @@
-import { Page, PageContent } from "@/components/layout/page";
+import { Page, PageContent } from "components/layout/page";
 import { Link } from "react-router-dom";
 
 export function Login() {

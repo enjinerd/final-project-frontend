@@ -1,6 +1,6 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Login, SignUp, UserDashboard } from "@/pages/user";
-import { NotFound } from "@/pages";
+import { Login, SignUp, UserDashboard } from "pages/user";
+import { NotFound } from "pages";
 
 export default function User() {
   const { path } = useRouteMatch();

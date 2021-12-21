@@ -6,8 +6,8 @@ import {
   useRouteMatch,
   useParams,
 } from "react-router-dom";
-import { Home, NotFound } from "@/pages";
-import { LayoutRoot } from "@/components/layout/layout-root";
+import { Home, NotFound } from "pages";
+import { LayoutRoot } from "components/layout/layout-root";
 import User from "./User";
 
 export default function Routes() {
