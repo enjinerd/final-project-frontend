@@ -6,21 +6,27 @@ import {
   useRouteMatch,
   useParams,
 } from "react-router-dom";
-import { Home, NotFound } from "pages";
+import { Home, NotFound, Dashboard } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
 import User from "./User";
-
 
 export default function Routes() {
   return (
     <Router>
-      <LayoutRoot>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/user" component={User} />
-          <Route path="/*" component={NotFound} />
-        </Switch>
-      </LayoutRoot>
+      <Switch>
+        <Route exact path="/">
+          <LayoutRoot>
+            <Home />
+          </LayoutRoot>
+        </Route>
+        <Route path="/user" component={User} />
+        <Route path="/admin" component={Dashboard} />
+        <Route exact path="/*">
+          <LayoutRoot>
+            <NotFound />
+          </LayoutRoot>
+        </Route>
+      </Switch>
     </Router>
   );
 }
