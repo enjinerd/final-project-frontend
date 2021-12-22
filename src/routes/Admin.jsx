@@ -3,7 +3,7 @@ import { Login, SignUp, UserDashboard } from "pages/user";
 import { NotFound } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
 
-export default function User() {
+export default function Admin() {
   const { path } = useRouteMatch();
 
   return (
