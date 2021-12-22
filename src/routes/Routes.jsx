@@ -7,9 +7,11 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { Home, NotFound, Dashboard } from "pages";
+import { Home, NotFound} from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
+import { LayoutAdmin } from "components/layout/layout-admin";
 import User from "./User";
+import AdminTable from "../components/admin-table/AdminTable";
 
 
 export default function Routes() {
@@ -22,7 +24,11 @@ export default function Routes() {
           </LayoutRoot>
         </Route>
         <Route path="/user" component={User} />
-        <Route path="/admin" component={Dashboard} />
+        <Route exact path="/admin">
+          <LayoutAdmin>
+            <AdminTable/>
+          </LayoutAdmin>
+        </Route>
         <Route exact path="/*">
           <LayoutRoot>
             <NotFound />
