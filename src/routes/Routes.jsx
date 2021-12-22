@@ -7,23 +7,28 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { Home, NotFound } from "../pages";
-import { LayoutRoot } from "../components/layout/layout-root";
-import AdminTable from "../components/admin-table/AdminTable";
-import { LayoutAdmin } from "../components/layout/layout-admin";
+import { Home, NotFound, Dashboard } from "pages";
+import { LayoutRoot } from "components/layout/layout-root";
+import User from "./User";
+
 
 export default function Routes() {
   return (
     <Router>
-        <Switch>
-          <LayoutAdmin>
-            <Route exact path="/admin" component={AdminTable} />
-          </LayoutAdmin>
+      <Switch>
+        <Route exact path="/">
           <LayoutRoot>
-            <Route exact path="/" component={Home} />
-            <Route path="/*" component={NotFound} />
+            <Home />
           </LayoutRoot>
-        </Switch>
+        </Route>
+        <Route path="/user" component={User} />
+        <Route path="/admin" component={Dashboard} />
+        <Route exact path="/*">
+          <LayoutRoot>
+            <NotFound />
+          </LayoutRoot>
+        </Route>
+      </Switch>
     </Router>
   );
 }
