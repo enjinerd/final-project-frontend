@@ -1,0 +1,27 @@
+.side-menu {
+  background-color: #059669;
+  color: white;
+}
+
+.profile {
+  padding: 40px;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.profile .username {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.menus {
+  text-transform: uppercase;
+}
+
+a:active {
+  background-color: white;
+}
