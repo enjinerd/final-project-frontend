@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@material-table/core": "^4.3.12",
     "@material-ui/core": "^4.12.3",
@@ -19,8 +20,10 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.5",
     "@mui/styles": "^5.2.3",
+    "axios": "^0.24.0",
     "clsx": "^1.1.1",
     "daisyui": "^1.16.6",
+    "formik": "^2.2.9",
     "material-table": "^1.69.3",
     "mui-datatables": "^4.0.0",
     "react": "^17.0.2",

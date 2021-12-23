@@ -2,7 +2,7 @@ import "./styles.css";
 
 export default function SideMenu () {
     return (
-        <div className="side-menu flex-none">
+        <div className="side-menu">
                 <div className="profile flex flex-col justify-center items-center">
                     <img src="" alt="" />
                     <p className="username">Yustina Yasin</p>

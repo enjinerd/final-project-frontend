@@ -24,9 +24,18 @@ export default function Routes() {
           </LayoutRoot>
         </Route>
         <Route path="/user" component={User} />
-        <Route exact path="/admin">
+        <Route exact path="/admin/vaccine">
           <LayoutAdmin>
-            <AdminTable/>
+            <AdminTable
+              columns={[
+                { title: 'Name', field: 'name' },
+                { title: 'Stock', field: 'stock', type: 'numeric' }
+              ]}
+              data={[
+                { name: 'Sinovac', stock: 600},
+                { name: 'Moderna', stock: 600},
+              ]}
+            />
           </LayoutAdmin>
         </Route>
         <Route exact path="/*">
