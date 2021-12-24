@@ -1,5 +1,10 @@
 import Routes from "routes/Routes";
+import { PersistGate } from "zustand-persist";
 
 export default function App() {
-  return <Routes />;
+  return (
+    <PersistGate>
+      <Routes />
+    </PersistGate>
+  );
 }
