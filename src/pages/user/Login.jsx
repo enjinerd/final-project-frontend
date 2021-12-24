@@ -1,12 +1,17 @@
+import { useEffect } from "react";
 import { Page, PageContent } from "components/layout/page";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
 import useAuthStore from "stores/useAuthStore";
+import { useHistory } from "react-router-dom";
 
 export function Login() {
-  const { login, error } = useAuthStore();
-
+  const { login, error, isAuthenticated } = useAuthStore();
+  const history = useHistory();
+  if (isAuthenticated) {
+    history.push("/user");
+  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,7 +32,9 @@ export function Login() {
     },
     onSubmit: async (values) => {
       await login(values);
-      console.log(values);
+      if (!error) {
+        history.push("/user");
+      }
     },
   });
 
