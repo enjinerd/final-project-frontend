@@ -11,16 +11,15 @@ import {
   validateNotEmpty,
   validateValue,
 } from "helpers";
-import useAuth from "hooks/useAuth";
+import useAuthStore from "stores/useAuthStore";
 
 export function SignUp() {
   const api = import.meta.env.VITE_API_HOST;
-  const { registerUser, error } = useAuth();
+  const { register, error } = useAuthStore();
 
   const [isNext, setNext] = useState(false);
   const [isDone, setDone] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [isError, setError] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -59,13 +58,8 @@ export function SignUp() {
     },
     onSubmit: async (values) => {
       setDone(false);
-      await registerUser(values).then(() => {
-        if (error) {
-          setError(true);
-        } else {
-          setDone(true);
-        }
-      });
+      await register(values);
+      console.log(error);
     },
   });
   const handleNext = () => {
@@ -109,7 +103,7 @@ export function SignUp() {
               </div>
             </div>
           )}
-          {isError && (
+          {error && (
             <div className="font-medium alert alert-error">
               <div className="flex-1">
                 <svg
