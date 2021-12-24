@@ -6,10 +6,12 @@ import useAuthStore from "stores/useAuthStore";
 export default function PrivateRoute(props) {
   const { isAuthenticated, isAuthenticating, token, logout } = useAuthStore();
   const [isExpired, setExpired] = useState(false);
-  const decode = jwt_decode(token);
-  if (decode.exp * 1000 < Date.now()) {
-    setExpired(true);
-    logout();
+  if (token != null) {
+    const decode = jwt_decode(token);
+    if (decode.exp * 1000 < Date.now()) {
+      setExpired(true);
+      logout();
+    }
   }
   const { component: Component, ...rest } = props;
   if (isAuthenticating) {
