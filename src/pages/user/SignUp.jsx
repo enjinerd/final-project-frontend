@@ -11,9 +11,11 @@ import {
   validateNotEmpty,
   validateValue,
 } from "helpers";
+import useAuth from "hooks/useAuth";
 
 export function SignUp() {
   const api = import.meta.env.VITE_API_HOST;
+  const { registerUser, error } = useAuth();
 
   const [isNext, setNext] = useState(false);
   const [isDone, setDone] = useState(false);
@@ -55,21 +57,15 @@ export function SignUp() {
       }
       return errors;
     },
-    onSubmit: (values) => {
-      axios
-        .post(`${api}/citizen/registers`, {
-          email: values.email,
-          password: values.password,
-          name: values.name,
-          nik: values.nik,
-        })
-        .then(function (response) {
-          setDone(true);
-        })
-        .catch(function (error) {
-          console.log(error);
+    onSubmit: async (values) => {
+      setDone(false);
+      await registerUser(values).then(() => {
+        if (error) {
           setError(true);
-        });
+        } else {
+          setDone(true);
+        }
+      });
     },
   });
   const handleNext = () => {
@@ -249,6 +245,7 @@ export function SignUp() {
                   className="btn btn-block"
                   disabled={
                     formik.isSubmitting ||
+                    isDone ||
                     formik.errors.nik ||
                     formik.errors.name ||
                     formik.values.nik == ""
