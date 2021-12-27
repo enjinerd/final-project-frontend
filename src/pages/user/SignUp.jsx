@@ -11,14 +11,15 @@ import {
   validateNotEmpty,
   validateValue,
 } from "helpers";
+import useAuthStore from "stores/useAuthStore";
 
 export function SignUp() {
   const api = import.meta.env.VITE_API_HOST;
+  const { register, error } = useAuthStore();
 
   const [isNext, setNext] = useState(false);
   const [isDone, setDone] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [isError, setError] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -55,21 +56,10 @@ export function SignUp() {
       }
       return errors;
     },
-    onSubmit: (values) => {
-      axios
-        .post(`${api}/citizen/registers`, {
-          email: values.email,
-          password: values.password,
-          name: values.name,
-          nik: values.nik,
-        })
-        .then(function (response) {
-          setDone(true);
-        })
-        .catch(function (error) {
-          console.log(error);
-          setError(true);
-        });
+    onSubmit: async (values) => {
+      setDone(false);
+      await register(values);
+      console.log(error);
     },
   });
   const handleNext = () => {
@@ -113,7 +103,7 @@ export function SignUp() {
               </div>
             </div>
           )}
-          {isError && (
+          {error && (
             <div className="font-medium alert alert-error">
               <div className="flex-1">
                 <svg
@@ -249,6 +239,7 @@ export function SignUp() {
                   className="btn btn-block"
                   disabled={
                     formik.isSubmitting ||
+                    isDone ||
                     formik.errors.nik ||
                     formik.errors.name ||
                     formik.values.nik == ""
