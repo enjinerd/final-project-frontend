@@ -26,16 +26,17 @@ export default function Routes() {
         <Route path="/user" component={User} />
         <Route exact path="/admin/vaccine">
           <LayoutAdmin>
-            <AdminTable
-              columns={[
-                { title: 'Name', field: 'name' },
-                { title: 'Stock', field: 'stock', type: 'numeric' }
-              ]}
-              data={[
-                { name: 'Sinovac', stock: 600},
-                { name: 'Moderna', stock: 600},
-              ]}
-            />
+            <AdminTable />
+          </LayoutAdmin>
+        </Route>
+        <Route exact path="/admin/session">
+          <LayoutAdmin>
+            <AdminTable />
+          </LayoutAdmin>
+        </Route>
+        <Route exact path="/admin/user">
+          <LayoutAdmin>
+            <AdminTable />
           </LayoutAdmin>
         </Route>
         <Route exact path="/*">

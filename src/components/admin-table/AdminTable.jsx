@@ -1,6 +1,20 @@
-import MaterialTable, { MTableToolbar } from "@material-table/core";
+import MaterialTable, { MTableToolbar, MTableBodyRow, MTableHeader } from "@material-table/core";
+import { Rowing } from "@material-ui/icons";
+import { useLocation } from "react-router-dom";
+import {useState, useEffect} from 'react';
 
-export default function AdminTable({columns, data}) {
+export default function AdminTable() {
+  let datum = useLocation();
+  const [columns, setColumns] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if(datum.state) {
+        setColumns(datum.state.columns);
+        setData(datum.state.data);
+    }
+  }, [datum])
+
   return (
     <MaterialTable
       title="Positioning Actions Column Preview"
@@ -43,6 +57,20 @@ export default function AdminTable({columns, data}) {
         sorting: true,
         selection: true,
         showTitle: false,
+        headerStyle: {
+          backgroundColor: '#D1FAE5',
+          textTransform: 'uppercase'
+        },
+        rowStyle: {
+          
+        },
+        showTextRowsSelected: false,
+        searchFieldAlignment: 'left',
+        searchFieldStyle: {
+          backgroundColor: '#FFFFFF',
+          padding: '5px',
+          borderRadius: '5px'
+        },
       }}
       components={{
         Toolbar: props => (
@@ -56,7 +84,10 @@ export default function AdminTable({columns, data}) {
             >
                 <MTableToolbar {...props} />
             </div>
-        )
+        ),
+      }}
+      style={{ 
+        flex: '1 1 0%' 
       }}
     />
   )
