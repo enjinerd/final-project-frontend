@@ -2,6 +2,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { Login, SignUp, UserDashboard } from "pages/user";
 import { NotFound } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
+import PrivateRoute from "./PrivateRoute";
 
 export default function User() {
   const { path } = useRouteMatch();
@@ -9,7 +10,7 @@ export default function User() {
   return (
     <LayoutRoot>
       <Switch>
-        <Route exact path={path} component={UserDashboard} />
+        <PrivateRoute exact path={path} component={UserDashboard} />
         <Route path={`${path}/login`}>
           <Login />
         </Route>
