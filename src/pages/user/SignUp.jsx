@@ -11,11 +11,15 @@ import {
   validateNotEmpty,
   validateValue,
 } from "helpers";
+import { Redirect } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 
 export function SignUp() {
   const api = import.meta.env.VITE_API_HOST;
-  const { register, error } = useAuthStore();
+  const { register, error, isAuthenticated } = useAuthStore();
+  if (isAuthenticated) {
+    return <Redirect to="/user" />;
+  }
 
   const [isNext, setNext] = useState(false);
   const [isDone, setDone] = useState(false);
