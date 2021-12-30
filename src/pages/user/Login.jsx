@@ -9,9 +9,6 @@ import { Redirect, useHistory } from "react-router-dom";
 export function Login() {
   const { login, error, isAuthenticated } = useAuthStore();
   const history = useHistory();
-  if (isAuthenticated) {
-    return <Redirect to="/user" />;
-  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -41,6 +38,9 @@ export function Login() {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
+  if (isAuthenticated) {
+    return <Redirect to="/user" />;
+  }
   return (
     <Page>
       <PageContent>

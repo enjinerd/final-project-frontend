@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Page, PageContent } from "components/layout/page";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
@@ -8,7 +8,9 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
 
 export function UserProfile() {
-  const [date, setDate] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+  const dateEl = useRef(null);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -33,7 +35,8 @@ export function UserProfile() {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
-  const handleDateChange = (val) => {
+  const handleDate = (val) => {
+    setSelectedDay(val);
     console.log(val);
   };
   return (
@@ -43,37 +46,39 @@ export function UserProfile() {
           <h1 className="text-2xl font-bold text-center sm:text-xl font-primary">
             Data Diri
           </h1>
-          <div class="form-control space-y-1">
-            <label class="label">
-              <span class="label-text font-bold">Alamat Tinggal</span>
+          <div className="form-control space-y-1">
+            <label className="label">
+              <span className="label-text font-bold">Alamat Tinggal</span>
             </label>
             <input
               type="text"
               placeholder="contoh@email.com"
-              class="input input-bordered"
+              className="input input-bordered"
               name="address"
               onChange={formik.handleChange}
               value={formik.values.email}
             />
             {formik.errors.email ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
-                <div class="flex-1">
+              <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+                <div className="flex-1">
                   <label>{formik.errors.email}</label>
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="label-text font-bold">Tanggal Lahir</span>
-            </label>
+            <label className="label">
+              <span className="label-text font-bold">Tanggal Lahir</span>
+            </label>{" "}
             <DatePicker
-              className="w-full"
-              value={date}
-              inputPlaceholder="Pilih tanggal"
-              onChange={handleDateChange} //only when value has changed
+              value={selectedDay}
+              onChange={handleDate}
+              inputClassName="input input-bordered w-full shadow-lg"
+              calendarClassName="text-sm sm:text-base"
+              inputPlaceholder="Pilh Tanggal"
+              shouldHighlightWeekends
             />
             {formik.errors.password ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
-                <div class="flex-1">
+              <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+                <div className="flex-1">
                   <label>{formik.errors.password}</label>
                 </div>
               </div>
@@ -81,7 +86,7 @@ export function UserProfile() {
           </div>
           <button
             type="submit"
-            class="btn btn-block"
+            className="btn btn-block"
             onClick={handleSubmit}
             disabled={
               formik.errors.email ||
