@@ -52,7 +52,7 @@ export function UserProfile() {
             </label>
             <input
               type="text"
-              placeholder="contoh@email.com"
+              placeholder="Jalan Contoh No 1, Desa Contoh, Kota Semarang, Jawa Tengah"
               className="input input-bordered"
               name="address"
               onChange={formik.handleChange}
