@@ -10,7 +10,7 @@ export function UserDashboard() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-8 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-8 lg:px-8">
           <p className="text-2xl sm:text-xl font-primary">
             Halo, <strong>Pengguna</strong>
           </p>

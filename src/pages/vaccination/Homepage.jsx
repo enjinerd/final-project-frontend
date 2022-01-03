@@ -9,7 +9,7 @@ export function VaccinationHomepage() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-6   lg:px-8">
           {geolocation.latitude && geolocation.longitude ? (
             <Map
               latitude={geolocation.latitude}
