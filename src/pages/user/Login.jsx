@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
 import useAuthStore from "stores/useAuthStore";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 export function Login() {
   const { login, error, isAuthenticated } = useAuthStore();
   const history = useHistory();
-  if (isAuthenticated) {
-    history.push("/user");
-  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -41,6 +38,9 @@ export function Login() {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
+  if (isAuthenticated) {
+    return <Redirect to="/user" />;
+  }
   return (
     <Page>
       <PageContent>

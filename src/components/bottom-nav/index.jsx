@@ -24,7 +24,7 @@ const navItems = [
   },
   {
     name: "Vaksinasi",
-    href: "/vaksinasi",
+    href: "/vaccination",
     icon: CollectionIcon,
   },
   {
