@@ -20,7 +20,7 @@ const userMenuItems = [
   },
   {
     name: "Vaksinasi Terdekat",
-    href: "/vaccine/nearby",
+    href: "/vaccination",
     icon: LocationMarkerIcon,
   },
   {
