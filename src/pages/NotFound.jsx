@@ -5,7 +5,7 @@ export function NotFound() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-2 sm:px-6 sm:py-2 md:grid md:place-items-center lg:px-8">
+        <div className="px-4 py-2 sm:px-6 sm:py-2   md:place-items-center lg:px-8">
           <div className="py-16 mx-auto sm:py-12 max-w-max">
             <NotFoundSvg />
             <div className="sm:flex">

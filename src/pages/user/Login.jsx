@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
 import useAuthStore from "stores/useAuthStore";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 export function Login() {
   const { login, error, isAuthenticated } = useAuthStore();
   const history = useHistory();
-  if (isAuthenticated) {
-    history.push("/user");
-  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -41,10 +38,13 @@ export function Login() {
   const handleSubmit = () => {
     formik.handleSubmit();
   };
+  if (isAuthenticated) {
+    return <Redirect to="/user" />;
+  }
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Masuk</h1>
           <div class="form-control space-y-1">
             <h1 className="text-base text-center sm:text-xl">

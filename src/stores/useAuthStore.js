@@ -49,7 +49,7 @@ const useAuthStore = createStore(
           })
           .then((val) => {
             set((state) => ({
-              isAuthenticated: true,
+              isAuthenticated: false,
               isAuthenticating: false,
               email: val.data.data.email,
             }));
