@@ -44,7 +44,7 @@ export function Login() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Masuk</h1>
           <div class="form-control space-y-1">
             <h1 className="text-base text-center sm:text-xl">

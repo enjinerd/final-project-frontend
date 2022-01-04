@@ -6,10 +6,13 @@ import { validateEmail, validateNotEmpty, validateValue } from "helpers";
 import { useHistory } from "react-router-dom";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
+import { idLocalCalendar } from "components/ui";
+import useCitizen from "hooks/user/useCitizen";
 
 export function UserProfile() {
   const [selectedDay, setSelectedDay] = useState(null);
   const dateEl = useRef(null);
+  const { updateProfile } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
@@ -29,7 +32,9 @@ export function UserProfile() {
       }
       return errors;
     },
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      await updateProfile(values);
+    },
   });
 
   const handleSubmit = () => {
@@ -37,12 +42,13 @@ export function UserProfile() {
   };
   const handleDate = (val) => {
     setSelectedDay(val);
-    console.log(val);
+    let date = new Date(`${val.year}-${val.month}-${val.day}`);
+    console.log(date);
   };
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-6   lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl font-primary">
             Data Diri
           </h1>
@@ -52,7 +58,7 @@ export function UserProfile() {
             </label>
             <input
               type="text"
-              placeholder="contoh@email.com"
+              placeholder="Jalan Contoh No 1, Desa Contoh, Kota Semarang, Jawa Tengah"
               className="input input-bordered"
               name="address"
               onChange={formik.handleChange}
@@ -73,7 +79,9 @@ export function UserProfile() {
               onChange={handleDate}
               inputClassName="input input-bordered w-full shadow-lg"
               calendarClassName="text-sm sm:text-base"
-              inputPlaceholder="Pilh Tanggal"
+              inputPlaceholder="Piilh Tanggal"
+              calendarPopperPosition="bottom"
+              locale={idLocalCalendar}
               shouldHighlightWeekends
             />
             {formik.errors.password ? (

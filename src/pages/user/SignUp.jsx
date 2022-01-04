@@ -76,7 +76,7 @@ export function SignUp() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6 md:grid lg:px-8">
+        <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
             Sudah punya akun?{" "}
@@ -231,7 +231,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                class="tooltip"
+                className="tooltip w-full"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -239,7 +239,7 @@ export function SignUp() {
                   handleConfirm={handleSubmit}
                   title="Konfirmasi Data"
                   message="Apakah anda benar-benar mengisi data sesuai dengan KTP yang anda miliki?"
-                  titleAction="Daftar"
+                  titleAction="Konfirmasi"
                   className="btn btn-block"
                   disabled={
                     formik.isSubmitting ||
@@ -254,10 +254,10 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              class="tooltip"
+              className="tooltip w-full"
             >
               <button
-                class="btn btn-block"
+                class="btn btn-block btn-info"
                 onClick={handleNext}
                 disabled={
                   formik.errors.email ||
