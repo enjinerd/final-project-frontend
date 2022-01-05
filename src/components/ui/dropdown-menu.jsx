@@ -1,11 +1,11 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import {
   PencilIcon as PencilIconOutline,
   TrashIcon as TrashIconOutline,
 } from "@heroicons/react/outline";
+import { ChevronDownIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import { ConfirmDialog } from "components/ui";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export function DropdownMenu() {
   const [isOpen, setOpen] = useState(false);

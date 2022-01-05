@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Page, PageContent } from "components/layout/page";
 import { Map } from "./Map";
+import { Page, PageContent } from "components/layout/page";
+import { useState } from "react";
 import useGeolocation from "react-hook-geolocation";
 
 export function VaccinationHomepage() {

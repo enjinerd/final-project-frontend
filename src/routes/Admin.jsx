@@ -1,7 +1,7 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Login, SignUp, UserDashboard } from "pages/user";
-import { NotFound } from "pages";
 import { LayoutRoot } from "components/layout/layout-root";
+import { NotFound } from "pages";
+import { Login, SignUp, UserDashboard } from "pages/user";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 export default function Admin() {
   const { path } = useRouteMatch();

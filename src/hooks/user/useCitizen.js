@@ -1,5 +1,6 @@
-import createStore from "zustand";
 import axios from "axios";
+import createStore from "zustand";
+
 const api = import.meta.env.VITE_API_HOST;
 
 const useCitizen = createStore((set) => ({

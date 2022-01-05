@@ -1,11 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import {
   ClipboardListIcon,
-  UsersIcon,
-  LocationMarkerIcon,
   CogIcon,
+  LocationMarkerIcon,
+  UsersIcon,
 } from "@heroicons/react/solid";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const userMenuItems = [
   {

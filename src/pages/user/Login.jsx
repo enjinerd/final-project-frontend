@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { Page, PageContent } from "components/layout/page";
-import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
-import useAuthStore from "stores/useAuthStore";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Redirect, useHistory } from "react-router-dom";
+import useAuthStore from "stores/useAuthStore";
 
 export function Login() {
   const { login, error, isAuthenticated } = useAuthStore();

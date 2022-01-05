@@ -1,16 +1,16 @@
-import { useState } from "react";
 import axios from "axios";
-import { useFormik } from "formik";
 import { Page, PageContent } from "components/layout/page";
-import { Link } from "react-router-dom";
 import { ConfirmDialog } from "components/ui";
+import { useFormik } from "formik";
 import {
+  validateConfirmPassword,
   validateEmail,
   validateNik,
-  validateConfirmPassword,
   validateNotEmpty,
   validateValue,
 } from "helpers";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 

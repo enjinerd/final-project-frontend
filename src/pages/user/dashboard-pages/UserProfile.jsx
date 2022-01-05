@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef } from "react";
 import { Page, PageContent } from "components/layout/page";
-import { Link } from "react-router-dom";
+import { idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
-import { useHistory } from "react-router-dom";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import DatePicker from "react-modern-calendar-datepicker";
-import { idLocalCalendar } from "components/ui";
 import useCitizen from "hooks/user/useCitizen";
+import { useEffect, useRef, useState } from "react";
+import DatePicker from "react-modern-calendar-datepicker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export function UserProfile() {
   const [selectedDay, setSelectedDay] = useState(null);

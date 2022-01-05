@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Route, Redirect } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useState } from "react";
+import { Redirect, Route } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 
 export default function PrivateRoute(props) {

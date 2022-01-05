@@ -1,4 +1,5 @@
 import { Page, PageContent } from "components/layout/page";
+
 export function Home() {
   return (
     <Page>
