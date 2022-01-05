@@ -55,11 +55,11 @@ export function Login() {
               </span>
             </h1>
             {error && (
-              <div className="font-medium alert alert-error my-1">
+              <div className="alert alert-error my-1 font-medium">
                 <div className="flex-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 mx-2"
+                    className="mx-2 w-6 h-6"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -85,7 +85,7 @@ export function Login() {
               value={formik.values.email}
             />
             {formik.errors.email ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div class="flex-1">
                   <label>{formik.errors.email}</label>
                 </div>
@@ -103,7 +103,7 @@ export function Login() {
               value={formik.values.password}
             />
             {formik.errors.password ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div class="flex-1">
                   <label>{formik.errors.password}</label>
                 </div>

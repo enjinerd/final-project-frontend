@@ -60,7 +60,7 @@ export function BottomNav() {
   return (
     <nav className="bottom-nav">
       <div className="bottom-nav_container">
-        <ul className="flex items-center w-full justify-evenly">
+        <ul className="flex justify-evenly items-center w-full">
           {navItems.map((item) => {
             const isActive = item.exact
               ? item.href === router.pathname

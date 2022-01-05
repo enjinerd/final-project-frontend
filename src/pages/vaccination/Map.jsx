@@ -53,7 +53,7 @@ export const Map = ({ latitude, longitude }) => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-emerald-500"
+            class="w-8 h-8 text-emerald-500"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

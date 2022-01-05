@@ -48,8 +48,8 @@ export function UserProfile() {
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-6   lg:px-8">
-          <h1 className="text-2xl font-bold text-center sm:text-xl font-primary">
+        <div className="px-4 py-8 space-y-6 lg:px-8">
+          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
             Data Diri
           </h1>
           <div className="form-control space-y-1">
@@ -65,7 +65,7 @@ export function UserProfile() {
               value={formik.values.email}
             />
             {formik.errors.email ? (
-              <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.email}</label>
                 </div>
@@ -85,7 +85,7 @@ export function UserProfile() {
               shouldHighlightWeekends
             />
             {formik.errors.password ? (
-              <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.password}</label>
                 </div>

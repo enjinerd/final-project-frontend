@@ -32,22 +32,22 @@ const userMenuItems = [
 
 export function UserMenus() {
   return (
-    <ul className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
       {userMenuItems.map((item) => (
         <li key={item.name} className="inline-flex flex-col">
           <Link
             to={item.href}
-            className="flex flex-col items-center justify-center shadow-lg text-center relative rounded-lg py-3 px-2 bg-white hover:bg-gray-200 transition-colors duration-200"
+            className="flex relative flex-col justify-center items-center px-2 py-3 text-center bg-white rounded-lg shadow-lg transition-colors duration-200 hover:bg-gray-200"
           >
             <div
               aria-hidden
-              className="flex items-center justify-center h-10 w-10 bg-emerald-500 rounded-full"
+              className="flex justify-center items-center w-10 h-10 bg-emerald-500 rounded-full"
             >
               {React.createElement(item.icon, {
                 className: "h-6 w-6 text-white",
               })}
             </div>
-            <a className="text-gray-900 font-medium text-xs mt-3 helper-link-cover">
+            <a className="helper-link-cover mt-3 text-xs font-medium text-gray-900">
               {item.name}
             </a>
           </Link>

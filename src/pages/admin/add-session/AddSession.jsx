@@ -57,7 +57,7 @@ export function AddSession() {
             value={formik.values.startDate}
           />
           {formik.errors.startDate ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div className="flex-1">
                 <label>{formik.errors.startDate}</label>
               </div>
@@ -77,7 +77,7 @@ export function AddSession() {
             value={formik.values.endDate}
           />
           {formik.errors.endDate ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div className="flex-1">
                 <label>{formik.errors.endDate}</label>
               </div>
@@ -99,7 +99,7 @@ export function AddSession() {
             <option value="3">Moderna</option>
           </select>
           {formik.errors.vaccine ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div className="flex-1">
                 <label>{formik.errors.vaccine}</label>
               </div>
@@ -119,7 +119,7 @@ export function AddSession() {
             value={formik.values.quota}
           />
           {formik.errors.quota ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div className="flex-1">
                 <label>{formik.errors.quota}</label>
               </div>
@@ -140,7 +140,7 @@ export function AddSession() {
             <option value="2">2</option>
           </select>
           {formik.errors.sessionType ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div className="flex-1">
                 <label>{formik.errors.sessionType}</label>
               </div>

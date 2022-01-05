@@ -46,7 +46,7 @@ export function AddVaccine() {
             value={formik.values.name}
           />
           {formik.errors.name ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div class="flex-1">
                 <label>{formik.errors.name}</label>
               </div>
@@ -66,7 +66,7 @@ export function AddVaccine() {
             value={formik.values.stock}
           />
           {formik.errors.stock ? (
-            <div className="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+            <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
               <div class="flex-1">
                 <label>{formik.errors.stock}</label>
               </div>
