@@ -14,6 +14,7 @@ import User from "./User";
 import AdminTable from "../components/admin-table/AdminTable";
 import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
 import { AddSession } from "../pages/admin/add-session/AddSession";
+import { AddUser } from "../pages/admin/add-user/AddUser";
 
 
 export default function Routes() {
@@ -49,6 +50,11 @@ export default function Routes() {
         <Route exact path="/admin/session/add">
           <LayoutAdmin>
             <AddSession />
+          </LayoutAdmin>
+        </Route>
+        <Route exact path="/admin/user/add">
+          <LayoutAdmin>
+            <AddUser />
           </LayoutAdmin>
         </Route>
         <Route exact path="/*">
