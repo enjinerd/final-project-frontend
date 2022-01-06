@@ -1,8 +1,8 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import MapGL, { Marker } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 // Please be a decent human and don't abuse my Mapbox API token.
 // If you fork this sandbox, replace my API token with your own.
@@ -53,7 +53,7 @@ export const Map = ({ latitude, longitude }) => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 text-emerald-500"
+            class="w-8 h-8 text-emerald-500"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

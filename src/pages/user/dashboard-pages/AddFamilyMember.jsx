@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Page, PageContent } from "components/layout/page";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import DatePicker from "react-modern-calendar-datepicker";
 import { idLocalCalendar } from "components/ui";
+import { useState } from "react";
+import DatePicker from "react-modern-calendar-datepicker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 export function AddFamilyMember() {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -15,7 +15,7 @@ export function AddFamilyMember() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-center sm:text-xl font-primary">
+          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
             Tambah Anggota Keluarga
           </h1>
           <div class="form-control space-y-1">
