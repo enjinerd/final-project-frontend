@@ -47,3 +47,34 @@ Start the server
 ```bash
   yarn dev --host
 ```
+
+## Command
+
+**To start development server and expose dev url to same network / LAN**
+
+```bash
+  yarn dev --host
+```
+
+**To commit using commitizen with emoji support**
+
+```bash
+  yarn commit
+```
+
+**format code using prettier**
+
+```bash
+  yarn pretty #Only staged file
+  yarn pretty:all #Format all file
+```
+
+**Linter**
+
+```bash
+  yarn lint
+```
+
+## Notes
+
+We using **husky** to lint and format code when commit is triggered
