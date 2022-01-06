@@ -1,7 +1,7 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { readdirSync } from "fs";
 import path from "path";
+import { defineConfig } from "vite";
 
 // https://stackoverflow.com/questions/69424422/use-compileroptions-baseurl-with-vite-js-project
 const absolutePathAliases = {};
