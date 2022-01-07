@@ -1,10 +1,11 @@
 import MaterialTable, { MTableToolbar, MTableBodyRow, MTableHeader, createMuiTheme, MuiThemeProvider } from "@material-table/core";
 import { Rowing } from "@material-ui/icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useHistory} from "react-router-dom";
 import {useState, useEffect} from 'react';
 
 export default function AdminTable() {
   let datum = useLocation();
+  const history = useHistory();
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
 
@@ -12,6 +13,7 @@ export default function AdminTable() {
     if(datum.state) {
         setColumns(datum.state.columns);
         setData(datum.state.data);
+        console.log(datum.pathname);
     }
   }, [datum])
 
@@ -60,7 +62,7 @@ export default function AdminTable() {
             tooltip: "add new vaccine",
             position: "toolbar",
             onClick: () => {
-              console.log("clicked");
+              history.push(datum.pathname+'/add');
             }
           }
         ]}

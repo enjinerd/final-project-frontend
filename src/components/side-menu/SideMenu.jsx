@@ -22,7 +22,7 @@ export default function SideMenu () {
                                         data: [
                                             { name: 'Sinovac', stock: 600},
                                             { name: 'Moderna', stock: 600},
-                                        ]
+                                        ],
                                     }
                                 }}
                             >
@@ -46,7 +46,7 @@ export default function SideMenu () {
                                             { startDate: '15 Desember 2021', endDate: '15 Desember 2021', vaccine: 'Moderna', quota: 600, sessionType: 1},
                                             { startDate: '27 Desember Desember', endDate: '27 Desember Desember', vaccine: 'Astra', quota: 500, sessionType: 2},
                                             { startDate: '27 Januari 2022', endDate: '27 Januari 2022', vaccine: 'Moderna', quota: 600, sessionType: 2},
-                                        ]
+                                        ],
                                     }
                                 }}
                             >
