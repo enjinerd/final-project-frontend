@@ -1,7 +1,7 @@
 import PrivateRoute from "./PrivateRoute";
 import { LayoutRoot } from "components/layout/layout-root";
 import { NotFound } from "pages";
-import { Login, SignUp, UserDashboard } from "pages/user";
+import { Login, SignUp, UserDashboard, News } from "pages/user";
 import {
   AddFamilyMember,
   FamilyMembers,
@@ -31,6 +31,9 @@ export default function User() {
         </Route>
         <Route path={`${path}/signup`}>
           <SignUp />
+        </Route>
+        <Route path={`${path}/news`}>
+          <News />
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>
