@@ -1,13 +1,13 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Login, SignUp, UserDashboard } from "pages/user";
-import { NotFound } from "pages";
-import { LayoutRoot } from "components/layout/layout-root";
 import PrivateRoute from "./PrivateRoute";
+import { LayoutRoot } from "components/layout/layout-root";
+import { NotFound } from "pages";
+import { Login, SignUp, UserDashboard, News } from "pages/user";
 import {
-  UserProfile,
-  FamilyMembers,
   AddFamilyMember,
+  FamilyMembers,
+  UserProfile,
 } from "pages/user/dashboard-pages";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 export default function User() {
   const { path } = useRouteMatch();
@@ -31,6 +31,9 @@ export default function User() {
         </Route>
         <Route path={`${path}/signup`}>
           <SignUp />
+        </Route>
+        <Route path={`${path}/news`}>
+          <News />
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>

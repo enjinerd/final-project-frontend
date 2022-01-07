@@ -1,8 +1,8 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { NotFound } from "pages";
-import { LayoutRoot } from "components/layout/layout-root";
 import PrivateRoute from "./PrivateRoute";
+import { LayoutRoot } from "components/layout/layout-root";
+import { NotFound } from "pages";
 import { VaccinationHomepage } from "pages/vaccination";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 export default function Vaccination() {
   const { path } = useRouteMatch();

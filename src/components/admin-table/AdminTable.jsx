@@ -1,19 +1,26 @@
-import MaterialTable, { MTableToolbar, MTableBodyRow, MTableHeader, createMuiTheme, MuiThemeProvider } from "@material-table/core";
+import MaterialTable, {
+  MTableBodyRow,
+  MTableHeader,
+  MTableToolbar,
+  MuiThemeProvider,
+  createMuiTheme,
+} from "@material-table/core";
 import { Rowing } from "@material-ui/icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useHistory} from "react-router-dom";
 import {useState, useEffect} from 'react';
 
 export default function AdminTable() {
   let datum = useLocation();
+  const history = useHistory();
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if(datum.state) {
-        setColumns(datum.state.columns);
-        setData(datum.state.data);
+    if (datum.state) {
+      setColumns(datum.state.columns);
+      setData(datum.state.data);
     }
-  }, [datum])
+  }, [datum]);
 
   // const custom_theme = createMuiTheme({
   //   palette: {
@@ -28,17 +35,22 @@ export default function AdminTable() {
 
   return (
     // <MuiThemeProvider theme={custom_theme}>
-      <MaterialTable
-        title="Positioning Actions Column Preview"
-        columns={columns}
-        data={data}
-        actions={[
-          {
-            icon: () => 
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#7D90B2">
+    <MaterialTable
+      title="Positioning Actions Column Preview"
+      columns={columns}
+      data={data}
+      actions={[
+        {
+          icon: () => (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="#7D90B2"
+            >
               <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
               <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
-            </svg>,
+            </svg>),
             tooltip: 'Edit Vaccine',
             position: 'row',
             onClick: (event, rowData) => alert("You edit " + rowData.name)
@@ -60,7 +72,7 @@ export default function AdminTable() {
             tooltip: "add new vaccine",
             position: "toolbar",
             onClick: () => {
-              console.log("clicked");
+              history.push(datum.pathname+'/add');
             }
           }
         ]}
@@ -84,24 +96,43 @@ export default function AdminTable() {
             borderRadius: '5px'
           },
         }}
-        components={{
-          Toolbar: props => (
-              <div style={{ 
-                    backgroundColor: '#D1FAE5',
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: "100%"
-                  }}
-              >
-                  <MTableToolbar {...props} />
-              </div>
-          ),
-        }}
-        style={{ 
-          flex: '1 1 0%' 
-        }}
-      />
+      options={{
+        actionsColumnIndex: -1,
+        sorting: true,
+        selection: true,
+        showTitle: false,
+        headerStyle: {
+          backgroundColor: "#D1FAE5",
+          textTransform: "uppercase",
+        },
+        rowStyle: {},
+        showTextRowsSelected: false,
+        searchFieldAlignment: "left",
+        searchFieldStyle: {
+          backgroundColor: "#FFFFFF",
+          padding: "5px",
+          borderRadius: "5px",
+        },
+      }}
+      components={{
+        Toolbar: (props) => (
+          <div
+            style={{
+              backgroundColor: "#D1FAE5",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <MTableToolbar {...props} />
+          </div>
+        ),
+      }}
+      style={{
+        flex: "1 1 0%",
+      }}
+    />
     // </MuiThemeProvider>
-  )
+  );
 }

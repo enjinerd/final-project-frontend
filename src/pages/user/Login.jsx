@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { Page, PageContent } from "components/layout/page";
-import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { validateEmail, validateNotEmpty, validateValue } from "helpers";
-import useAuthStore from "stores/useAuthStore";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Redirect, useHistory } from "react-router-dom";
+import useAuthStore from "stores/useAuthStore";
 
 export function Login() {
   const { login, error, isAuthenticated } = useAuthStore();
@@ -45,21 +45,23 @@ export function Login() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-center sm:text-xl">Masuk</h1>
+          <h1 className="font-bold font-primary text-2xl text-center sm:text-xl">
+            Masuk
+          </h1>
           <div class="form-control space-y-1">
             <h1 className="text-base text-center sm:text-xl">
               Belum punya akun?{" "}
-              <span className="italic font-bold">
+              <span className="font-bold italic">
                 {" "}
                 <Link to="/user/signup">Daftar</Link>
               </span>
             </h1>
             {error && (
-              <div className="font-medium alert alert-error my-1">
+              <div className="alert alert-error font-medium my-1">
                 <div className="flex-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 mx-2"
+                    className="h-6 mx-2 w-6"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -74,7 +76,7 @@ export function Login() {
               </div>
             )}
             <label class="label">
-              <span class="label-text font-bold">E-mail</span>
+              <span class="font-bold label-text">E-mail</span>
             </label>
             <input
               type="text"
@@ -85,14 +87,14 @@ export function Login() {
               value={formik.values.email}
             />
             {formik.errors.email ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div class="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div class="flex-1">
                   <label>{formik.errors.email}</label>
                 </div>
               </div>
             ) : null}
             <label class="label">
-              <span class="label-text font-bold">Kata Sandi</span>
+              <span class="font-bold label-text">Kata Sandi</span>
             </label>
             <input
               type="password"
@@ -103,14 +105,14 @@ export function Login() {
               value={formik.values.password}
             />
             {formik.errors.password ? (
-              <div class="text-red-600  rounded-md text-sm font-medium px-2 py-1">
+              <div class="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div class="flex-1">
                   <label>{formik.errors.password}</label>
                 </div>
               </div>
             ) : null}
             <label class="label">
-              <a href="#" class="label-text-alt font-semibold text-gray-400">
+              <a href="#" class="font-semibold label-text-alt text-gray-400">
                 Lupa kata sandi?
               </a>
             </label>

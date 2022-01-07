@@ -1,23 +1,23 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import {
   PencilIcon as PencilIconOutline,
   TrashIcon as TrashIconOutline,
 } from "@heroicons/react/outline";
+import { ChevronDownIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import { ConfirmDialog } from "components/ui";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export function DropdownMenu() {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <div className="w-56 text-right">
-      <Menu as="div" className="relative inline-block text-left">
+    <div className="text-right">
+      <Menu as="div" className="inline-block relative text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-bold text-white bg-black rounded-md bg-opacity-60 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className="bg-black bg-opacity-60 font-bold inline-flex justify-center px-4 py-2 rounded-md text-sm text-white w-full hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white">
             Ubah
             <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-emerald-200 hover:text-emerald-100"
+              className="-mr-1 h-5 ml-2 text-emerald-200 w-5 hover:text-emerald-100"
               aria-hidden="true"
             />
           </Menu.Button>
@@ -31,8 +31,8 @@ export function DropdownMenu() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+          <Menu.Items className="absolute bg-white divide-gray-100 divide-y mt-2 origin-top-right right-0 ring-1 ring-black ring-opacity-5 rounded-md shadow-lg w-56 focus:outline-none">
+            <div className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -41,7 +41,7 @@ export function DropdownMenu() {
                     } group flex flex-row space-x-2 rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <PencilIcon className="w-5 h-5" />
+                      <PencilIcon className="h-5 w-5" />
                     ) : (
                       <PencilIconOutline className="h-5 w-5" />
                     )}
@@ -59,7 +59,7 @@ export function DropdownMenu() {
                   title="Konfirmasi"
                   message="Apakah anda benar-benar ingin keluar?"
                   titleAction="Hapus Data"
-                  className="hover:bg-emerald-500 hover:text-white text-gray-900 group flex flex-row space-x-2 rounded-md items-center w-full px-2 py-2 text-sm"
+                  className="flex flex-row group items-center px-2 py-2 rounded-md space-x-2 text-gray-900 text-sm w-full hover:bg-emerald-500 hover:text-white"
                 />
               </Menu.Item>
             </div>
