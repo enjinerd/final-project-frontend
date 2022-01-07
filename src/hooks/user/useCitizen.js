@@ -19,9 +19,7 @@ const useCitizen = createStore((set) => ({
       )
       .then((val) => {
         set((state) => ({
-          isAuthenticated: true,
           isLoading: false,
-          token: val.data.data.token,
         }));
       })
       .catch((error) => {
@@ -31,22 +29,24 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  addFamily: async ({ name, birthday, age, nik, phone, gender }) => {
+  addFamily: async ({ name, birthday, age, nik, handphone, gender, token }) => {
     set((state) => ({ isAuthenticating: true }));
     await axios
-      .put(`${api}/citizen`, {
-        name,
-        birthday,
-        nik,
-        age,
-        gender,
-        phone,
-      })
+      .post(
+        `${api}/families`,
+        {
+          name,
+          birthday,
+          nik,
+          age,
+          gender,
+          handphone,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       .then((val) => {
         set((state) => ({
-          isAuthenticated: true,
           isLoading: false,
-          token: val.data.data.token,
         }));
       })
       .catch((error) => {

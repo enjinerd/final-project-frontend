@@ -1,7 +1,7 @@
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
-import { validateEmail, validateNotEmpty, validateValue } from "helpers";
+import { validateNotEmpty, validateValue } from "helpers";
 import useCitizen from "hooks/user/useCitizen";
 import { useEffect, useRef, useState } from "react";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -66,7 +66,7 @@ export function UserProfile() {
               onChange={formik.handleChange}
               value={formik.values.address}
             />
-            {formik.errors.email ? (
+            {formik.errors.address ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.address}</label>
