@@ -7,14 +7,14 @@ export function FamilyMembers() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
+          <h1 className="font-bold font-primary text-2xl text-center sm:text-xl">
             Anggota Keluarga
           </h1>
           <div className="alert alert-warning font-medium">
             <div className="flex-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="mx-2 w-6 h-6"
+                className="h-6 mx-2 w-6"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -27,8 +27,8 @@ export function FamilyMembers() {
               <label>Belum ada anggota keluarga yang ditambahkan</label>
             </div>
           </div>
-          <div className="flex flex-row justify-between px-4 py-2 bg-gradient-to-tl from-gray-200 via-gray-300 to-gray-300 rounded-md">
-            <p className="text-lg font-bold">Rahayu Lestari</p>
+          <div className="alert flex flex-row justify-between">
+            <p className="font-bold text-lg">Rahayu Lestari</p>
             <DropdownMenu />
           </div>
           <div>

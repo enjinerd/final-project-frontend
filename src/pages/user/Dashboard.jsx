@@ -14,7 +14,7 @@ export function UserDashboard() {
           <p className="font-primary text-2xl sm:text-xl">
             Halo, <strong>Pengguna</strong>
           </p>
-          <div className="alert-error font-secondary py-1 font-semibold text-center">
+          <div className="alert-error font-secondary font-semibold py-1 text-center dark:bg-">
             <p>Belum Vaksinasi</p>
           </div>
           <UserMenus />

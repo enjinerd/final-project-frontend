@@ -11,13 +11,13 @@ export function DropdownMenu() {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <div className="w-56 text-right">
+    <div className="text-right">
       <Menu as="div" className="inline-block relative text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center px-4 py-2 w-full text-sm font-bold text-white bg-black bg-opacity-60 rounded-md hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className="bg-black bg-opacity-60 font-bold inline-flex justify-center px-4 py-2 rounded-md text-sm text-white w-full hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white">
             Ubah
             <ChevronDownIcon
-              className="-mr-1 ml-2 w-5 h-5 text-emerald-200 hover:text-emerald-100"
+              className="-mr-1 h-5 ml-2 text-emerald-200 w-5 hover:text-emerald-100"
               aria-hidden="true"
             />
           </Menu.Button>
@@ -31,7 +31,7 @@ export function DropdownMenu() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
+          <Menu.Items className="absolute bg-white divide-gray-100 divide-y mt-2 origin-top-right right-0 ring-1 ring-black ring-opacity-5 rounded-md shadow-lg w-56 focus:outline-none">
             <div className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
@@ -41,9 +41,9 @@ export function DropdownMenu() {
                     } group flex flex-row space-x-2 rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
                     {active ? (
-                      <PencilIcon className="w-5 h-5" />
+                      <PencilIcon className="h-5 w-5" />
                     ) : (
-                      <PencilIconOutline className="w-5 h-5" />
+                      <PencilIconOutline className="h-5 w-5" />
                     )}
                     <span>Ubah Data</span>
                   </button>
@@ -59,7 +59,7 @@ export function DropdownMenu() {
                   title="Konfirmasi"
                   message="Apakah anda benar-benar ingin keluar?"
                   titleAction="Hapus Data"
-                  className="group flex flex-row items-center px-2 py-2 space-x-2 w-full text-sm text-gray-900 rounded-md hover:text-white hover:bg-emerald-500"
+                  className="flex flex-row group items-center px-2 py-2 rounded-md space-x-2 text-gray-900 text-sm w-full hover:bg-emerald-500 hover:text-white"
                 />
               </Menu.Item>
             </div>

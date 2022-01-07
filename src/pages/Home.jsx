@@ -5,14 +5,14 @@ export function Home() {
   return (
     <Page>
       <PageContent>
-        <div className="flex flex-col items-center px-4 py-8 space-y-2 lg:px-8">
+        <div className="flex flex-col items-center px-3 py-8 space-y-2 lg:px-8">
           <Link
-            to="/user/vaccine-session"
-            className="text-xl font-bold text-gray-800 font-primary"
+            to="/vaccination"
+            className="font-bold font-primary text-gray-800 text-xl"
           >
             <img
               src="https://res.cloudinary.com/dvhdig9hg/image/upload/v1641538598/cta-daftar2_ltv1aa.png"
-              className="w-auto h-auto"
+              className="h-auto w-auto"
             />
           </Link>
           <HomepageNews allNews={false} />
