@@ -71,6 +71,11 @@ export default function Routes() {
             <AddUser />
           </LayoutAdmin>
         </Route>
+        <Route exact path="/admin/user/add">
+          <LayoutAdmin>
+            <AddUser />
+          </LayoutAdmin>
+        </Route>
         <Route exact path="/*">
           <LayoutRoot>
             <NotFound />
