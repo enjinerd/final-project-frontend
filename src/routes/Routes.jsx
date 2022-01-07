@@ -15,6 +15,9 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
+import { AddUser } from "../pages/admin/add-user/AddUser";
+
+
 export default function Routes() {
   return (
     <Router>
@@ -59,6 +62,16 @@ export default function Routes() {
                 { name: "Moderna", stock: 600 },
               ]}
             />
+          </LayoutAdmin>
+        </Route>
+        <Route exact path="/admin/user/add">
+          <LayoutAdmin>
+            <AddUser />
+          </LayoutAdmin>
+        </Route>
+        <Route exact path="/admin/user/add">
+          <LayoutAdmin>
+            <AddUser />
           </LayoutAdmin>
         </Route>
         <Route exact path="/*">
