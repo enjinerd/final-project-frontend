@@ -8,27 +8,29 @@ import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import useAuthStore from "stores/useAuthStore";
 
 export function UserProfile() {
+  const { token } = useAuthStore();
+
   const [selectedDay, setSelectedDay] = useState(null);
   const dateEl = useRef(null);
   const { updateProfile } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      address: "",
+      birthday: "",
+      token,
     },
     validateOnBlur: true,
     validate: (values) => {
       let errors = {};
-      if (validateValue(values.email, validateNotEmpty)) {
-        errors.email = "Email harus diisi";
-      } else if (validateValue(values.email, validateEmail)) {
-        errors.email = "Email tidak valid";
+      if (validateValue(values.address, validateNotEmpty)) {
+        errors.address = "Alamat harus diisi";
       }
-      if (validateValue(values.password, validateNotEmpty)) {
-        errors.password = "Kata sandi harus diisi";
+      if (validateValue(values.birthday, validateNotEmpty)) {
+        errors.birthday = "Tanggal lahir tidak valid";
       }
       return errors;
     },
@@ -43,18 +45,18 @@ export function UserProfile() {
   const handleDate = (val) => {
     setSelectedDay(val);
     let date = new Date(`${val.year}-${val.month}-${val.day}`);
-    console.log(date);
+    formik.setValues({ ...formik.values, birthday: date });
   };
   return (
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
+          <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
             Data Diri
           </h1>
-          <div className="form-control space-y-1">
+          <div className="space-y-1 form-control">
             <label className="label">
-              <span className="label-text font-bold">Alamat Tinggal</span>
+              <span className="font-bold label-text">Alamat Tinggal</span>
             </label>
             <input
               type="text"
@@ -62,32 +64,32 @@ export function UserProfile() {
               className="input input-bordered"
               name="address"
               onChange={formik.handleChange}
-              value={formik.values.email}
+              value={formik.values.address}
             />
             {formik.errors.email ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
-                  <label>{formik.errors.email}</label>
+                  <label>{formik.errors.address}</label>
                 </div>
               </div>
             ) : null}
             <label className="label">
-              <span className="label-text font-bold">Tanggal Lahir</span>
+              <span className="font-bold label-text">Tanggal Lahir</span>
             </label>{" "}
             <DatePicker
               value={selectedDay}
               onChange={handleDate}
-              inputClassName="input input-bordered w-full shadow-lg"
+              inputClassName="input input-bordered w-full shadow-lg text-black"
               calendarClassName="text-sm sm:text-base"
               inputPlaceholder="Piilh Tanggal"
               calendarPopperPosition="bottom"
               locale={idLocalCalendar}
               shouldHighlightWeekends
             />
-            {formik.errors.password ? (
+            {formik.errors.birthday ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
-                  <label>{formik.errors.password}</label>
+                  <label>{formik.errors.birthday}</label>
                 </div>
               </div>
             ) : null}
@@ -97,8 +99,8 @@ export function UserProfile() {
             className="btn btn-block"
             onClick={handleSubmit}
             disabled={
-              formik.errors.email ||
-              formik.values.password == "" ||
+              formik.errors.address ||
+              formik.values.birthday == "" ||
               formik.isSubmitting
             }
           >
