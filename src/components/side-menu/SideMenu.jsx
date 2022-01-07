@@ -5,7 +5,7 @@ export default function SideMenu() {
   return (
     <div className="side-menu">
       <div className="flex flex-col items-center justify-center profile">
-        <img src="" alt="" className="img-profile" />
+        <img src="" alt="" />
         <p className="username">Yustina Yasin</p>
       </div>
       <div className="artboard menus">
