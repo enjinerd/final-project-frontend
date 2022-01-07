@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 export default function SideMenu() {
   return (
     <div className="side-menu">
-      <div className="profile flex flex-col justify-center items-center">
-        <img src="" alt="" />
+      <div className="flex flex-col items-center justify-center profile">
+        <img src="" alt="" className="img-profile" />
         <p className="username">Yustina Yasin</p>
       </div>
       <div className="artboard menus">
-        <ul className="menu p-4">
+        <ul className="p-4 menu">
           <li>
             <Link
               to={{
