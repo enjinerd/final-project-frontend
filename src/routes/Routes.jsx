@@ -15,8 +15,6 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
-import { AddSession } from "../pages/admin/add-session/AddSession";
 import { AddUser } from "../pages/admin/add-user/AddUser";
 
 
