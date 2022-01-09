@@ -35,7 +35,7 @@ export function FamilyMembers() {
                     <Link to={`/user/dashboard/family-members/${family.id}`}>
                       <p className="font-bold">{family.name}</p>
                     </Link>
-                    <DropdownFamilyMenu />
+                    <DropdownFamilyMenu dataId={family.id} />
                   </div>
                 </li>
               ))}

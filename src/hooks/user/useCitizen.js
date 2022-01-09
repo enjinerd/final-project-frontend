@@ -7,7 +7,6 @@ const useCitizen = createStore((set) => ({
   isLoading: true,
   error: undefined,
   updateProfile: async ({ address, birthday, token }) => {
-    set((state) => ({ isAuthenticating: true }));
     await axios
       .put(
         `${api}/citizens`,
@@ -57,7 +56,6 @@ const useCitizen = createStore((set) => ({
       });
   },
   familyMember: async (token) => {
-    set((state) => ({ isAuthenticating: true }));
     let data;
     await axios
       .get(`${api}/family/citizens`, {
@@ -76,6 +74,23 @@ const useCitizen = createStore((set) => ({
         }));
       });
     return data;
+  },
+  deleteFamily: async ({ id, token }) => {
+    await axios
+      .delete(`${api}/families/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((val) => {
+        set((state) => ({
+          isLoading: false,
+        }));
+      })
+      .catch((error) => {
+        set((state) => ({
+          isLoading: false,
+          error,
+        }));
+      });
   },
 }));
 

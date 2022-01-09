@@ -8,9 +8,16 @@ import {
 } from "@supabase/ui";
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import useAuthStore from "stores/useAuthStore";
+import useCitizen from "hooks/user/useCitizen";
+import { useHistory } from "react-router-dom";
 
-export function DropdownFamilyMenu() {
+export function DropdownFamilyMenu({ dataId }) {
   const [isOpen, setOpen] = useState(false);
+  const { token } = useAuthStore();
+  const { deleteFamily } = useCitizen();
+  const history = useHistory();
+
   function closeModal() {
     setOpen(false);
   }
@@ -18,17 +25,17 @@ export function DropdownFamilyMenu() {
   function openModal() {
     setOpen(true);
   }
-  function handleConfirm() {
-    alert("deleted");
+  async function handleConfirm() {
+    await deleteFamily({ token, id: dataId });
+    closeModal();
+    history.go(0);
   }
   return (
     <>
       <Dropdown
         overlay={[
           <Dropdown.Item icon={<IconEdit stroke="green" />}>
-            <Button className="text-red-600" onClick={() => setOpen(true)}>
-              Ubah Data
-            </Button>{" "}
+            <Button>Ubah Data</Button>
           </Dropdown.Item>,
           <Divider light />,
           <Dropdown.Item icon={<IconTrash stroke="red" />}>
