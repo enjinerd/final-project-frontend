@@ -3,10 +3,8 @@ import { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 
-export default function PrivateRoute(props) {
+function PrivateRoute(props) {
   const { isAuthenticated, isAuthenticating, token, logout } = useAuthStore();
-  const [isExpired, setExpired] = useState(false);
-  const decode = jwt_decode(token);
 
   const { component: Component, ...rest } = props;
   if (isAuthenticating) {
@@ -16,10 +14,11 @@ export default function PrivateRoute(props) {
       </div>
     );
   }
-  if (!isAuthenticated && decode.exp * 1000 < Date.now()) {
-    return <Redirect to="/user/login" />;
+  if (isAuthenticated && jwt_decode(token).exp * 1000 > Date.now() == false) {
+    return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
-  return <Route {...rest} render={(props) => <Component {...props} />} />;
+  return <Redirect to="/user/login" />;
 
   //redirect if there is no user
 }
+export default PrivateRoute;
