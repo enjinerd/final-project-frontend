@@ -9,6 +9,9 @@ module.exports = {
         primary: ["Epilogue ", ...fontFamily.mono],
         secondary: ["Inter ", ...fontFamily.sans],
       },
+      colors: {
+        dark: "#121212",
+      },
     },
   },
   variants: {
