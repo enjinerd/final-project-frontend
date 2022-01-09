@@ -4,31 +4,49 @@ import { useState } from "react";
 import useGeolocation from "react-hook-geolocation";
 
 export function VaccinationHomepage() {
-  const geolocation = useGeolocation();
+  const [status, setStatus] = useState(null);
+  const [userPos, setUserPos] = useState({
+    latitude: -6.2,
+    longitude: 106.816666,
+  });
+
+  const handleLocation = () => {
+    if (!navigator.geolocation) {
+      setStatus("Geolocation is not supported by your browser");
+    } else {
+      setStatus("Locating...");
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setStatus(null);
+          setUserPos({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        () => {
+          setStatus("Unable to retrieve your location");
+        }
+      );
+    }
+  };
 
   return (
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          {geolocation.latitude && geolocation.longitude ? (
-            <Map
-              latitude={geolocation.latitude}
-              longitude={geolocation.longitude}
-            />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-6"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                clip-rule="evenodd"
-              />
-            </svg>
+          <button
+            className="capitalize btn btn-block btn-primary"
+            onClick={handleLocation}
+          >
+            Klik untuk otomatis mendeteksi lokasi anda Sekarang
+          </button>
+          {status && (
+            <p className="alert alert-error alert-sm">
+              Lokasi tidak valid, Pastikan anda memberi izin browser untuk
+              mengakses lokasi.
+            </p>
           )}
+          <Map latitude={userPos.latitude} longitude={userPos.longitude} />
         </div>
       </PageContent>
     </Page>
