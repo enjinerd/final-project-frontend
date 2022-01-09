@@ -1442,6 +1442,16 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@supabase/ui@^0.36.2":
+  version "0.36.2"
+  resolved "https://registry.yarnpkg.com/@supabase/ui/-/ui-0.36.2.tgz#4c7af9c944a6d8124dd2bec083ea6d688a859328"
+  integrity sha512-E379j5SvhrZrSmaHQhHLMWsJIVC/GCs29gsjZpMr+Ao4MXfWuRTJDpZVminnlNf2GY/qbazu3qqJIPs5ehmRXQ==
+  dependencies:
+    lodash "^4.17.20"
+    prop-types "^15.7.2"
+  optionalDependencies:
+    fsevents "^2.3.2"
+
 "@tailwindcss/forms@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.4.0.tgz#a46715e347a32d216a3973eb67473bd29ae3798e"

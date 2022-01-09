@@ -1,5 +1,5 @@
 import { Page, PageContent } from "components/layout/page";
-import { DropdownMenu } from "components/ui";
+import { DropdownFamilyMenu } from "components/user";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
@@ -35,7 +35,7 @@ export function FamilyMembers() {
                     <Link to={`/user/dashboard/family-members/${family.id}`}>
                       <p className="font-bold">{family.name}</p>
                     </Link>
-                    <DropdownMenu />
+                    <DropdownFamilyMenu />
                   </div>
                 </li>
               ))}
