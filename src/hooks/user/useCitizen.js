@@ -75,6 +75,42 @@ const useCitizen = createStore((set) => ({
       });
     return data;
   },
+  updateFamilyMember: async ({
+    name,
+    birthday,
+    age,
+    nik,
+    handphone,
+    gender,
+    token,
+    id,
+  }) => {
+    set((state) => ({ isAuthenticating: true }));
+    await axios
+      .put(
+        `${api}/families/${id}`,
+        {
+          name,
+          birthday,
+          nik,
+          age,
+          gender,
+          handphone,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((val) => {
+        set((state) => ({
+          isLoading: false,
+        }));
+      })
+      .catch((error) => {
+        set((state) => ({
+          isLoading: false,
+          error,
+        }));
+      });
+  },
   deleteFamily: async ({ id, token }) => {
     await axios
       .delete(`${api}/families/${id}`, {

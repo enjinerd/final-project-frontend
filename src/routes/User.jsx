@@ -6,6 +6,7 @@ import {
   AddFamilyMember,
   FamilyMembers,
   UserProfile,
+  EditFamilyMember,
 } from "pages/user/dashboard-pages";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
@@ -20,6 +21,11 @@ export default function User() {
         <PrivateRoute
           path={`${path}/family-member/add`}
           component={AddFamilyMember}
+          exact
+        />
+        <PrivateRoute
+          path={`${path}/family-member/edit`}
+          component={EditFamilyMember}
           exact
         />
         <PrivateRoute

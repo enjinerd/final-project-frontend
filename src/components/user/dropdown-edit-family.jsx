@@ -10,9 +10,10 @@ import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
-export function DropdownFamilyMenu({ dataId }) {
+export function DropdownFamilyMenu({ dataId, userData }) {
+  userData.id = dataId;
   const [isOpen, setOpen] = useState(false);
   const { token } = useAuthStore();
   const { deleteFamily } = useCitizen();
@@ -25,6 +26,7 @@ export function DropdownFamilyMenu({ dataId }) {
   function openModal() {
     setOpen(true);
   }
+
   async function handleConfirm() {
     await deleteFamily({ token, id: dataId });
     closeModal();
@@ -35,7 +37,14 @@ export function DropdownFamilyMenu({ dataId }) {
       <Dropdown
         overlay={[
           <Dropdown.Item icon={<IconEdit stroke="green" />}>
-            <Button>Ubah Data</Button>
+            <Link
+              to={{
+                pathname: `/user/family-member/edit`,
+                state: userData,
+              }}
+            >
+              <Button>Ubah Data</Button>
+            </Link>
           </Dropdown.Item>,
           <Divider light />,
           <Dropdown.Item icon={<IconTrash stroke="red" />}>
