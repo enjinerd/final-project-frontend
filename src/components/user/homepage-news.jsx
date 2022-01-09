@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { NewsLoader } from "components/ui/loader";
+
 export function HomepageNews({ allNews }) {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,15 +20,13 @@ export function HomepageNews({ allNews }) {
       });
   }, []);
   return (
-    <div className="py-8 space-y-3 lg:px-8">
+    <div className="flex flex-col py-8 space-y-3 lg:px-8">
       <p className="text-base font-bold text-left font-primary md:text-lg">
         Berita Terbaru
       </p>
       {loading ? (
-        <div className="text-center">
-          <div className="flex items-center justify-center p-12">
-            <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
-          </div>
+        <div className="flex flex-col items-center justify-center">
+          <NewsLoader />
         </div>
       ) : (
         <>
@@ -68,7 +68,7 @@ export function HomepageNews({ allNews }) {
           {!allNews && (
             <div>
               <Link to="/user/news">
-                <p className="text-base font-bold text-center font-primary md:text-lg">
+                <p className="px-2 py-1 text-base font-bold text-center bg-dark font-primary rounded-xl md:text-base dark:bg-white dark:text-dark hover:opacity-75">
                   Lihat Berita Lainnya...
                 </p>
               </Link>
