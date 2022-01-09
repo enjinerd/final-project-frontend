@@ -56,6 +56,27 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
+  familyMember: async (token) => {
+    set((state) => ({ isAuthenticating: true }));
+    let data;
+    await axios
+      .get(`${api}/family/citizens`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((val) => {
+        set((state) => ({
+          isLoading: false,
+        }));
+        data = val.data.data;
+      })
+      .catch((error) => {
+        set((state) => ({
+          isLoading: false,
+          error,
+        }));
+      });
+    return data;
+  },
 }));
 
 export default useCitizen;
