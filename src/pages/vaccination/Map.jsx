@@ -8,12 +8,16 @@ import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 // If you fork this sandbox, replace my API token with your own.
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
 const MAPBOX_TOKEN =
-  "pk.eyJ1Ijoibmlyb2luIiwiYSI6ImNreHk5ODNxazR4aTQzMXF3YmI1Z3hnb2EifQ.gwWKlei3iVjLeJw6X_STfg";
+  "pk.eyJ1Ijoibmlyb2luIiwiYSI6ImNreTduZGxvMzE3ZjEyb280c3RpMGprMG8ifQ.E6efKzClsQa0Fq_sqz1UBA";
 
 export const Map = ({ latitude, longitude }) => {
-  const [viewport, setViewport] = useState({
+  const [userPos, setUserPos] = useState({
     latitude,
     longitude,
+  });
+  const [viewport, setViewport] = useState({
+    latitude: -6.2,
+    longitude: 106.816666,
     zoom: 14,
   });
   const mapRef = useRef();
@@ -46,14 +50,14 @@ export const Map = ({ latitude, longitude }) => {
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
         <Marker
-          latitude={latitude}
-          longitude={longitude}
+          latitude={userPos.latitude}
+          longitude={userPos.longitude}
           offsetLeft={-20}
           offsetTop={-10}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8 text-emerald-500"
+            class="h-8 text-emerald-500 w-8"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -66,9 +70,16 @@ export const Map = ({ latitude, longitude }) => {
         </Marker>
         <Geocoder
           language="id"
-          placeholder="Cari lokasi"
+          placeholder="Cari lokasi anda"
           mapRef={mapRef}
+          marker={false}
           onViewportChange={handleGeocoderViewportChange}
+          onResult={(data) =>
+            setUserPos({
+              latitude: data.result.center[1],
+              longitude: data.result.center[0],
+            })
+          }
           mapboxApiAccessToken={MAPBOX_TOKEN}
           position="top-left"
         />
