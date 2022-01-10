@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -7,22 +7,29 @@ import { useFormik } from "formik";
 import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
+import { useHistory } from "react-router";
 
-export function AddFamilyMember() {
+export function EditFamilyMember(props) {
+  const data = props.location.state;
+
+  const history = useHistory();
+  if (!data) {
+    history.push("/");
+  }
   const { token } = useAuthStore();
+  const birthday = new Date(data?.birthday);
 
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState({
+    year: birthday.getFullYear(),
+    month: birthday?.getMonth() + 1,
+    day: birthday?.getDate(),
+  });
   const dateEl = useRef(null);
-  const { addFamily } = useCitizen();
+  const { updateFamilyMember } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
-      birthday: "",
-      name: "",
-      nik: "",
-      gender: "",
-      handphone: "",
-      age: "",
+      ...data,
       token,
     },
     validateOnBlur: true,
@@ -49,7 +56,7 @@ export function AddFamilyMember() {
       return errors;
     },
     onSubmit: async (values) => {
-      await addFamily(values);
+      await updateFamilyMember(values);
     },
   });
 
@@ -69,6 +76,7 @@ export function AddFamilyMember() {
     formik.setValues({ ...formik.values, birthday: date, age });
     console.log(formik.values.birthday);
   };
+
   return (
     <Page>
       <PageContent>
@@ -124,8 +132,15 @@ export function AddFamilyMember() {
               <option disabled="disabled" selected>
                 Pilih Jenis Kelamin
               </option>
-              <option value="Male">Laki - Laki</option>
-              <option value="Female">Perempuan</option>
+              <option value="Male" selected={formik.values?.gender == "Male"}>
+                Laki - Laki
+              </option>
+              <option
+                value="Female "
+                selected={formik.values?.gender == "Female"}
+              >
+                Perempuan
+              </option>
             </select>
             {formik.errors.gender ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
@@ -186,7 +201,7 @@ export function AddFamilyMember() {
               formik.isSubmitting
             }
           >
-            Tambahkan Data
+            Perbarui Data
           </button>
         </div>
       </PageContent>

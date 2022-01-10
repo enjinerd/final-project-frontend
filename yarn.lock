@@ -1442,6 +1442,16 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@supabase/ui@^0.36.2":
+  version "0.36.2"
+  resolved "https://registry.yarnpkg.com/@supabase/ui/-/ui-0.36.2.tgz#4c7af9c944a6d8124dd2bec083ea6d688a859328"
+  integrity sha512-E379j5SvhrZrSmaHQhHLMWsJIVC/GCs29gsjZpMr+Ao4MXfWuRTJDpZVminnlNf2GY/qbazu3qqJIPs5ehmRXQ==
+  dependencies:
+    lodash "^4.17.20"
+    prop-types "^15.7.2"
+  optionalDependencies:
+    fsevents "^2.3.2"
+
 "@tailwindcss/forms@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.4.0.tgz#a46715e347a32d216a3973eb67473bd29ae3798e"
@@ -5919,6 +5929,11 @@ react-beautiful-dnd@^13.0.0:
     redux "^4.0.4"
     use-memo-one "^1.1.1"
 
+react-content-loader@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-6.1.0.tgz#6b06be3889d2480ae909be0374a6062a36a53dec"
+  integrity sha512-S4/+doQrNs0PGDgUYCGGfdFjGax8dMQzYkWcSSxfaUcUjFkbnikWARuX9lWkglocIVhxnn3lxNb6uEWFFUzNUw==
+
 react-display-name@^0.2.0:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.5.tgz#304c7cbfb59ee40389d436e1a822c17fe27936c6"
@@ -6157,6 +6172,11 @@ react-transition-group@^4.0.0, react-transition-group@^4.4.0, react-transition-g
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-use-geolocation@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-use-geolocation/-/react-use-geolocation-0.1.1.tgz#249d60162887e62dcf388fcbf6cd8fe362d1186e"
+  integrity sha512-x9L0HC1o/g0emakmyCTT51tY8qGZ43AVf9XDe89s8B5eqe+BFlW54YkAy+Q7E0jhb3O1n993Qws07+qeHrpszg==
 
 react-virtualized@^9.21.2:
   version "9.22.3"
