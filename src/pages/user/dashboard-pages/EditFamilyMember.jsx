@@ -30,7 +30,6 @@ export function EditFamilyMember(props) {
   const formik = useFormik({
     initialValues: {
       ...data,
-      token,
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -56,7 +55,7 @@ export function EditFamilyMember(props) {
       return errors;
     },
     onSubmit: async (values) => {
-      await updateFamilyMember(values);
+      await updateFamilyMember(values, token);
     },
   });
 

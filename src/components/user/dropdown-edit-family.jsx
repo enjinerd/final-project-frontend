@@ -28,7 +28,7 @@ export function DropdownFamilyMenu({ dataId, userData }) {
   }
 
   async function handleConfirm() {
-    await deleteFamily({ token, id: dataId });
+    await deleteFamily(dataId, token);
     closeModal();
     history.go(0);
   }

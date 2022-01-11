@@ -6,13 +6,32 @@ const api = import.meta.env.VITE_API_HOST;
 const useCitizen = createStore((set) => ({
   isLoading: true,
   error: undefined,
-  updateProfile: async ({ address, birthday, token }) => {
+  userProfile: async (token) => {
+    let data;
+    await axios
+      .get(`${api}/citizen/profiles`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((val) => {
+        set((state) => ({
+          isLoading: false,
+        }));
+        data = val.data.data;
+      })
+      .catch((error) => {
+        set((state) => ({
+          isLoading: false,
+          error,
+        }));
+      });
+    return data;
+  },
+  updateProfile: async (val, token) => {
     await axios
       .put(
         `${api}/citizens`,
         {
-          address,
-          birthday,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -28,18 +47,13 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  addFamily: async ({ name, birthday, age, nik, handphone, gender, token }) => {
+  addFamily: async (val, token) => {
     set((state) => ({ isAuthenticating: true }));
     await axios
       .post(
         `${api}/families`,
         {
-          name,
-          birthday,
-          nik,
-          age,
-          gender,
-          handphone,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -75,27 +89,13 @@ const useCitizen = createStore((set) => ({
       });
     return data;
   },
-  updateFamilyMember: async ({
-    name,
-    birthday,
-    age,
-    nik,
-    handphone,
-    gender,
-    token,
-    id,
-  }) => {
+  updateFamilyMember: async (val, id, token) => {
     set((state) => ({ isAuthenticating: true }));
     await axios
       .put(
         `${api}/families/${id}`,
         {
-          name,
-          birthday,
-          nik,
-          age,
-          gender,
-          handphone,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -111,7 +111,7 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  deleteFamily: async ({ id, token }) => {
+  deleteFamily: async (id, token) => {
     await axios
       .delete(`${api}/families/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
