@@ -1,5 +1,4 @@
 import jwt_decode from "jwt-decode";
-import { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 

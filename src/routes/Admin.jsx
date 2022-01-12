@@ -14,30 +14,30 @@ export default function User() {
   return (
     <LayoutAdmin>
       <Switch>
-        <PrivateRouteAdmin path={`${path}`} exact>
-          <AdminTable />
-        </PrivateRouteAdmin>
-        <PrivateRouteAdmin path={`${path}/session`} exact>
-          <AdminTable />
-        </PrivateRouteAdmin>
-        <PrivateRouteAdmin path={`${path}/user`} exact>
-          <AdminTable />
-        </PrivateRouteAdmin>
-        <PrivateRouteAdmin path={`${path}/vaccine/add`} exact>
-          <AddVaccine />
-        </PrivateRouteAdmin>
-        <PrivateRouteAdmin path={`${path}/session/add`} exact>
-          <AddSession />
-        </PrivateRouteAdmin>
-        <PrivateRouteAdmin path={`${path}/user/add`} exact>
-          <AddUser />
-        </PrivateRouteAdmin>
-        <Route path={`${path}/logins`}>
-          <Login />
-        </Route>
-        <Route path={`${path}/signup`}>
-          <SignUp />
-        </Route>
+        <PrivateRouteAdmin path={`${path}`} component={AdminTable} exact />
+        <PrivateRouteAdmin
+          path={`${path}/session`}
+          component={AdminTable}
+          exact
+        />
+        <PrivateRouteAdmin path={`${path}/user`} component={AdminTable} exact />
+        <PrivateRouteAdmin
+          path={`${path}/vaccine/add`}
+          component={AddVaccine}
+          exact
+        />
+        <PrivateRouteAdmin
+          path={`${path}/session/add`}
+          component={AddSession}
+          exact
+        />
+        <PrivateRouteAdmin
+          path={`${path}/user/add`}
+          component={AddUser}
+          exact
+        />
+        <Route path={`${path}/logins`} component={Login} />
+        <Route path={`${path}/signup`} component={SignUp} />
       </Switch>
     </LayoutAdmin>
   );
