@@ -1,0 +1,10 @@
+{
+  "conventionalCommits.scopes": [
+    "pages",
+    "app",
+    "user-dashboard",
+    "family",
+    "user-homepage",
+    "vaccination"
+  ]
+}

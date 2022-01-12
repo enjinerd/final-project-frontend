@@ -1,14 +1,14 @@
+import "./styles.css";
+import {
+  CollectionIcon,
+  HomeIcon,
+  InformationCircleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/solid";
+import clsx from "clsx";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  HomeIcon,
-  UserCircleIcon,
-  CollectionIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/solid";
-import clsx from "clsx";
-import "./styles.css";
 
 const navItems = [
   {
@@ -60,7 +60,7 @@ export function BottomNav() {
   return (
     <nav className="bottom-nav">
       <div className="bottom-nav_container">
-        <ul className="flex items-center w-full justify-evenly">
+        <ul className="flex justify-evenly items-center w-full">
           {navItems.map((item) => {
             const isActive = item.exact
               ? item.href === router.pathname

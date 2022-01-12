@@ -1,33 +1,50 @@
-import { useState } from "react";
 import { Page, PageContent } from "components/layout/page";
-import useAuthStore from "stores/useAuthStore";
-import { UserMenus } from "components/user";
 import { ConfirmDialog } from "components/ui";
+import { UserMenus } from "components/user";
+import { useState, useEffect } from "react";
+import useAuthStore from "stores/useAuthStore";
+import useCitizen from "hooks/user/useCitizen";
 
 export function UserDashboard() {
   const [isOpen, setOpen] = useState(false);
-  const { logout } = useAuthStore();
+  const { logout, token } = useAuthStore();
+  const [profile, setProfile] = useState(null);
+  const { userProfile } = useCitizen();
+
+  useEffect(async () => {
+    const data = await userProfile(token);
+    setProfile(data);
+  }, []);
+
   return (
     <Page>
       <PageContent>
-        <div className="px-4 py-8 space-y-8 md:grid lg:px-8">
-          <p className="text-2xl sm:text-xl font-primary">
-            Halo, <strong>Pengguna</strong>
-          </p>
-          <div className="text-center alert-error py-1 font-semibold font-secondary">
-            <p>Belum Vaksinasi</p>
+        {profile ? (
+          <div className="px-4 py-8 space-y-8 lg:px-8">
+            <p className="text-2xl font-primary sm:text-xl">
+              Halo, <strong>{profile?.name}</strong>
+            </p>
+            <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
+              <p>Belum Vaksinasi</p>
+            </div>
+            <UserMenus />
+            <ConfirmDialog
+              isOpen={isOpen}
+              setOpen={setOpen}
+              handleConfirm={logout}
+              title="Konfirmasi"
+              message="Apakah anda benar-benar ingin keluar?"
+              titleAction="Keluar"
+              className="btn btn-block btn-warning"
+            />
           </div>
-          <UserMenus />
-          <ConfirmDialog
-            isOpen={isOpen}
-            setOpen={setOpen}
-            handleConfirm={logout}
-            title="Konfirmasi"
-            message="Apakah anda benar-benar ingin keluar?"
-            titleAction="Keluar"
-            className="btn btn-warning btn-block"
-          />
-        </div>
+        ) : (
+          <div className="text-center">
+            <div className="flex items-center justify-center p-12">
+              <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+            </div>
+          </div>
+        )}
       </PageContent>
     </Page>
   );

@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+
 export function ConfirmDialog({
   isOpen,
   setOpen,
@@ -78,14 +79,14 @@ export function ConfirmDialog({
                 <div className="flex flex-row mt-4 space-x-3">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white transition duration-500 transform border border-transparent rounded-md bg-gradient-to-r from-red-400 via-red-500 to-yellow-600 hover:-translate-y-1 hover:bg-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 "
+                    className="btn btn-error"
                     onClick={handleConfirm}
                   >
                     Konfirmasi
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium bg-blue-100 border border-transparent rounded-md text-blue hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="btn btn-info"
                     onClick={closeModal}
                   >
                     Batal
