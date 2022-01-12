@@ -51,6 +51,7 @@
     "react-router-dom": "5.2.0",
     "react-use-geolocation": "^0.1.1",
     "tailwind-react-datepicker": "^1.1.2",
+    "turf": "^3.0.14",
     "zustand": "^3.6.7",
     "zustand-persist": "^0.4.0"
   },

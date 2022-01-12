@@ -1,4 +1,5 @@
-import { persist, purge } from "./persist";
+import { persist } from "./persist";
+
 import axios from "axios";
 import createStore from "zustand";
 
@@ -18,46 +19,42 @@ const useAuthStore = createStore(
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MTc1NTg0OCwiZXhwIjoxNjQxNzU1MDAwfQ.Ln9NfWjO_PId8yHhv6IhUZzveRvQ1AG7xOJfJL5qZJs",
       email: undefined,
       error: undefined,
-      login: async ({ email, password }) => {
-        set((state) => ({ isAuthenticating: true }));
+      login: async (val) => {
+        set(() => ({ isAuthenticating: true }));
         await axios
           .post(`${api}/citizen/logins`, {
-            email,
-            password,
+            ...val,
           })
           .then((val) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: true,
               isAuthenticating: false,
               token: val.data.data.token,
             }));
           })
           .catch((error) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               error,
             }));
           });
       },
-      register: async ({ email, password, nik, name }) => {
-        set((state) => ({ isAuthenticating: true }));
+      register: async (val) => {
+        set(() => ({ isAuthenticating: true }));
         await axios
           .post(`${api}/citizen/registers`, {
-            email,
-            password,
-            nik,
-            name,
+            ...val,
           })
           .then((val) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               email: val.data.data.email,
             }));
           })
           .catch((error) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               error,
@@ -65,7 +62,7 @@ const useAuthStore = createStore(
           });
       },
       logout: async () => {
-        set((state) => ({ isAuthenticated: false }));
+        set(() => ({ isAuthenticated: false }));
       },
     })
   )

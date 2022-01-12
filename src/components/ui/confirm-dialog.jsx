@@ -33,7 +33,7 @@ export function ConfirmDialog({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 overflow-y-auto z-10"
+          className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeModal}
         >
           <div className="min-h-screen px-4 text-center">
@@ -51,7 +51,7 @@ export function ConfirmDialog({
 
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="align-middle h-screen inline-block"
+              className="inline-block h-screen align-middle"
               aria-hidden="true"
             >
               &#8203;
@@ -65,15 +65,15 @@ export function ConfirmDialog({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="align-middle bg-white inline-block max-w-md my-8 overflow-hidden p-6 rounded-2xl shadow-xl text-left transform transition-all w-full">
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="font-bold leading-6 text-gray-900 text-lg"
+                  className="text-lg font-bold leading-6 text-gray-900"
                 >
                   {title}
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-gray-500 text-sm">{message} </p>
+                  <p className="text-sm text-gray-500">{message} </p>
                 </div>
 
                 <div className="flex flex-row mt-4 space-x-3">

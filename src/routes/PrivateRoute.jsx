@@ -14,7 +14,11 @@ function PrivateRoute(props) {
       </div>
     );
   }
-  if (isAuthenticated && jwt_decode(token).exp * 1000 > Date.now() == false) {
+  if (isAuthenticated) {
+    const decoded = jwt_decode(token);
+    if (decoded.exp < Date.now() / 1000) {
+      logout();
+    }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
   return <Redirect to="/user/login" />;
