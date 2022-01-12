@@ -1,15 +1,24 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
+import useAuthAdminStore from "stores/useAuthAdminStore";
 
 export default function SideMenu() {
+  const { isAuthenticated } = useAuthAdminStore();
+
   return (
     <div className="side-menu">
-      <div className="flex flex-col items-center justify-center profile">
-        <img src="" alt="" />
-        <p className="username">Yustina Yasin</p>
+      <div className="profile flex flex-col justify-center items-center">
+        {isAuthenticated ? (
+          <>
+            <img src="" alt="" />
+            <p className="username">Yustina Yasin</p>
+          </>
+        ) : (
+          <Link to={{ pathname: "/admin/login" }}>Login</Link>
+        )}
       </div>
       <div className="artboard menus">
-        <ul className="p-4 menu">
+        <ul className="menu p-4">
           <li>
             <Link
               to={{

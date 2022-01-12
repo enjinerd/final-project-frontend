@@ -1,8 +1,13 @@
 import "./styles.css";
 import { useFormik } from "formik";
 import React from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export function AddVaccine() {
+  const api = import.meta.env.VITE_API_HOST;
+  const history = useHistory();
+
   const validate = (values) => {
     const errors = {};
     if (!values.name) {
@@ -20,10 +25,24 @@ export function AddVaccine() {
       stock: 0,
     },
     validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (name, stock) => {
+      await axios
+        .post(`${api}/vaccines`, {
+          name,
+          stock,
+        })
+        .then(() => {
+          history.push("/admin/vaccine");
+        })
+        .catch((error) => {
+          return error;
+        });
     },
   });
+
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
 
   return (
     <section className="flex-1">
@@ -47,7 +66,7 @@ export function AddVaccine() {
           />
           {formik.errors.name ? (
             <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
-              <div class="flex-1">
+              <div className="flex-1">
                 <label>{formik.errors.name}</label>
               </div>
             </div>
@@ -67,7 +86,7 @@ export function AddVaccine() {
           />
           {formik.errors.stock ? (
             <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
-              <div class="flex-1">
+              <div className="flex-1">
                 <label>{formik.errors.stock}</label>
               </div>
             </div>
@@ -76,7 +95,8 @@ export function AddVaccine() {
 
         <button
           type="submit"
-          class="btn"
+          className="btn"
+          onClick={handleSubmit}
           disabled={
             formik.errors.name == "" ||
             formik.values.stock == 0 ||
