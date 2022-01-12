@@ -1,4 +1,5 @@
-import { persist, purge } from "./persist";
+import { persist } from "./persist";
+
 import axios from "axios";
 import createStore from "zustand";
 
@@ -19,20 +20,20 @@ const useAuthStore = createStore(
       email: undefined,
       error: undefined,
       login: async (val) => {
-        set((state) => ({ isAuthenticating: true }));
+        set(() => ({ isAuthenticating: true }));
         await axios
           .post(`${api}/citizen/logins`, {
             ...val,
           })
           .then((val) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: true,
               isAuthenticating: false,
               token: val.data.data.token,
             }));
           })
           .catch((error) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               error,
@@ -40,20 +41,20 @@ const useAuthStore = createStore(
           });
       },
       register: async (val) => {
-        set((state) => ({ isAuthenticating: true }));
+        set(() => ({ isAuthenticating: true }));
         await axios
           .post(`${api}/citizen/registers`, {
             ...val,
           })
           .then((val) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               email: val.data.data.email,
             }));
           })
           .catch((error) => {
-            set((state) => ({
+            set(() => ({
               isAuthenticated: false,
               isAuthenticating: false,
               error,
@@ -61,7 +62,7 @@ const useAuthStore = createStore(
           });
       },
       logout: async () => {
-        set((state) => ({ isAuthenticated: false }));
+        set(() => ({ isAuthenticated: false }));
       },
     })
   )

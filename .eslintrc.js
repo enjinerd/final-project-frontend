@@ -1,7 +1,12 @@
 module.exports = {
-  parser: "@babel/eslint-parser",
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   parserOptions: {
-    requireConfigFile: false,
+    ecmaVersion: 11,
+    sourceType: "module",
   },
   env: {
     commonjs: true,
@@ -10,8 +15,7 @@ module.exports = {
     es6: true,
     jest: true,
   },
-
-  plugins: ["react", "simple-import-sort", "unused-imports"],
+  plugins: ["react", "unused-imports"],
   extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
   rules: {
     "no-unused-vars": "off",
@@ -32,40 +36,40 @@ module.exports = {
     ],
     //#endregion  //*======== Unused Import ===========
 
-    //#region  //*=========== Import Sort ===========
-    "simple-import-sort/exports": "warn",
-    "simple-import-sort/imports": [
-      "warn",
-      {
-        groups: [
-          // ext library & side effect imports
-          // {s}css files
-          ["^.+\\.s?css$"],
-          // Lib and hooks
-          ["^lib", "^@/hooks"],
-          // static data
-          ["^helpers"],
-          // components
-          ["^components"],
-          // zustand store
-          ["^stores"],
-          // Other imports
-          // relative paths up until 3 level
-          [
-            "^\\./?$",
-            "^\\.(?!/?$)",
-            "^\\.\\./?$",
-            "^\\.\\.(?!/?$)",
-            "^\\.\\./\\.\\./?$",
-            "^\\.\\./\\.\\.(?!/?$)",
-            "^\\.\\./\\.\\./\\.\\./?$",
-            "^\\.\\./\\.\\./\\.\\.(?!/?$)",
-          ],
-          // other that didnt fit in
-          ["^"],
-        ],
-      },
-    ],
+    // //#region  //*=========== Import Sort ===========
+    // "simple-import-sort/exports": "warn",
+    // "simple-import-sort/imports": [
+    //   "warn",
+    //   {
+    //     groups: [
+    //       // ext library & side effect imports
+    //       // {s}css files
+    //       ["^.+\\.s?css$"],
+    //       // Lib and hooks
+    //       ["^lib", "^@/hooks"],
+    //       // static data
+    //       ["^helpers"],
+    //       // components
+    //       ["^components"],
+    //       // zustand store
+    //       ["^stores"],
+    //       // Other imports
+    //       // relative paths up until 3 level
+    //       [
+    //         "^\\./?$",
+    //         "^\\.(?!/?$)",
+    //         "^\\.\\./?$",
+    //         "^\\.\\.(?!/?$)",
+    //         "^\\.\\./\\.\\./?$",
+    //         "^\\.\\./\\.\\.(?!/?$)",
+    //         "^\\.\\./\\.\\./\\.\\./?$",
+    //         "^\\.\\./\\.\\./\\.\\.(?!/?$)",
+    //       ],
+    //       // other that didnt fit in
+    //       ["^"],
+    //     ],
+    //   },
+    // ],
     //#endregion  //*======== Import Sort ===========
   },
   globals: {

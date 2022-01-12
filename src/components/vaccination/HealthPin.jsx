@@ -1,4 +1,5 @@
 import { Marker } from "react-map-gl";
+
 const mockData = [
   {
     latitude: -6.190219293448022,
@@ -7,7 +8,9 @@ const mockData = [
   { latitude: -6.216778975008671, longitude: 106.81588133722337 },
   { latitude: -6.175242710951207, longitude: 106.83742141701642 },
   { latitude: -6.193980585860535, longitude: 106.85162672825925 },
+  { latitude: -6.201272485661845, longitude: 106.88467960825862 },
 ];
+
 export function HealthPin({ data, onClick }) {
   return data.map((loc, index) => (
     <Marker

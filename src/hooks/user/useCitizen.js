@@ -13,13 +13,13 @@ const useCitizen = createStore((set) => ({
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((val) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
         }));
         data = val.data.data;
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
@@ -35,20 +35,20 @@ const useCitizen = createStore((set) => ({
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
       });
   },
   addFamily: async (val, token) => {
-    set((state) => ({ isAuthenticating: true }));
+    set(() => ({ isAuthenticating: true }));
     await axios
       .post(
         `${api}/families`,
@@ -57,13 +57,13 @@ const useCitizen = createStore((set) => ({
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
@@ -76,13 +76,13 @@ const useCitizen = createStore((set) => ({
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((val) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
         }));
         data = val.data.data;
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
@@ -90,7 +90,7 @@ const useCitizen = createStore((set) => ({
     return data;
   },
   updateFamilyMember: async (val, id, token) => {
-    set((state) => ({ isAuthenticating: true }));
+    set(() => ({ isAuthenticating: true }));
     await axios
       .put(
         `${api}/families/${id}`,
@@ -99,13 +99,13 @@ const useCitizen = createStore((set) => ({
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
@@ -116,13 +116,13 @@ const useCitizen = createStore((set) => ({
       .delete(`${api}/families/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
