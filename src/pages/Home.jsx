@@ -1,6 +1,9 @@
 import { Page, PageContent } from "components/layout/page";
 import { HomepageNews } from "components/user";
 import { Link } from "react-router-dom";
+const mockSlider = {
+  sasaran: 208265720,
+};
 export function Home() {
   return (
     <Page>
@@ -15,6 +18,13 @@ export function Home() {
               className="h-auto w-auto"
             />
           </Link>
+          <div className="px-8 w-full">
+            <div className="bg-gradient-to-r from-orange-400 py-3 rounded-lg to-rose-400 w-full">
+              <p className="font-semibold text-center text-lg">
+                150.000 Telah divaksinasi
+              </p>
+            </div>
+          </div>
           <HomepageNews allNews={false} />
         </div>
       </PageContent>
