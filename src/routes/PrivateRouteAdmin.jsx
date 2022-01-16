@@ -1,11 +1,11 @@
 import jwt_decode from "jwt-decode";
 import { Redirect, Route } from "react-router-dom";
-import useAuthStore from "stores/useAuthStore";
+import useAuthAdminStore from "stores/useAuthAdminStore";
 
-function PrivateRoute(props) {
-  const { isAuthenticated, isAuthenticating, token, logout } = useAuthStore();
-
+function PrivateRouteAdmin(props) {
+  const { isAuthenticated, isAuthenticating, token } = useAuthAdminStore();
   const { component: Component, ...rest } = props;
+
   if (isAuthenticating) {
     return (
       <div className="flex items-center justify-center p-12">
@@ -20,8 +20,8 @@ function PrivateRoute(props) {
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
-  return <Redirect to="/user/login" />;
+  return <Redirect to="/admin/logins" />;
 
   //redirect if there is no user
 }
-export default PrivateRoute;
+export default PrivateRouteAdmin;
