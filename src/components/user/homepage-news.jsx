@@ -2,54 +2,51 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NewsLoader } from "components/ui/loader";
+import { useFetchNews } from "hooks/user";
 
 export function HomepageNews({ allNews }) {
   const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const { data: newsFetchData, isLoading } = useFetchNews();
 
   useEffect(() => {
-    axios
-      .get("https://berita-indo-api.vercel.app/v1/okezone-news?title=vaksin")
-      .then((res) => {
-        if (allNews) {
-          setNews(res.data.data);
-        } else {
-          setNews(res.data.data?.slice(0, 3));
-        }
-        setLoading(false);
-      });
-  }, []);
+    if (allNews) {
+      setNews(newsFetchData);
+    } else {
+      setNews(newsFetchData?.slice(0, 3));
+    }
+  }, [newsFetchData]);
   return (
     <div className="flex flex-col py-8 space-y-3 lg:px-8">
-      <p className="font-bold font-primary text-base text-left md:text-lg">
+      <p className="text-base font-bold text-left font-primary md:text-lg">
         Berita Terbaru
       </p>
-      {loading ? (
+      {isLoading ? (
         <div className="flex flex-col items-center justify-center">
           <NewsLoader />
         </div>
       ) : (
         <>
           <div className="space-y-2">
-            {news.map((item) => (
+            {news?.map((item) => (
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={item.link}
-                className="bg-white duration-200 flex flex-col p-3 rounded-lg shadow-lg space-y-1 transition-colors hover:bg-gray-200"
+                className="flex flex-col p-3 space-y-1 transition-colors duration-200 bg-white rounded-lg shadow-lg hover:bg-gray-200"
                 key={item.id}
               >
                 <div className="flex items-center">
                   <img
                     src={item.image.medium}
                     alt={item.title}
-                    className="h-12 rounded-full w-12"
+                    className="w-12 h-12 rounded-full"
                   />
                   <div className="ml-4">
-                    <p className="font-bold font-primary text-gray-800 text-xs md:text-sm">
+                    <p className="text-xs font-bold text-gray-800 font-primary md:text-sm">
                       {item.title}
                     </p>
-                    <p className="font-medium text-gray-600 text-xs">
+                    <p className="text-xs font-medium text-gray-600">
                       {new Date(item.isoDate).toLocaleDateString("id-ID", {
                         weekday: "long",
                         year: "numeric",
@@ -59,7 +56,7 @@ export function HomepageNews({ allNews }) {
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-600 text-xs md:text-sm">
+                <p className="text-xs text-gray-600 md:text-sm">
                   {item.content}
                 </p>
               </a>
@@ -68,7 +65,7 @@ export function HomepageNews({ allNews }) {
           {!allNews && (
             <div>
               <Link to="/user/news">
-                <p className="bg-white duration-200 font-bold px-2 py-1 rounded-lg shadow-lg text-base text-center transition-colors md:text-base dark:bg-white dark:text-dark hover:bg-gray-200font-primary hover:opacity-75">
+                <p className="px-2 py-1 text-base font-bold text-center text-white bg-dark font-primary rounded-xl md:text-base dark:bg-white dark:text-dark hover:opacity-75">
                   Lihat Berita Lainnya...
                 </p>
               </Link>

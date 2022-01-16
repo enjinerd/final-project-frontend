@@ -1,19 +1,37 @@
 import MaterialTable, { MTableToolbar } from "@material-table/core";
 import { useLocation, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
+import useAuthAdminStore from "stores/useAuthAdminStore";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
-export default function AdminTable() {
+export default function TableSession() {
+  const api = import.meta.env.VITE_API_HOST;
   let datum = useLocation();
   const history = useHistory();
-  const [columns, setColumns] = useState([]);
+  const { token } = useAuthAdminStore();
+  const { isAuthenticated } = useAuthAdminStore();
   const [data, setData] = useState([]);
+  const decoded = jwt_decode(token);
 
   useEffect(() => {
-    if (datum.state) {
-      setColumns(datum.state.columns);
-      setData(datum.state.data);
+    async function fetchMyAPI() {
+      let response = await axios.get(
+        `${api}/vaccine/session/owned/${decoded.user_id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setData(response.data.data);
     }
-  }, [datum]);
+    fetchMyAPI();
+  }, []);
+
+  const handleDelete = (id) => {
+    axios.delete(`${api}/vaccine/session/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  };
 
   // const custom_theme = createMuiTheme({
   //   palette: {
@@ -30,7 +48,17 @@ export default function AdminTable() {
     // <MuiThemeProvider theme={custom_theme}>
     <MaterialTable
       title="Positioning Actions Column Preview"
-      columns={columns}
+      columns={[
+        { title: "Start Date", field: "startDate" },
+        { title: "End Date", field: "endDate" },
+        { title: "Vaccine", field: "vaccine" },
+        { title: "Quota", field: "quota", type: "numeric" },
+        {
+          title: "Session Type",
+          field: "sessionType",
+          type: "numeric",
+        },
+      ]}
       data={data}
       actions={[
         {
@@ -70,8 +98,10 @@ export default function AdminTable() {
           ),
           tooltip: "Delete Vaccine",
           position: "row",
-          onClick: (event, rowData) =>
-            confirm("You want to delete " + rowData.name),
+          onClick: (event, rowData) => {
+            confirm("You want to delete " + rowData.name);
+            handleDelete(rowData.id);
+          },
         },
         {
           icon: () => (

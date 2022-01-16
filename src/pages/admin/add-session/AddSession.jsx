@@ -1,7 +1,15 @@
-import { Field, useFormik } from "formik";
-import React from "react";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import useAuthAdminStore from "stores/useAuthAdminStore";
+import "./styles.css";
 
 export function AddSession() {
+  const api = import.meta.env.VITE_API_HOST;
+  const history = useHistory();
+  const { token } = useAuthAdminStore();
+
   const validate = (values) => {
     const errors = {};
     if (!values.startDate) {
@@ -31,10 +39,37 @@ export function AddSession() {
       sessionType: 1,
     },
     validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async () => {
+      await axios
+        .post(
+          `${api}/vaccine/sessions`,
+          {
+            start_date: formik.values.startDate,
+            end_date: formik.values.endDate,
+            vaccine_id: formik.values.vaccine,
+            quota: formik.values.quota,
+            session_type: formik.values.sessionType,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then(() => {
+          history.push("/admin/session");
+        })
+        .catch((error) => {
+          return error;
+        });
     },
   });
+
+  useEffect(() => {
+    console.log(formik.values.startDate);
+  }, [formik.values.startDat]);
+
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
 
   return (
     <section className="flex-1">
@@ -43,11 +78,14 @@ export function AddSession() {
           <h1 className="label label-text font-bold">Add Vaccine Session</h1>
         </div>
       </header>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="startDate" className="label label-text font-bold">
+      <form className="form-session">
+        <label
+          htmlFor="startDate"
+          className="label label-session label-text font-bold"
+        >
           Start Date
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-session">
           <input
             id="startDate"
             name="startDate"
@@ -64,10 +102,13 @@ export function AddSession() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="endDate" className="label label-text font-bold">
+        <label
+          htmlFor="endDate"
+          className="label label-session label-text font-bold"
+        >
           End Date
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-session">
           <input
             id="endDate"
             name="endDate"
@@ -84,10 +125,13 @@ export function AddSession() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="vaccine" className="label label-text font-bold">
+        <label
+          htmlFor="vaccine"
+          className="label label-session label-text font-bold"
+        >
           Vaccine
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-session">
           <select
             name="vaccine"
             className="input input-bordered"
@@ -106,10 +150,13 @@ export function AddSession() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="quota" className="label label-text font-bold">
+        <label
+          htmlFor="quota"
+          className="label label-session label-text font-bold"
+        >
           Quota
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-session">
           <input
             id="quota"
             name="quota"
@@ -126,10 +173,13 @@ export function AddSession() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="sessionType" className="label label-text font-bold">
+        <label
+          htmlFor="sessionType"
+          className="label label-session label-text font-bold"
+        >
           Session Type
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-session">
           <select
             name="sessionType"
             className="input input-bordered"
@@ -151,9 +201,13 @@ export function AddSession() {
         <button
           type="submit"
           className="btn"
+          onClick={() => handleSubmit()}
           disabled={
-            formik.errors.name == "" ||
-            formik.values.stock == 0 ||
+            formik.errors.startDate == "" ||
+            formik.values.endDate == "" ||
+            formik.values.quota == 0 ||
+            formik.values.sessionType == "" ||
+            formik.values.vaccine == 0 ||
             formik.isSubmitting
           }
         >

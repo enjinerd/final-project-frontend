@@ -63,7 +63,7 @@ export function SignUp() {
         errors.gender = "Jenik Kelamin harus dipilih";
       }
       if (validateValue(values.handphone_number, validateNotEmpty)) {
-        errors.handphone = "No. Telepon harus diisi";
+        errors.handphone_number = "No. Telepon harus diisi";
       }
       return errors;
     },
@@ -93,11 +93,11 @@ export function SignUp() {
             </span>
           </h1>
           {isDone && (
-            <div className="alert alert-success font-medium">
+            <div className="font-medium alert alert-success">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -115,11 +115,11 @@ export function SignUp() {
             </div>
           )}
           {error && (
-            <div className="alert alert-error font-medium">
+            <div className="font-medium alert alert-error">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -135,9 +135,9 @@ export function SignUp() {
           )}
 
           {isNext ? (
-            <div className="form-control space-y-1">
+            <div className="space-y-1 form-control">
               <label className="label">
-                <span className="label-text font-bold">NIK</span>
+                <span className="font-bold label-text">NIK</span>
               </label>
               <input
                 type="text"
@@ -155,7 +155,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Nama Lengkap</span>
+                <span className="font-bold label-text">Nama Lengkap</span>
               </label>
               <input
                 type="text"
@@ -173,10 +173,10 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Jenis Kelamin</span>
+                <span className="font-bold label-text">Jenis Kelamin</span>
               </label>
               <select
-                className="select select-bordered w-full"
+                className="w-full select select-bordered"
                 onChange={formik.handleChange}
                 name="gender"
               >
@@ -195,28 +195,28 @@ export function SignUp() {
               ) : null}
 
               <label className="label">
-                <span className="label-text font-bold">No. Telepon</span>
+                <span className="font-bold label-text">No. Telepon</span>
               </label>
               <input
                 type="text"
                 placeholder="081273823xxxx"
-                className="input input-bordered"
-                name="handphone"
+                class="input input-bordered"
+                name="handphone_number"
                 onChange={formik.handleChange}
                 value={formik.values.handphone_number}
               />
-              {formik.errors.handphone ? (
+              {formik.errors.handphone_number ? (
                 <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
-                    <label>{formik.errors.handphone}</label>
+                    <label>{formik.errors.handphone_number}</label>
                   </div>
                 </div>
               ) : null}
             </div>
           ) : (
-            <div className="form-control space-y-1">
+            <div className="space-y-1 form-control">
               <label className="label">
-                <span className="label-text font-bold">E-mail</span>
+                <span className="font-bold label-text">E-mail</span>
               </label>
               <input
                 type="text"
@@ -234,7 +234,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Kata Sandi</span>
+                <span className="font-bold label-text">Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -252,7 +252,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">
+                <span className="font-bold label-text">
                   Konfirmasi Kata Sandi
                 </span>
               </label>
@@ -280,7 +280,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                className="tooltip w-full"
+                className="w-full tooltip"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -303,7 +303,7 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              className="tooltip w-full"
+              className="w-full tooltip"
             >
               <button
                 className="btn btn-block btn-info"

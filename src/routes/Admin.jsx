@@ -1,5 +1,7 @@
 import PrivateRouteAdmin from "./PrivateRouteAdmin";
-import AdminTable from "../components/admin-table/AdminTable";
+import TableVaccine from "../components/table-vaccine/TableVaccine";
+import TableSession from "../components/table-session/TableSession";
+import TableUser from "../components/table-user/TableUser";
 import { AddSession } from "../pages/admin/add-session/AddSession";
 import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
 import { Login } from "../pages/admin/login/Login";
@@ -14,13 +16,17 @@ export default function User() {
   return (
     <LayoutAdmin>
       <Switch>
-        <PrivateRouteAdmin path={`${path}`} component={AdminTable} exact />
         <PrivateRouteAdmin
-          path={`${path}/session`}
-          component={AdminTable}
+          path={`${path}/vaccine`}
+          component={TableVaccine}
           exact
         />
-        <PrivateRouteAdmin path={`${path}/user`} component={AdminTable} exact />
+        <PrivateRouteAdmin
+          path={`${path}/session`}
+          component={TableSession}
+          exact
+        />
+        <PrivateRouteAdmin path={`${path}/user`} component={TableUser} exact />
         <PrivateRouteAdmin
           path={`${path}/vaccine/add`}
           component={AddVaccine}
