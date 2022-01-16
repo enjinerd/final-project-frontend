@@ -31,6 +31,8 @@ export function SignUp() {
       confirmPassword: "",
       name: "",
       nik: "",
+      gender: "",
+      handphone_number: "",
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -58,6 +60,12 @@ export function SignUp() {
       } else if (validateValue(values.nik, validateNik)) {
         errors.nik = "NIK tidak valid";
       }
+      if (validateValue(values.gender, validateNotEmpty)) {
+        errors.gender = "Jenik Kelamin harus dipilih";
+      }
+      if (validateValue(values.handphone_number, validateNotEmpty)) {
+        errors.handphone = "No. Telepon harus diisi";
+      }
       return errors;
     },
     onSubmit: async (values) => {
@@ -73,6 +81,7 @@ export function SignUp() {
     formik.handleSubmit();
     setOpen(false);
   };
+
   return (
     <Page>
       <PageContent>
@@ -86,11 +95,11 @@ export function SignUp() {
             </span>
           </h1>
           {isDone && (
-            <div className="alert alert-success font-medium">
+            <div className="font-medium alert alert-success">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -108,11 +117,11 @@ export function SignUp() {
             </div>
           )}
           {error && (
-            <div className="alert alert-error font-medium">
+            <div className="font-medium alert alert-error">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -130,38 +139,78 @@ export function SignUp() {
           {isNext ? (
             <div class="form-control space-y-1">
               <label class="label">
-                <span class="label-text font-bold">Nama Lengkap</span>
+                <span class="font-bold label-text">NIK</span>
               </label>
               <input
                 type="text"
-                placeholder="Nama lengkap sesuai KTP"
-                class="input input-bordered"
-                name="name"
-                onChange={formik.handleChange}
-                value={formik.values.name}
-              />
-              {formik.errors.name ? (
-                <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
-                  <div class="flex-1">
-                    <label>{formik.errors.name}</label>
-                  </div>
-                </div>
-              ) : null}
-              <label class="label">
-                <span class="label-text font-bold">NIK</span>
-              </label>
-              <input
-                type="text"
-                placeholder="NIK sesuai KTP"
+                placeholder="15 Digit No KTP"
                 class="input input-bordered"
                 name="nik"
                 onChange={formik.handleChange}
                 value={formik.values.nik}
               />
               {formik.errors.nik ? (
-                <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
-                  <div class="flex-1">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                  <div className="flex-1">
                     <label>{formik.errors.nik}</label>
+                  </div>
+                </div>
+              ) : null}
+              <label class="label">
+                <span class="font-bold label-text">Nama Lengkap</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Budi Setiawan"
+                class="input input-bordered"
+                name="name"
+                onChange={formik.handleChange}
+                value={formik.values.name}
+              />
+              {formik.errors.name ? (
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                  <div className="flex-1">
+                    <label>{formik.errors.name}</label>
+                  </div>
+                </div>
+              ) : null}
+              <label class="label">
+                <span class="font-bold label-text">Jenis Kelamin</span>
+              </label>
+              <select
+                class="select select-bordered w-full"
+                onChange={formik.handleChange}
+                name="gender"
+              >
+                <option disabled="disabled" selected>
+                  Pilih Jenis Kelamin
+                </option>
+                <option value="Male">Laki - Laki</option>
+                <option value="Female">Perempuan</option>
+              </select>
+              {formik.errors.gender ? (
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                  <div className="flex-1">
+                    <label>{formik.errors.gender}</label>
+                  </div>
+                </div>
+              ) : null}
+
+              <label class="label">
+                <span class="font-bold label-text">No. Telepon</span>
+              </label>
+              <input
+                type="text"
+                placeholder="081273823xxxx"
+                class="input input-bordered"
+                name="handphone"
+                onChange={formik.handleChange}
+                value={formik.values.handphone_number}
+              />
+              {formik.errors.handphone ? (
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                  <div className="flex-1">
+                    <label>{formik.errors.handphone}</label>
                   </div>
                 </div>
               ) : null}
@@ -169,7 +218,7 @@ export function SignUp() {
           ) : (
             <div class="form-control space-y-1">
               <label class="label">
-                <span class="label-text font-bold">E-mail</span>
+                <span class="font-bold label-text">E-mail</span>
               </label>
               <input
                 type="text"
@@ -180,14 +229,14 @@ export function SignUp() {
                 value={formik.values.email}
               />
               {formik.errors.email ? (
-                <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div class="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div class="flex-1">
                     <label>{formik.errors.email}</label>
                   </div>
                 </div>
               ) : null}
               <label class="label">
-                <span class="label-text font-bold">Kata Sandi</span>
+                <span class="font-bold label-text">Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -198,14 +247,14 @@ export function SignUp() {
                 value={formik.values.password}
               />
               {formik.errors.password ? (
-                <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div class="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div class="flex-1">
                     <label>{formik.errors.password}</label>
                   </div>
                 </div>
               ) : null}
               <label class="label">
-                <span class="label-text font-bold">Konfirmasi Kata Sandi</span>
+                <span class="font-bold label-text">Konfirmasi Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -216,7 +265,7 @@ export function SignUp() {
                 value={formik.values.confirmPassword}
               />
               {formik.errors.confirmPassword ? (
-                <div class="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div class="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div class="flex-1">
                     <label>{formik.errors.confirmPassword}</label>
                   </div>
@@ -231,7 +280,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                className="tooltip w-full"
+                className="w-full tooltip"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -254,7 +303,7 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              className="tooltip w-full"
+              className="w-full tooltip"
             >
               <button
                 class="btn btn-block btn-info"

@@ -1,31 +1,35 @@
+import { useRef, useState, useEffect } from "react";
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
-import { useFormik } from "formik";
-import { validateNotEmpty, validateValue } from "helpers";
-import useCitizen from "hooks/user/useCitizen";
-import { useEffect, useRef, useState } from "react";
 import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
+import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useAuthStore from "stores/useAuthStore";
+import useCitizen from "hooks/user/useCitizen";
+import { useHistory } from "react-router";
 
-export function UserProfile() {
+export function EditFamilyMember(props) {
+  const data = props.location.state;
+
+  const history = useHistory();
+  if (!data) {
+    history.push("/");
+  }
   const { token } = useAuthStore();
+  const birthday = new Date(data?.birthday);
 
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [profile, setProfile] = useState(null);
+  const [selectedDay, setSelectedDay] = useState({
+    year: birthday.getFullYear(),
+    month: birthday?.getMonth() + 1,
+    day: birthday?.getDate(),
+  });
   const dateEl = useRef(null);
-  const { updateProfile, userProfile } = useCitizen();
+  const { updateFamilyMember } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
-      birthday: "",
-      name: "",
-      nik: "",
-      gender: "",
-      handphone: "",
-      age: "",
+      ...data,
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -51,7 +55,7 @@ export function UserProfile() {
       return errors;
     },
     onSubmit: async (values) => {
-      await updateProfile(values, token);
+      await updateFamilyMember(values, token);
     },
   });
 
@@ -60,32 +64,24 @@ export function UserProfile() {
   };
   const handleDate = (val) => {
     setSelectedDay(val);
-    let date = new Date(`${val.year}-${val.month}-${val.day}`);
-    formik.setValues({ ...formik.values, birthday: date });
+    let date = new Date(
+      `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`
+    );
+    let difference = Date.now() - date.getTime();
+
+    let ageDate = new Date(difference);
+    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+    formik.setValues({ ...formik.values, birthday: date, age });
+    console.log(formik.values.birthday);
   };
-  useEffect(async () => {
-    const data = await userProfile(token);
-    const birthday = new Date(data?.birthday);
-    setSelectedDay({
-      year: birthday.getFullYear(),
-      month: birthday?.getMonth() + 1,
-      day: birthday?.getDate(),
-    });
-    formik.setValues({
-      ...formik.values,
-      name: data?.name,
-      nik: data?.nik,
-      address: data.address,
-      birthday: data.birthday,
-    });
-  }, []);
 
   return (
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
-            Perbarui Data Diri
+            Tambah Anggota Keluarga
           </h1>
           <div class="form-control space-y-1">
             <label class="label">

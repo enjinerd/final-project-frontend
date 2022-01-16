@@ -1,16 +1,24 @@
+import {
+  Button,
+  Divider,
+  Dropdown,
+  IconEdit,
+  IconTrash,
+  IconSettings,
+} from "@supabase/ui";
+import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import useAuthStore from "stores/useAuthStore";
+import useCitizen from "hooks/user/useCitizen";
+import { useHistory, Link } from "react-router-dom";
 
-export function ConfirmDialog({
-  isOpen,
-  setOpen,
-  handleConfirm,
-  message,
-  title,
-  className,
-  titleAction,
-  disabled,
-}) {
+export function DropdownFamilyMenu({ dataId, userData }) {
+  userData.id = dataId;
+  const [isOpen, setOpen] = useState(false);
+  const { token } = useAuthStore();
+  const { deleteFamily } = useCitizen();
+  const history = useHistory();
+
   function closeModal() {
     setOpen(false);
   }
@@ -19,17 +27,41 @@ export function ConfirmDialog({
     setOpen(true);
   }
 
+  async function handleConfirm() {
+    await deleteFamily(dataId, token);
+    closeModal();
+    history.go(0);
+  }
   return (
     <>
-      <button
-        type="btn btn-block"
-        onClick={openModal}
-        disabled={disabled}
-        className={className}
+      <Dropdown
+        overlay={[
+          <Dropdown.Item icon={<IconEdit stroke="green" />}>
+            <Link
+              to={{
+                pathname: `/user/family-member/edit`,
+                state: userData,
+              }}
+            >
+              <Button>Ubah Data</Button>
+            </Link>
+          </Dropdown.Item>,
+          <Divider light />,
+          <Dropdown.Item icon={<IconTrash stroke="red" />}>
+            <Button
+              className="text-red-600"
+              onClick={() => setOpen(true)}
+              danger={true}
+            >
+              Hapus Data
+            </Button>
+          </Dropdown.Item>,
+        ]}
       >
-        {titleAction}
-      </button>
-
+        <Button type="primary">
+          <IconSettings />
+        </Button>
+      </Dropdown>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -70,10 +102,12 @@ export function ConfirmDialog({
                   as="h3"
                   className="text-lg font-bold leading-6 text-gray-900"
                 >
-                  {title}
+                  Hapus Anggota Keluarga
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">{message} </p>
+                  <p className="text-sm text-gray-500">
+                    Apakah anda yakin ingin menghapus ?
+                  </p>
                 </div>
 
                 <div className="flex flex-row mt-4 space-x-3">

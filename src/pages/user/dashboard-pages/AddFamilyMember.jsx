@@ -23,7 +23,6 @@ export function AddFamilyMember() {
       gender: "",
       handphone: "",
       age: "",
-      token,
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -49,7 +48,7 @@ export function AddFamilyMember() {
       return errors;
     },
     onSubmit: async (values) => {
-      await addFamily(values);
+      await addFamily(values, token);
     },
   });
 
