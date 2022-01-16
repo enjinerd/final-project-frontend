@@ -39,7 +39,7 @@ export function PlaceListing() {
         <div className="flex flex-col items-center px-3 py-8 space-y-8 lg:px-16">
           <div className="flex flex-col w-full h-auto px-10 py-6 bg-blue-500 border-b-4 border-blue-800 rounded-lg shadow-md">
             <p className="text-2xl font-bold font-primary">{mockData.hfName}</p>
-            <p className="font-primary">{mockData.address}</p>
+            <p className="text-gray-200 font-primary">{mockData.address}</p>
           </div>
           <h2 className="text-xl font-semibold font-primary">
             Sesi Vaksinasi{" "}

@@ -1,10 +1,11 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import MapGL, { Marker } from "react-map-gl";
+import MapGL, { Marker, Popup } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import * as turf from "turf";
 import { distancePlace } from "helpers";
+import { HealthPin, CityInfo } from "components/vaccination";
 
 // Please be a decent human and don't abuse my Mapbox API token.
 // If you fork this sandbox, replace my API token with your own.
@@ -28,6 +29,8 @@ const faskes = [
 ];
 
 export const Map = ({ latitude, longitude }) => {
+  const [popupInfo, setPopupInfo] = useState(null);
+
   const mockUser = { latitude: -6.2, longitude: 106.816666 };
   const [nearby, setNearby] = useState();
   const [userPos, setUserPos] = useState({
@@ -85,6 +88,19 @@ export const Map = ({ latitude, longitude }) => {
         onViewportChange={handleViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
+        <HealthPin onClick={setPopupInfo} />
+        {popupInfo && (
+          <Popup
+            tipSize={7}
+            anchor="top"
+            longitude={popupInfo.longitude}
+            latitude={popupInfo.latitude}
+            closeOnClick={false}
+            onClose={setPopupInfo}
+          >
+            <CityInfo info={popupInfo} />
+          </Popup>
+        )}
         <Marker
           latitude={userPos.latitude}
           longitude={userPos.longitude}
