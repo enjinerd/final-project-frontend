@@ -38,7 +38,7 @@ export function HomepageNews({ allNews }) {
               >
                 <div className="flex items-center">
                   <img
-                    src={item.image.medium}
+                    src={item.image?.medium}
                     alt={item.title}
                     className="w-12 h-12 rounded-full"
                   />
