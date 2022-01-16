@@ -64,7 +64,7 @@ export function SignUp() {
         errors.gender = "Jenik Kelamin harus dipilih";
       }
       if (validateValue(values.handphone_number, validateNotEmpty)) {
-        errors.handphone = "No. Telepon harus diisi";
+        errors.handphone_number = "No. Telepon harus diisi";
       }
       return errors;
     },
@@ -203,14 +203,14 @@ export function SignUp() {
                 type="text"
                 placeholder="081273823xxxx"
                 class="input input-bordered"
-                name="handphone"
+                name="handphone_number"
                 onChange={formik.handleChange}
                 value={formik.values.handphone_number}
               />
-              {formik.errors.handphone ? (
+              {formik.errors.handphone_number ? (
                 <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
-                    <label>{formik.errors.handphone}</label>
+                    <label>{formik.errors.handphone_number}</label>
                   </div>
                 </div>
               ) : null}
