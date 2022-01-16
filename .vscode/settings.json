@@ -4,6 +4,7 @@
     "app",
     "user-dashboard",
     "family",
-    "user-homepage"
+    "user-homepage",
+    "vaccination"
   ]
 }
