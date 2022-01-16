@@ -2,36 +2,33 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NewsLoader } from "components/ui/loader";
+import { useFetchNews } from "hooks/user";
 
 export function HomepageNews({ allNews }) {
   const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const { data: newsFetchData, isLoading } = useFetchNews();
 
   useEffect(() => {
-    axios
-      .get("https://berita-indo-api.vercel.app/v1/okezone-news?title=vaksin")
-      .then((res) => {
-        if (allNews) {
-          setNews(res.data.data);
-        } else {
-          setNews(res.data.data?.slice(0, 3));
-        }
-        setLoading(false);
-      });
-  }, []);
+    if (allNews) {
+      setNews(newsFetchData);
+    } else {
+      setNews(newsFetchData?.slice(0, 3));
+    }
+  }, [newsFetchData]);
   return (
     <div className="flex flex-col py-8 space-y-3 lg:px-8">
       <p className="text-base font-bold text-left font-primary md:text-lg">
         Berita Terbaru
       </p>
-      {loading ? (
+      {isLoading ? (
         <div className="flex flex-col items-center justify-center">
           <NewsLoader />
         </div>
       ) : (
         <>
           <div className="space-y-2">
-            {news.map((item) => (
+            {news?.map((item) => (
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -68,7 +65,7 @@ export function HomepageNews({ allNews }) {
           {!allNews && (
             <div>
               <Link to="/user/news">
-                <p className="px-2 py-1 text-base font-bold text-center bg-dark font-primary rounded-xl md:text-base dark:bg-white dark:text-dark hover:opacity-75">
+                <p className="px-2 py-1 text-base font-bold text-center text-white bg-dark font-primary rounded-xl md:text-base dark:bg-white dark:text-dark hover:opacity-75">
                   Lihat Berita Lainnya...
                 </p>
               </Link>
