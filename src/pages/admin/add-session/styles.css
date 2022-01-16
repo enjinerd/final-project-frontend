@@ -1,0 +1,80 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants; */
+
+.header {
+  @apply flex fixed z-40 justify-start items-center h-16 bg-emerald-500 shadow-md;
+}
+
+.header__container {
+  @apply flex justify-between items-center px-4 py-3 mx-auto h-full sm:max-w-xl;
+}
+
+.header__container h1 {
+  color: white;
+  text-transform: uppercase;
+}
+
+.form-session {
+  display: grid;
+  grid-template-areas:
+    "labelStartDate inputStartDate"
+    "labelEndDate inputEndDate"
+    "labelVaccine inputVaccine"
+    "labelQuota inputQuota"
+    "labelSessionType inputSessionType"
+    "button button";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 30px 10px;
+  padding: 100px 50px;
+  justify-items: start;
+  align-items: center;
+  width: 70%;
+}
+
+.label-session:nth-of-type(1) {
+  grid-area: labelStartDate;
+}
+
+.label-session:nth-of-type(2) {
+  grid-area: labelEndDate;
+}
+
+.label-session:nth-of-type(3) {
+  grid-area: labelVaccine;
+}
+
+.label-session:nth-of-type(4) {
+  grid-area: labelQuota;
+}
+
+.label-session:nth-of-type(5) {
+  grid-area: labelSessionType;
+}
+
+.input-wrapper-session:nth-of-type(1) {
+  grid-area: inputStartDate;
+}
+
+.input-wrapper-session:nth-of-type(2) {
+  grid-area: inputEndDate;
+}
+
+.input-wrapper-session:nth-of-type(3) {
+  grid-area: inputVaccine;
+}
+
+.input-wrapper-session:nth-of-type(4) {
+  grid-area: inputQuota;
+}
+
+.input-wrapper-session:nth-of-type(5) {
+  grid-area: inputSessionType;
+}
+
+button {
+  grid-area: button;
+  justify-self: center;
+}

@@ -3,13 +3,14 @@ import { Redirect, Route } from "react-router-dom";
 import useAuthAdminStore from "stores/useAuthAdminStore";
 
 function PrivateRouteAdmin(props) {
-  const { isAuthenticated, isAuthenticating, token } = useAuthAdminStore();
+  const { isAuthenticated, isAuthenticating, token, logout } =
+    useAuthAdminStore();
   const { component: Component, ...rest } = props;
 
   if (isAuthenticating) {
     return (
-      <div className="flex items-center justify-center p-12">
-        <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center p-12">
+        <div className="w-20 h-20 rounded-full border-b-2 border-gray-900 animate-spin"></div>
       </div>
     );
   }
