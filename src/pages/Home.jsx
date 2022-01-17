@@ -27,9 +27,9 @@ export function Home() {
               className="w-auto h-auto"
             />
           </Link>
-          <div className="w-full px-8">
-            <div className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-400 to-rose-400">
-              <p className="text-lg font-semibold text-center text-transparent bg-clip-text bg-gradient-to-tr from-rose-100 to-teal-100">
+          <div className="w-full lg:px-8">
+            <div className="w-full px-2 py-3 rounded-lg bg-gradient-to-r from-orange-400 to-rose-400">
+              <p className="text-base font-semibold text-center text-transparent bg-clip-text bg-gradient-to-tr from-rose-100 to-teal-100 md:text-lg">
                 180.150.000 Warga Telah divaksinasi
               </p>
             </div>

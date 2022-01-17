@@ -1,5 +1,4 @@
 import { Marker } from "react-map-gl";
-import { loadEnv } from "vite";
 
 export function HealthPin({ data, onClick }) {
   return (

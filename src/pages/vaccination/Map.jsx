@@ -108,7 +108,7 @@ export const Map = ({ latitude, longitude, data }) => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 text-emerald-500 w-8"
+                className="w-8 h-8 text-emerald-500"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -137,14 +137,16 @@ export const Map = ({ latitude, longitude, data }) => {
           </MapGL>
         </div>
         <div className="flex flex-col space-y-4">
-          <h1 className="font-primary font-semibold text-center text-lg sm:text-xl">
+          <h1 className="text-lg font-semibold text-center font-primary sm:text-xl">
             Lokasi Vaksinasi Terdekat
           </h1>
           {nearby?.map((f) => (
-            <Link to="/vaccination/session">
-              <div className="bg-white duration-200 flex flex-col px-6 py-4 rounded-lg shadow-lg text-dark transition-colors hover:bg-gray-200">
+            <Link
+              to={`/vaccination/session/${f.vaccine[0]?.health_facilitator_id}`}
+            >
+              <div className="flex flex-col px-6 py-4 transition-colors duration-200 bg-white rounded-lg shadow-lg text-dark hover:bg-gray-200">
                 <p className="font-bold">{f?.name} </p>
-                <p className="font-medium text-gray-700 text-sm">
+                <p className="text-sm font-medium text-gray-700">
                   {f?.address}{" "}
                 </p>
               </div>
