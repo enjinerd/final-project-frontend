@@ -19,8 +19,10 @@ export function HomepageNews({ allNews, data }) {
         Berita Terbaru
       </p>
       {!data ? (
-        <div className="flex flex-col items-center justify-center">
-          <NewsLoader />
+        <div className="text-center">
+          <div className="flex items-center justify-center p-12">
+            <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+          </div>
         </div>
       ) : (
         <>

@@ -1,2 +1,2 @@
 export * from "./useFetchNews";
-export * from "./useCitizen";
+export { default as useCitizen } from "./useCitizen";

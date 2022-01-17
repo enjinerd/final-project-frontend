@@ -35,7 +35,11 @@ export function Home() {
             </div>
           </div>
           {isLoading ? (
-            <p>Loading...</p>
+            <div className="text-center">
+              <div className="flex items-center justify-center p-12">
+                <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+              </div>
+            </div>
           ) : (
             <HomepageNews allNews={false} data={news} />
           )}

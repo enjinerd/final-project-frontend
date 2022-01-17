@@ -36,7 +36,7 @@ export function VaccinationHomepage() {
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <button
-            className="btn btn-block btn-primary capitalize"
+            className="capitalize btn btn-block btn-primary"
             onClick={handleLocation}
           >
             Klik untuk otomatis mendeteksi lokasi anda Sekarang
@@ -48,7 +48,11 @@ export function VaccinationHomepage() {
             </p>
           )}
           {isLoading ? (
-            <p>Load....</p>
+            <div className="text-center">
+              <div className="flex items-center justify-center p-12">
+                <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+              </div>
+            </div>
           ) : (
             <Map
               latitude={userPos.latitude}

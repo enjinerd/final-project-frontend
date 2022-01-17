@@ -2,26 +2,40 @@ import { Page, PageContent } from "components/layout/page";
 import { Link } from "react-router-dom";
 import { ExpandableArea, ConfirmDialog } from "components/ui";
 import { useState, useEffect } from "react";
+import { useCitizen } from "hooks/user";
 import { useFetchHFById } from "hooks/vaccination";
+import useAuthStore from "stores/useAuthStore";
 
 export function PlaceListing({ match }) {
   const [isOpen, setOpen] = useState(false);
   const sessionId = match.params.sessionId;
+  const { token } = useAuthStore();
+
+  const { registerVaccination } = useCitizen();
   console.log(
     "🚀 ~ file: PlaceListing.jsx ~ line 38 ~ PlaceListing ~ sessionId",
     sessionId
   );
   const { data, isLoading, error } = useFetchHFById({ id: sessionId });
+  const handleRegisterSession = async (jwt, sessionId) => {
+    console.log(jwt);
+    await registerVaccination(jwt, sessionId);
+  };
 
   useEffect(() => {
     console.log(sessionId);
+    console.log(token);
   }, [sessionId]);
 
   return (
     <Page>
       <PageContent>
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="text-center">
+            <div className="flex items-center justify-center p-12">
+              <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+            </div>
+          </div>
         ) : (
           <div className="flex flex-col items-center px-3 py-8 space-y-8 lg:px-16">
             <div className="flex flex-col w-full h-auto px-10 py-6 bg-blue-500 border-b-4 border-blue-800 rounded-lg shadow-md">
@@ -52,7 +66,9 @@ export function PlaceListing({ match }) {
                       setOpen={setOpen}
                       title="Apakah anda yakin ingin mendaftar?"
                       message="Konfirmasi jika anda ingin mendaftar, anda tidak bisa membatalkan sesi vaksinasi yang sudah terdaftar"
-                      handleConfirm={() => alert("yes")}
+                      handleConfirm={() =>
+                        handleRegisterSession(token, item.id)
+                      }
                       titleAction="Daftar"
                       className="btn btn-info"
                     />

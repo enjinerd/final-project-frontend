@@ -6,10 +6,10 @@ const api = import.meta.env.VITE_API_HOST;
 const useCitizen = createStore((set) => ({
   isLoading: true,
   error: undefined,
-  userProfile: async (token) => {
+  userProfile: async (token, id) => {
     let data;
     await axios
-      .get(`${api}/citizen/profiles`, {
+      .get(`${api}/citizen/profile/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((val) => {
@@ -116,6 +116,32 @@ const useCitizen = createStore((set) => ({
       .delete(`${api}/families/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
+      .then(() => {
+        set(() => ({
+          isLoading: false,
+        }));
+      })
+      .catch((error) => {
+        set(() => ({
+          isLoading: false,
+          error,
+        }));
+      });
+  },
+  registerVaccination: async (token, bookingId) => {
+    console.log(
+      "🚀 ~ file: useCitizen.js ~ line 132 ~ registerVaccination: ~ token",
+      token
+    );
+
+    await axios
+      .post(
+        `${api}/session/bookings/${bookingId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then(() => {
         set(() => ({
           isLoading: false,
