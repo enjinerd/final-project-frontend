@@ -1,5 +1,4 @@
 import { persist } from "./persist";
-
 import axios from "axios";
 import createStore from "zustand";
 
@@ -19,11 +18,12 @@ const useAuthStore = createStore(
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MTc1NTg0OCwiZXhwIjoxNjQxNzU1MDAwfQ.Ln9NfWjO_PId8yHhv6IhUZzveRvQ1AG7xOJfJL5qZJs",
       email: undefined,
       error: undefined,
-      login: async (val) => {
+      login: async ({ email, password }) => {
         set(() => ({ isAuthenticating: true }));
         await axios
-          .post(`${api}/citizen/logins`, {
-            ...val,
+          .post(`${api}/admin/logins`, {
+            email,
+            password,
           })
           .then((val) => {
             set(() => ({
@@ -40,11 +40,25 @@ const useAuthStore = createStore(
             }));
           });
       },
-      register: async (val) => {
+      register: async ({
+        email,
+        password,
+        address,
+        longtitude,
+        latitude,
+        type,
+        facilitator_name,
+      }) => {
         set(() => ({ isAuthenticating: true }));
         await axios
-          .post(`${api}/citizen/registers`, {
-            ...val,
+          .post(`${api}/admin/registers`, {
+            email,
+            password,
+            address,
+            longtitude,
+            latitude,
+            type,
+            facilitator_name,
           })
           .then((val) => {
             set(() => ({

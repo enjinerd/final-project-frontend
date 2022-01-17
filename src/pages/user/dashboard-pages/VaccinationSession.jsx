@@ -52,10 +52,10 @@ export function VaccinationSession() {
             Daftar Anggota Keluarga
           </h2>
           <div className="flex flex-col w-full space-y-2">
-            <div className="flex flex-row justify-between px-3 py-2 alert alert-sm">
+            <div className="flex flex-row justify-between px-3 py-2 transition-colors duration-200 bg-white rounded-lg shadow-lg hover:bg-gray-200">
               <p className="font-bold">Eka Putra</p>
             </div>
-            <div className="flex flex-row justify-between px-3 py-2 alert alert-sm">
+            <div className="flex flex-row justify-between px-3 py-2 transition-colors duration-200 bg-white rounded-lg shadow-lg hover:bg-gray-200">
               <p className="font-bold">Putri Sisel</p>
             </div>
           </div>

@@ -1,9 +1,10 @@
 import { Map } from "./Map";
 import { Page, PageContent } from "components/layout/page";
 import { useState } from "react";
-import useGeolocation from "react-hook-geolocation";
+import { useFetchHF } from "hooks/vaccination";
 
 export function VaccinationHomepage() {
+  const { data, isLoading } = useFetchHF();
   const [status, setStatus] = useState(null);
   const [userPos, setUserPos] = useState({
     latitude: -6.2,
@@ -35,7 +36,7 @@ export function VaccinationHomepage() {
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <button
-            className="capitalize btn btn-block btn-primary"
+            className="btn btn-block btn-primary capitalize"
             onClick={handleLocation}
           >
             Klik untuk otomatis mendeteksi lokasi anda Sekarang
@@ -46,7 +47,15 @@ export function VaccinationHomepage() {
               mengakses lokasi.
             </p>
           )}
-          <Map latitude={userPos.latitude} longitude={userPos.longitude} />
+          {isLoading ? (
+            <p>Load....</p>
+          ) : (
+            <Map
+              latitude={userPos.latitude}
+              longitude={userPos.longitude}
+              data={data}
+            />
+          )}
         </div>
       </PageContent>
     </Page>
