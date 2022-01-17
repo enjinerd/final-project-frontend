@@ -2,26 +2,23 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NewsLoader } from "components/ui/loader";
-import { useFetchNews } from "hooks/user";
 
-export function HomepageNews({ allNews }) {
+export function HomepageNews({ allNews, data }) {
   const [news, setNews] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  const { data: newsFetchData, isLoading } = useFetchNews();
 
   useEffect(() => {
     if (allNews) {
-      setNews(newsFetchData);
+      setNews(data);
     } else {
-      setNews(newsFetchData?.slice(0, 3));
+      setNews(data?.slice(0, 3));
     }
-  }, [newsFetchData]);
+  }, [data]);
   return (
     <div className="flex flex-col py-8 space-y-3 lg:px-8">
       <p className="text-base font-bold text-left font-primary md:text-lg">
         Berita Terbaru
       </p>
-      {isLoading ? (
+      {!data ? (
         <div className="flex flex-col items-center justify-center">
           <NewsLoader />
         </div>

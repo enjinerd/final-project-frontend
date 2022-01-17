@@ -6,7 +6,7 @@ export const useFetchHF = () => {
   const queryClient = useQueryClient();
 
   return useQuery(
-    "newsData",
+    "hfData",
     () => axios(`${api}/admins`).then((res) => res.data.data),
     {
       staleTime: 3000000,

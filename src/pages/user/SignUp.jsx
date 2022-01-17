@@ -84,20 +84,20 @@ export function SignUp() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
+          <h1 className="font-bold text-2xl text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
             Sudah punya akun?{" "}
-            <span className="italic font-bold">
+            <span className="font-bold italic">
               {" "}
               <Link to="/user/login">Masuk</Link>
             </span>
           </h1>
           {isDone && (
-            <div className="font-medium alert alert-success">
+            <div className="alert alert-success font-medium">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 mx-2"
+                  className="h-6 mx-2 w-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -115,11 +115,11 @@ export function SignUp() {
             </div>
           )}
           {error && (
-            <div className="font-medium alert alert-error">
+            <div className="alert alert-error font-medium">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 mx-2"
+                  className="h-6 mx-2 w-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -135,7 +135,7 @@ export function SignUp() {
           )}
 
           {isNext ? (
-            <div className="space-y-1 form-control">
+            <div className="form-control space-y-1">
               <label className="label">
                 <span className="font-bold label-text">NIK</span>
               </label>
@@ -148,7 +148,7 @@ export function SignUp() {
                 value={formik.values.nik}
               />
               {formik.errors.nik ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.nik}</label>
                   </div>
@@ -166,7 +166,7 @@ export function SignUp() {
                 value={formik.values.name}
               />
               {formik.errors.name ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.name}</label>
                   </div>
@@ -176,7 +176,7 @@ export function SignUp() {
                 <span className="font-bold label-text">Jenis Kelamin</span>
               </label>
               <select
-                className="w-full select select-bordered"
+                className="select select-bordered w-full"
                 onChange={formik.handleChange}
                 name="gender"
               >
@@ -187,7 +187,7 @@ export function SignUp() {
                 <option value="Female">Perempuan</option>
               </select>
               {formik.errors.gender ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.gender}</label>
                   </div>
@@ -200,13 +200,13 @@ export function SignUp() {
               <input
                 type="text"
                 placeholder="081273823xxxx"
-                class="input input-bordered"
+                className="input input-bordered"
                 name="handphone_number"
                 onChange={formik.handleChange}
                 value={formik.values.handphone_number}
               />
               {formik.errors.handphone_number ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.handphone_number}</label>
                   </div>
@@ -214,7 +214,7 @@ export function SignUp() {
               ) : null}
             </div>
           ) : (
-            <div className="space-y-1 form-control">
+            <div className="form-control space-y-1">
               <label className="label">
                 <span className="font-bold label-text">E-mail</span>
               </label>
@@ -227,7 +227,7 @@ export function SignUp() {
                 value={formik.values.email}
               />
               {formik.errors.email ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.email}</label>
                   </div>
@@ -245,7 +245,7 @@ export function SignUp() {
                 value={formik.values.password}
               />
               {formik.errors.password ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.password}</label>
                   </div>
@@ -265,7 +265,7 @@ export function SignUp() {
                 value={formik.values.confirmPassword}
               />
               {formik.errors.confirmPassword ? (
-                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                   <div className="flex-1">
                     <label>{formik.errors.confirmPassword}</label>
                   </div>
@@ -280,7 +280,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                className="w-full tooltip"
+                className="tooltip w-full"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -303,7 +303,7 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              className="w-full tooltip"
+              className="tooltip w-full"
             >
               <button
                 className="btn btn-block btn-info"

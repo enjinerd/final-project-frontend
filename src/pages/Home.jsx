@@ -1,10 +1,19 @@
 import { Page, PageContent } from "components/layout/page";
 import { HomepageNews } from "components/user";
 import { Link } from "react-router-dom";
-const mockSlider = {
-  sasaran: 208265720,
-};
+import { useFetchNews } from "hooks/user";
+
+import { useEffect, useState } from "react";
 export function Home() {
+  const [news, setNews] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const { data: newsFetchData, isLoading } = useFetchNews();
+
+  useEffect(() => {
+    if (newsFetchData) {
+      setNews(newsFetchData);
+    }
+  }, [newsFetchData]);
   return (
     <Page>
       <PageContent>
@@ -25,7 +34,11 @@ export function Home() {
               </p>
             </div>
           </div>
-          <HomepageNews allNews={false} />
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <HomepageNews allNews={false} data={news} />
+          )}
         </div>
       </PageContent>
     </Page>
