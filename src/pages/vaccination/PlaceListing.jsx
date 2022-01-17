@@ -1,7 +1,7 @@
 import { Page, PageContent } from "components/layout/page";
 import { Link } from "react-router-dom";
 import { ExpandableArea, ConfirmDialog } from "components/ui";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const mockData = {
   hfName: "RSUP Dr. Kariadi",
@@ -31,8 +31,14 @@ const mockData = {
     },
   ],
 };
-export function PlaceListing() {
+export function PlaceListing({ match }) {
   const [isOpen, setOpen] = useState(false);
+  const sessionId = match.params.sessionId;
+
+  useEffect(() => {
+    console.log(sessionId);
+  }, [sessionId]);
+
   return (
     <Page>
       <PageContent>

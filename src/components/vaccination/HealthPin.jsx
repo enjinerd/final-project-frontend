@@ -1,4 +1,5 @@
 import { Marker } from "react-map-gl";
+import { loadEnv } from "vite";
 
 export function HealthPin({ data, onClick }) {
   return (
@@ -18,6 +19,8 @@ export function HealthPin({ data, onClick }) {
               onClick({
                 latitude: parseFloat(loc?.latitude),
                 longitude: parseFloat(loc?.longitude),
+                name: loc?.name,
+                id: loc.vaccine[0]?.health_facilitator_id,
               })
             }
           >
