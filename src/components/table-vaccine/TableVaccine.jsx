@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import useAuthAdminStore from "stores/useAuthAdminStore";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export default function TableVaccine() {
   const api = import.meta.env.VITE_API_HOST;
@@ -14,6 +13,13 @@ export default function TableVaccine() {
   const { isAuthenticated } = useAuthAdminStore();
   const [data, setData] = useState([]);
   const decoded = jwt_decode(token);
+
+  useEffect(() => {
+    const d = jwt_decode(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJuYW1lIjoiTWFyayBMZWUiLCJyb2xlIjoiVVNFUiIsImV4cCI6MTY0MjQ5MTk3OX0.wuQF8wmBisma5DlI2si1BcnKu9LQqgXnxt6i6MhGzxs"
+    );
+    console.log(d);
+  }, []);
 
   useEffect(() => {
     async function fetchMyAPI() {

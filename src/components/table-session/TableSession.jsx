@@ -12,10 +12,11 @@ export default function TableSession() {
   const { token } = useAuthAdminStore();
   const { isAuthenticated } = useAuthAdminStore();
   const [data, setData] = useState([]);
+  const [vaccines, setVaccines] = useState([]);
   const decoded = jwt_decode(token);
 
   useEffect(() => {
-    async function fetchMyAPI() {
+    async function fetchSessions() {
       let response = await axios.get(
         `${api}/vaccine/session/owned/${decoded.user_id}`,
         {
@@ -24,7 +25,20 @@ export default function TableSession() {
       );
       setData(response.data.data);
     }
-    fetchMyAPI();
+    async function fetchVaccines() {
+      let response = await axios.get(`${api}/vaccines/${decoded.user_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setVaccines(response.data.data);
+      data.map((d, index) => {
+        const v = response.data.data.filter((obj) => {
+          return obj.id === d["vaccine_id "];
+        });
+        d.vaccine = v[0]["name"];
+      });
+    }
+    fetchSessions();
+    fetchVaccines();
   }, []);
 
   const handleDelete = (id) => {
@@ -49,13 +63,17 @@ export default function TableSession() {
     <MaterialTable
       title="Positioning Actions Column Preview"
       columns={[
-        { title: "Start Date", field: "startDate" },
-        { title: "End Date", field: "endDate" },
+        {
+          title: "Start Date",
+          field: "start_date",
+          render: (row) => <span>{row["start_date"]}</span>,
+        },
+        { title: "End Date", field: "end_date" },
         { title: "Vaccine", field: "vaccine" },
         { title: "Quota", field: "quota", type: "numeric" },
         {
           title: "Session Type",
-          field: "sessionType",
+          field: "session_type",
           type: "numeric",
         },
       ]}
@@ -79,7 +97,19 @@ export default function TableSession() {
           ),
           tooltip: "Edit Vaccine",
           position: "row",
-          onClick: (event, rowData) => alert("You edit " + rowData.name),
+          onClick: (event, rowData) => {
+            alert("You edit " + rowData.name);
+            history.push({
+              pathname: `${datum.pathname}/add`,
+              state: {
+                start_date: rowData.start_date,
+                end_date: rowData.end_date,
+                vaccine_id: rowData.vaccine_id,
+                quota: rowData.quota,
+                session_type: rowData.session_type,
+              },
+            });
+          },
         },
         {
           icon: () => (
@@ -121,7 +151,12 @@ export default function TableSession() {
           tooltip: "add new vaccine",
           position: "toolbar",
           onClick: () => {
-            history.push(datum.pathname + "/add");
+            history.push({
+              pathname: `${datum.pathname}/add`,
+              state: {
+                vaccines: vaccines,
+              },
+            });
           },
         },
       ]}

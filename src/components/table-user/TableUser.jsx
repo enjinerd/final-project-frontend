@@ -1,27 +1,72 @@
 import MaterialTable, { MTableToolbar } from "@material-table/core";
 import { useLocation, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
+import useAuthAdminStore from "stores/useAuthAdminStore";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default function TableUser() {
   const api = import.meta.env.VITE_API_HOST;
   let datum = useLocation();
   const history = useHistory();
-  const [columns, setColumns] = useState([]);
-  const [data, setData] = useState([]);
+  const { token } = useAuthAdminStore();
+  const { isAuthenticated } = useAuthAdminStore();
+  const [dataSessions, setDataSession] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [usersProfile, setUsersProfile] = useState([]);
+  const decoded = jwt_decode(token);
 
   useEffect(() => {
-    if (datum.state) {
-      setData(datum.state.data);
+    async function fetchMyAPI() {
+      let response = await axios.get(`${api}/admin/${decoded.user_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setDataSession(response.data.data.vaccine_session);
+      console.log("===data session==");
+      console.log(dataSessions);
+      dataSessions.map((session, index) => {
+        console.log("===user length==");
+        console.log(users.length);
+        console.log("===session length==");
+        console.log(session.vaccine_session_detail.length);
+        users.length === 0
+          ? session.vaccine_session_detail.length > 0 &&
+            setUsers([...session.vaccine_session_detail])
+          : session.vaccine_session_detail.length > 0 &&
+            setUsers([...users, ...session.vaccine_session_detail]);
+        console.log("===users==");
+        console.log(users);
+      });
     }
-  }, [datum]);
+    fetchMyAPI();
+    console.log("===users akhir==");
+    console.log(users);
+  }, []);
 
-  //   useEffect(() => {
-  //     axios
-  //         .get(`${api}/vaccines/:id`)
-  //         .then(response => {
-  //             setData(response.data)
-  //         });
-  //   }, []);
+  useEffect(() => {
+    users.map((user, index) => {
+      let family = handleGetCitizenId(user.family_member_id);
+      let profile = handleGetProfile(family.citizen_id);
+      setUsersProfile((prev) => [
+        ...prev,
+        { ...profile, status: family.status_vaccines },
+      ]);
+    });
+  }, []);
+
+  const handleGetCitizenId = async (familyId) => {
+    let response = await axios.get(`${api}/families/${familyId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  };
+
+  const handleGetProfile = async (citizenId) => {
+    let response = await axios.get(`${api}/citizen/profile/${citizenId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  };
 
   // const custom_theme = createMuiTheme({
   //   palette: {
@@ -40,12 +85,12 @@ export default function TableUser() {
       title="Positioning Actions Column Preview"
       columns={[
         { title: "Name", field: "name" },
-        { title: "DOB", field: "dob" },
+        { title: "Birthday", field: "birthday" },
         { title: "Address", field: "address" },
-        { title: "Phone Number", field: "phoneNumber" },
+        { title: "Phone Number", field: "handphone_number" },
         { title: "Status", field: "status", type: "numeric" },
       ]}
-      data={data}
+      data={usersProfile}
       actions={[
         {
           icon: () => (
@@ -86,27 +131,6 @@ export default function TableUser() {
           position: "row",
           onClick: (event, rowData) =>
             confirm("You want to delete " + rowData.name),
-        },
-        {
-          icon: () => (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              viewBox="0 0 20 20"
-              fill="#059669"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                clipRule="evenodd"
-              />
-            </svg>
-          ),
-          tooltip: "add new vaccine",
-          position: "toolbar",
-          onClick: () => {
-            history.push(datum.pathname + "/add");
-          },
         },
       ]}
       options={{

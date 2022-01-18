@@ -6,6 +6,7 @@ import { AddSession } from "../pages/admin/add-session/AddSession";
 import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
 import { Login } from "../pages/admin/login/Login";
 import { SignUp } from "../pages/admin/signup/SignUp";
+import { Profile } from "../pages/admin/profile/Profile";
 import { LayoutAdmin } from "components/layout/layout-admin";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { AddUser } from "../pages/admin/add-user/AddUser";
@@ -16,6 +17,7 @@ export default function User() {
   return (
     <LayoutAdmin>
       <Switch>
+        <PrivateRouteAdmin path={`${path}`} component={Profile} exact />
         <PrivateRouteAdmin
           path={`${path}/vaccine`}
           component={TableVaccine}
