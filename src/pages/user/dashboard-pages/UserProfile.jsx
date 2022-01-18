@@ -9,10 +9,10 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
+import jwt_decode from "jwt-decode";
 
 export function UserProfile() {
   const { token } = useAuthStore();
-
   const [selectedDay, setSelectedDay] = useState(null);
   const [profile, setProfile] = useState(null);
   const dateEl = useRef(null);
@@ -64,7 +64,9 @@ export function UserProfile() {
     formik.setValues({ ...formik.values, birthday: date });
   };
   useEffect(async () => {
-    const data = await userProfile(token);
+    const decode = jwt_decode(token);
+
+    const data = await userProfile(token, decode?.user_id);
     const birthday = new Date(data?.birthday);
     setSelectedDay({
       year: birthday.getFullYear(),
@@ -84,10 +86,10 @@ export function UserProfile() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-bold font-primary text-2xl text-center sm:text-xl">
+          <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
             Perbarui Data Diri
           </h1>
-          <div className="form-control space-y-1">
+          <div className="space-y-1 form-control">
             <label className="label">
               <span className="font-bold label-text">NIK</span>
             </label>
@@ -100,7 +102,7 @@ export function UserProfile() {
               value={formik.values.nik}
             />
             {formik.errors.nik ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.nik}</label>
                 </div>
@@ -118,7 +120,7 @@ export function UserProfile() {
               value={formik.values.name}
             />
             {formik.errors.name ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.name}</label>
                 </div>
@@ -128,7 +130,7 @@ export function UserProfile() {
               <span className="font-bold label-text">Jenis Kelamin</span>
             </label>
             <select
-              className="select select-bordered w-full"
+              className="w-full select select-bordered"
               onChange={formik.handleChange}
               name="gender"
             >
@@ -146,7 +148,7 @@ export function UserProfile() {
               </option>
             </select>
             {formik.errors.gender ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.gender}</label>
                 </div>
@@ -166,7 +168,7 @@ export function UserProfile() {
               shouldHighlightWeekends
             />
             {formik.errors.birthday ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.birthday}</label>
                 </div>
@@ -184,7 +186,7 @@ export function UserProfile() {
               value={formik.values.handphone}
             />
             {formik.errors.handphone ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.handphone}</label>
                 </div>

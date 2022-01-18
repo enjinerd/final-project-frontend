@@ -4,15 +4,17 @@ import { UserMenus } from "components/user";
 import { useState, useEffect } from "react";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
+import jwtDecode from "jwt-decode";
 
 export function UserDashboard() {
   const [isOpen, setOpen] = useState(false);
   const { logout, token } = useAuthStore();
   const [profile, setProfile] = useState(null);
   const { userProfile } = useCitizen();
+  const userId = jwtDecode(token).user_id;
 
   useEffect(async () => {
-    const data = await userProfile(token);
+    const data = await userProfile(token, userId);
     setProfile(data);
   }, []);
 
