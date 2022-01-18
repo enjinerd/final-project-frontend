@@ -2,28 +2,27 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NewsLoader } from "components/ui/loader";
-import { useFetchNews } from "hooks/user";
 
-export function HomepageNews({ allNews }) {
+export function HomepageNews({ allNews, data }) {
   const [news, setNews] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  const { data: newsFetchData, isLoading } = useFetchNews();
 
   useEffect(() => {
     if (allNews) {
-      setNews(newsFetchData);
+      setNews(data);
     } else {
-      setNews(newsFetchData?.slice(0, 3));
+      setNews(data?.slice(0, 3));
     }
-  }, [newsFetchData]);
+  }, [data]);
   return (
     <div className="flex flex-col py-8 space-y-3 lg:px-8">
       <p className="text-base font-bold text-left font-primary md:text-lg">
         Berita Terbaru
       </p>
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center">
-          <NewsLoader />
+      {!data ? (
+        <div className="text-center">
+          <div className="flex items-center justify-center p-12">
+            <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+          </div>
         </div>
       ) : (
         <>
@@ -38,7 +37,7 @@ export function HomepageNews({ allNews }) {
               >
                 <div className="flex items-center">
                   <img
-                    src={item.image.medium}
+                    src={item.image?.medium}
                     alt={item.title}
                     className="w-12 h-12 rounded-full"
                   />

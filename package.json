@@ -34,6 +34,8 @@
     "events": "^3.3.0",
     "formik": "^2.2.9",
     "husky": "^7.0.4",
+    "intro.js": "^4.3.0",
+    "intro.js-react": "^0.5.0",
     "jwt-decode": "^3.1.2",
     "mapbox-gl": "^2.6.1",
     "material-table": "^1.69.3",

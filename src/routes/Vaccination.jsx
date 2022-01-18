@@ -11,7 +11,7 @@ export default function Vaccination() {
     <LayoutRoot>
       <Switch>
         <Route exact path={path} component={VaccinationHomepage} />
-        <Route path={`${path}/session`} component={PlaceListing} />
+        <Route path={`${path}/session/:sessionId`} component={PlaceListing} />
         <Route path="*" component={NotFound} />
       </Switch>
     </LayoutRoot>

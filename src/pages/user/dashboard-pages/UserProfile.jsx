@@ -9,10 +9,10 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
+import jwt_decode from "jwt-decode";
 
 export function UserProfile() {
   const { token } = useAuthStore();
-
   const [selectedDay, setSelectedDay] = useState(null);
   const [profile, setProfile] = useState(null);
   const dateEl = useRef(null);
@@ -64,7 +64,9 @@ export function UserProfile() {
     formik.setValues({ ...formik.values, birthday: date });
   };
   useEffect(async () => {
-    const data = await userProfile(token);
+    const decode = jwt_decode(token);
+
+    const data = await userProfile(token, decode?.user_id);
     const birthday = new Date(data?.birthday);
     setSelectedDay({
       year: birthday.getFullYear(),
@@ -87,14 +89,14 @@ export function UserProfile() {
           <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
             Perbarui Data Diri
           </h1>
-          <div class="form-control space-y-1">
-            <label class="label">
-              <span class="font-bold label-text">NIK</span>
+          <div className="space-y-1 form-control">
+            <label className="label">
+              <span className="font-bold label-text">NIK</span>
             </label>
             <input
               type="text"
               placeholder="15 Digit No KTP"
-              class="input input-bordered"
+              className="input input-bordered"
               name="nik"
               onChange={formik.handleChange}
               value={formik.values.nik}
@@ -106,13 +108,13 @@ export function UserProfile() {
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">Nama Lengkap</span>
+            <label className="label">
+              <span className="font-bold label-text">Nama Lengkap</span>
             </label>
             <input
               type="text"
               placeholder="Budi Setiawan"
-              class="input input-bordered"
+              className="input input-bordered"
               name="name"
               onChange={formik.handleChange}
               value={formik.values.name}
@@ -124,11 +126,11 @@ export function UserProfile() {
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">Jenis Kelamin</span>
+            <label className="label">
+              <span className="font-bold label-text">Jenis Kelamin</span>
             </label>
             <select
-              class="select select-bordered w-full"
+              className="w-full select select-bordered"
               onChange={formik.handleChange}
               name="gender"
             >
@@ -172,13 +174,13 @@ export function UserProfile() {
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">No. Telepon</span>
+            <label className="label">
+              <span className="font-bold label-text">No. Telepon</span>
             </label>
             <input
               type="text"
               placeholder="081273823xxxx"
-              class="input input-bordered"
+              className="input input-bordered"
               name="handphone"
               onChange={formik.handleChange}
               value={formik.values.handphone}
