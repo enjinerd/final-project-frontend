@@ -4,11 +4,11 @@
 @tailwind variants; */
 
 .header {
-  @apply fixed z-40 flex items-center justify-start h-16 shadow-md bg-emerald-500;
+  @apply flex fixed z-40 justify-start items-center h-16 bg-emerald-500 shadow-md;
 }
 
 .header__container {
-  @apply flex items-center justify-between h-full px-4 py-3 mx-auto sm:max-w-xl;
+  @apply flex justify-between items-center px-4 py-3 mx-auto h-full sm:max-w-xl;
 }
 
 .header__container h1 {
@@ -16,7 +16,7 @@
   text-transform: uppercase;
 }
 
-form {
+.form-vaccine {
   display: grid;
   grid-template-areas:
     "labelName inputName"
@@ -31,19 +31,19 @@ form {
   width: 70%;
 }
 
-label:nth-of-type(1) {
+.label-vaccine:nth-of-type(1) {
   grid-area: labelName;
 }
 
-label:nth-of-type(2) {
+.label-vaccine:nth-of-type(2) {
   grid-area: labelStock;
 }
 
-.input-wrapper:nth-of-type(1) {
+.input-wrapper-vaccine:nth-of-type(1) {
   grid-area: inputName;
 }
 
-.input-wrapper:nth-of-type(2) {
+.input-wrapper-vaccine:nth-of-type(2) {
   grid-area: inputStock;
 }
 

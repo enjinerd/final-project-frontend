@@ -1,4 +1,4 @@
-import AdminTable from "../components/admin-table/AdminTable";
+import AdminTable from "../components/table-vaccine/TableVaccine";
 import SideMenu from "../components/side-menu/SideMenu";
 
 export function Dashboard() {

@@ -4,7 +4,7 @@ import { ChevronUpIcon } from "@heroicons/react/solid";
 export function ExpandableArea({ children, title }) {
   return (
     <div className="w-full">
-      <div className="w-full p-2 mx-auto bg-white border-b-2 border-gray-300 rounded-lg">
+      <div className="w-full p-2 mx-auto bg-white rounded-lg shadow-lg">
         <Disclosure>
           {({ open }) => (
             <>
