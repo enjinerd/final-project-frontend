@@ -21,6 +21,18 @@ export function PlaceListing({ match }) {
     console.log(jwt);
     await registerVaccination(jwt, sessionId);
   };
+  const formatDate = (dateString) => {
+    console.log(typeof dateString);
+
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("id-ID", options);
+  };
 
   useEffect(() => {
     console.log(sessionId);
@@ -55,9 +67,8 @@ export function PlaceListing({ match }) {
                   <div className="flex flex-row items-center justify-between">
                     <div className="flex flex-col justify-between">
                       <p className="font-medium">
-                        {item.start_date}
-                        <br />
-                        {item.ende_date}
+                        {formatDate(item.start_date)} WIB -{" "}
+                        {formatDate(item.end_date)} WIB
                       </p>
                       <p className="font-semibold">Kuota : {item.quota}</p>
                     </div>

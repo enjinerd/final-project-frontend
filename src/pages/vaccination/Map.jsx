@@ -68,7 +68,7 @@ export const Map = ({ latitude, longitude, data }) => {
     if (data) {
       getNearbyFaskes(data);
     }
-  }, [data]);
+  }, [userPos]);
   useEffect(() => {
     if (nearby) {
       console.log(nearby);
@@ -101,8 +101,8 @@ export const Map = ({ latitude, longitude, data }) => {
               </Popup>
             )}
             <Marker
-              latitude={userPos.latitude}
-              longitude={userPos.longitude}
+              latitude={userPos?.latitude}
+              longitude={userPos?.longitude}
               offsetLeft={-20}
               offsetTop={-10}
             >
