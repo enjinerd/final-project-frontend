@@ -89,11 +89,11 @@ const useCitizen = createStore((set) => ({
       });
     return data;
   },
-  updateFamilyMember: async (val, id, token) => {
+  updateFamilyMember: async (val, token) => {
     set(() => ({ isAuthenticating: true }));
     await axios
       .put(
-        `${api}/families/${id}`,
+        `${api}/families/${val.id}`,
         {
           ...val,
         },

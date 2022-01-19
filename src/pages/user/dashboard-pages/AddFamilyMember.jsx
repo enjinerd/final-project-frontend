@@ -7,12 +7,14 @@ import { useFormik } from "formik";
 import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
+import { useHistory } from "react-router-dom";
 
 export function AddFamilyMember() {
   const { token } = useAuthStore();
+  const history = useHistory();
 
   const [selectedDay, setSelectedDay] = useState(null);
-  const { addFamily } = useCitizen();
+  const { addFamily, error } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +50,9 @@ export function AddFamilyMember() {
     },
     onSubmit: async (values) => {
       await addFamily(values, token);
+      if (!error) {
+        history.push("/user/family-member");
+      }
     },
   });
 

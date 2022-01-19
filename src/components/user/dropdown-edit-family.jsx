@@ -6,7 +6,7 @@ import {
   IconTrash,
   IconSettings,
 } from "@supabase/ui";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
@@ -15,6 +15,7 @@ import { useHistory, Link } from "react-router-dom";
 export function DropdownFamilyMenu({ dataId, userData }) {
   userData.id = dataId;
   const [isOpen, setOpen] = useState(false);
+  let [count, setCount] = useState(0);
   const { token } = useAuthStore();
   const { deleteFamily } = useCitizen();
   const history = useHistory();
@@ -30,8 +31,15 @@ export function DropdownFamilyMenu({ dataId, userData }) {
   async function handleConfirm() {
     await deleteFamily(dataId, token);
     closeModal();
-    history.go(0);
+    setCount(count++);
   }
+
+  useEffect(() => {
+    if (count > 0) {
+      history.push("/user/family-member");
+    }
+  }, [count]);
+
   return (
     <>
       <Dropdown
@@ -65,10 +73,10 @@ export function DropdownFamilyMenu({ dataId, userData }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="overflow-y-auto fixed inset-0 z-10"
           onClose={closeModal}
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="px-4 min-h-screen text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -97,7 +105,7 @@ export function DropdownFamilyMenu({ dataId, userData }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block overflow-hidden p-6 my-8 w-full max-w-md text-left align-middle bg-white rounded-2xl shadow-xl transition-all transform">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-bold leading-6 text-gray-900"
