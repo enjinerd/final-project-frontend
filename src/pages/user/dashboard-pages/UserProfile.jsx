@@ -3,19 +3,15 @@ import { idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
 import { validateNotEmpty, validateValue } from "helpers";
 import useCitizen from "hooks/user/useCitizen";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 import jwt_decode from "jwt-decode";
 
 export function UserProfile() {
   const { token } = useAuthStore();
   const [selectedDay, setSelectedDay] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const dateEl = useRef(null);
   const { updateProfile, userProfile } = useCitizen();
 
   const formik = useFormik({
@@ -24,7 +20,7 @@ export function UserProfile() {
       name: "",
       nik: "",
       gender: "",
-      handphone: "",
+      handphone_number: "",
       age: "",
     },
     validateOnBlur: true,
@@ -75,10 +71,11 @@ export function UserProfile() {
     });
     formik.setValues({
       ...formik.values,
-      name: data?.name,
-      nik: data?.nik,
+      name: data.name,
+      nik: data.nik,
       address: data.address,
       birthday: data.birthday,
+      handphone_number: data.handphone_number,
     });
   }, []);
 
@@ -86,12 +83,12 @@ export function UserProfile() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
+          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
             Perbarui Data Diri
           </h1>
-          <div className="space-y-1 form-control">
+          <div className="form-control space-y-1">
             <label className="label">
-              <span className="font-bold label-text">NIK</span>
+              <span className="label-text font-bold">NIK</span>
             </label>
             <input
               type="text"
@@ -109,7 +106,7 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Nama Lengkap</span>
+              <span className="label-text font-bold">Nama Lengkap</span>
             </label>
             <input
               type="text"
@@ -127,10 +124,10 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Jenis Kelamin</span>
+              <span className="label-text font-bold">Jenis Kelamin</span>
             </label>
             <select
-              className="w-full select select-bordered"
+              className="select select-bordered w-full"
               onChange={formik.handleChange}
               name="gender"
             >
@@ -141,7 +138,7 @@ export function UserProfile() {
                 Laki - Laki
               </option>
               <option
-                value="Female "
+                value="Female"
                 selected={formik.values?.gender == "Female"}
               >
                 Perempuan
@@ -155,7 +152,7 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Tanggal Lahir</span>
+              <span className="label-text font-bold">Tanggal Lahir</span>
             </label>{" "}
             <DatePicker
               value={selectedDay}
@@ -175,17 +172,17 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">No. Telepon</span>
+              <span className="label-text font-bold">No. Telepon</span>
             </label>
             <input
               type="text"
               placeholder="081273823xxxx"
               className="input input-bordered"
-              name="handphone"
+              name="handphone_number"
               onChange={formik.handleChange}
-              value={formik.values.handphone}
+              value={formik.values.handphone_number}
             />
-            {formik.errors.handphone ? (
+            {formik.errors.handphone_number ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.handphone}</label>
