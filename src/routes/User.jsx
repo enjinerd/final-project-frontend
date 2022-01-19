@@ -7,6 +7,7 @@ import {
   FamilyMembers,
   UserProfile,
   EditFamilyMember,
+  VaccinationSession,
 } from "pages/user/dashboard-pages";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
@@ -31,6 +32,10 @@ export default function User() {
         <PrivateRoute
           path={`${path}/family-member`}
           component={FamilyMembers}
+        />
+        <PrivateRoute
+          path={`${path}/vaccine-session`}
+          component={VaccinationSession}
         />
         <Route path={`${path}/login`}>
           <Login />

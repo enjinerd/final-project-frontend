@@ -1,9 +1,10 @@
 import { Map } from "./Map";
 import { Page, PageContent } from "components/layout/page";
 import { useState } from "react";
-import useGeolocation from "react-hook-geolocation";
+import { useFetchHF } from "hooks/vaccination";
 
 export function VaccinationHomepage() {
+  const { data, isLoading } = useFetchHF();
   const [status, setStatus] = useState(null);
   const [userPos, setUserPos] = useState({
     latitude: -6.2,
@@ -46,7 +47,19 @@ export function VaccinationHomepage() {
               mengakses lokasi.
             </p>
           )}
-          <Map latitude={userPos.latitude} longitude={userPos.longitude} />
+          {isLoading ? (
+            <div className="text-center">
+              <div className="flex items-center justify-center p-12">
+                <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
+              </div>
+            </div>
+          ) : (
+            <Map
+              latitude={userPos.latitude}
+              longitude={userPos.longitude}
+              data={data}
+            />
+          )}
         </div>
       </PageContent>
     </Page>

@@ -30,7 +30,6 @@ export function EditFamilyMember(props) {
   const formik = useFormik({
     initialValues: {
       ...data,
-      token,
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -56,7 +55,7 @@ export function EditFamilyMember(props) {
       return errors;
     },
     onSubmit: async (values) => {
-      await updateFamilyMember(values);
+      await updateFamilyMember(values, token);
     },
   });
 
@@ -81,51 +80,51 @@ export function EditFamilyMember(props) {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
+          <h1 className="font-bold font-primary text-2xl text-center sm:text-xl">
             Tambah Anggota Keluarga
           </h1>
-          <div class="form-control space-y-1">
-            <label class="label">
-              <span class="font-bold label-text">NIK</span>
+          <div className="form-control space-y-1">
+            <label className="label">
+              <span className="font-bold label-text">NIK</span>
             </label>
             <input
               type="text"
               placeholder="15 Digit No KTP"
-              class="input input-bordered"
+              className="input input-bordered"
               name="nik"
               onChange={formik.handleChange}
               value={formik.values.nik}
             />
             {formik.errors.nik ? (
-              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div className="flex-1">
                   <label>{formik.errors.nik}</label>
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">Nama Lengkap</span>
+            <label className="label">
+              <span className="font-bold label-text">Nama Lengkap</span>
             </label>
             <input
               type="text"
               placeholder="Budi Setiawan"
-              class="input input-bordered"
+              className="input input-bordered"
               name="name"
               onChange={formik.handleChange}
               value={formik.values.name}
             />
             {formik.errors.name ? (
-              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div className="flex-1">
                   <label>{formik.errors.name}</label>
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">Jenis Kelamin</span>
+            <label className="label">
+              <span className="font-bold label-text">Jenis Kelamin</span>
             </label>
             <select
-              class="select select-bordered w-full"
+              className="select select-bordered w-full"
               onChange={formik.handleChange}
               name="gender"
             >
@@ -143,7 +142,7 @@ export function EditFamilyMember(props) {
               </option>
             </select>
             {formik.errors.gender ? (
-              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div className="flex-1">
                   <label>{formik.errors.gender}</label>
                 </div>
@@ -163,25 +162,25 @@ export function EditFamilyMember(props) {
               shouldHighlightWeekends
             />
             {formik.errors.birthday ? (
-              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div className="flex-1">
                   <label>{formik.errors.birthday}</label>
                 </div>
               </div>
             ) : null}
-            <label class="label">
-              <span class="font-bold label-text">No. Telepon</span>
+            <label className="label">
+              <span className="font-bold label-text">No. Telepon</span>
             </label>
             <input
               type="text"
               placeholder="081273823xxxx"
-              class="input input-bordered"
+              className="input input-bordered"
               name="handphone"
               onChange={formik.handleChange}
               value={formik.values.handphone}
             />
             {formik.errors.handphone ? (
-              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
                 <div className="flex-1">
                   <label>{formik.errors.handphone}</label>
                 </div>

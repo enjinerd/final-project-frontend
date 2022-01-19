@@ -6,50 +6,64 @@ const api = import.meta.env.VITE_API_HOST;
 const useCitizen = createStore((set) => ({
   isLoading: true,
   error: undefined,
-  updateProfile: async ({ address, birthday, token }) => {
+  userProfile: async (token, id) => {
+    let data;
+    await axios
+      .get(`${api}/citizen/profile/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((val) => {
+        set(() => ({
+          isLoading: false,
+        }));
+        data = val.data.data;
+      })
+      .catch((error) => {
+        set(() => ({
+          isLoading: false,
+          error,
+        }));
+      });
+    return data;
+  },
+  updateProfile: async (val, token) => {
     await axios
       .put(
         `${api}/citizens`,
         {
-          address,
-          birthday,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
       });
   },
-  addFamily: async ({ name, birthday, age, nik, handphone, gender, token }) => {
-    set((state) => ({ isAuthenticating: true }));
+  addFamily: async (val, token) => {
+    set(() => ({ isAuthenticating: true }));
     await axios
       .post(
         `${api}/families`,
         {
-          name,
-          birthday,
-          nik,
-          age,
-          gender,
-          handphone,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
@@ -62,71 +76,103 @@ const useCitizen = createStore((set) => ({
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((val) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
         }));
         data = val.data.data;
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
       });
     return data;
   },
-  updateFamilyMember: async ({
-    name,
-    birthday,
-    age,
-    nik,
-    handphone,
-    gender,
-    token,
-    id,
-  }) => {
-    set((state) => ({ isAuthenticating: true }));
+  updateFamilyMember: async (val, id, token) => {
+    set(() => ({ isAuthenticating: true }));
     await axios
       .put(
         `${api}/families/${id}`,
         {
-          name,
-          birthday,
-          nik,
-          age,
-          gender,
-          handphone,
+          ...val,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
       });
   },
-  deleteFamily: async ({ id, token }) => {
+  deleteFamily: async (id, token) => {
     await axios
       .delete(`${api}/families/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((val) => {
-        set((state) => ({
+      .then(() => {
+        set(() => ({
           isLoading: false,
         }));
       })
       .catch((error) => {
-        set((state) => ({
+        set(() => ({
           isLoading: false,
           error,
         }));
       });
+  },
+  registerVaccination: async (token, bookingId) => {
+    console.log(
+      "🚀 ~ file: useCitizen.js ~ line 132 ~ registerVaccination: ~ token",
+      token
+    );
+
+    await axios
+      .post(
+        `${api}/session/bookings/${bookingId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(() => {
+        set(() => ({
+          isLoading: false,
+        }));
+      })
+      .catch((error) => {
+        set(() => ({
+          isLoading: false,
+          error,
+        }));
+      });
+  },
+  vaccinationSession: async (token) => {
+    let data;
+    await axios
+      .get(`${api}/citizen/sessions`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((val) => {
+        set(() => ({
+          isLoading: false,
+        }));
+        data = val.data.data;
+      })
+      .catch((error) => {
+        set(() => ({
+          isLoading: false,
+          error,
+        }));
+      });
+    return data;
   },
 }));
 
