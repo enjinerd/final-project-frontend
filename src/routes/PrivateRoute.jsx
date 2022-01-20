@@ -17,7 +17,7 @@ function PrivateRoute(props) {
   if (isAuthenticated) {
     const decoded = jwt_decode(token);
     console.log(decoded);
-    if (decoded.exp < Date.now() / 1000) {
+    if (decoded.exp < Date.now() / 1000 || decoded.role !== "USER") {
       logout();
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
