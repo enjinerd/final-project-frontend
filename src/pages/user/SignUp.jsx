@@ -1,5 +1,5 @@
 import { Page, PageContent } from "components/layout/page";
-import { ConfirmDialog } from "components/ui";
+import { ConfirmDialog, idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
 import {
   validateConfirmPassword,
@@ -12,9 +12,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
+import DatePicker from "react-modern-calendar-datepicker";
+import { useHistory } from "react-router-dom";
 
 export function SignUp() {
   const { register, error, isAuthenticated } = useAuthStore();
+  const [selectedDay, setSelectedDay] = useState(null);
 
   if (isAuthenticated) {
     return <Redirect to="/user" />;
@@ -23,15 +26,18 @@ export function SignUp() {
   const [isNext, setNext] = useState(false);
   const [isDone, setDone] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
       confirmPassword: "",
+      birthday: "",
       name: "",
       nik: "",
       gender: "",
       handphone_number: "",
+      age: "",
     },
     validateOnBlur: true,
     validate: (values) => {
@@ -65,11 +71,18 @@ export function SignUp() {
       if (validateValue(values.handphone_number, validateNotEmpty)) {
         errors.handphone_number = "No. Telepon harus diisi";
       }
+      if (validateValue(values.name, validateNotEmpty)) {
+        errors.name = "Nama harus diisi";
+      }
+      if (validateValue(values.birthday, validateNotEmpty)) {
+        errors.birthday = "Tanggal harus diisi";
+      }
       return errors;
     },
     onSubmit: async (values) => {
       setDone(false);
       await register(values);
+      history.push("/user/login");
     },
   });
   const handleNext = () => {
@@ -80,14 +93,26 @@ export function SignUp() {
     setOpen(false);
   };
 
+  const handleDate = (val) => {
+    setSelectedDay(val);
+    let date = new Date(`${val.year}-${val.month}-${val.day}`);
+    let difference = Date.now() - date.getTime();
+
+    let ageDate = new Date(difference);
+    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+    formik.setValues({ ...formik.values, birthday: date, age });
+    console.log(formik.values.birthday);
+  };
+
   return (
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-bold text-2xl text-center sm:text-xl">Daftar</h1>
+          <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
             Sudah punya akun?{" "}
-            <span className="font-bold italic">
+            <span className="italic font-bold">
               {" "}
               <Link to="/user/login">Masuk</Link>
             </span>
@@ -97,7 +122,7 @@ export function SignUp() {
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 mx-2 w-6"
+                  className="mx-2 w-6 h-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -119,7 +144,7 @@ export function SignUp() {
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 mx-2 w-6"
+                  className="mx-2 w-6 h-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -137,7 +162,7 @@ export function SignUp() {
           {isNext ? (
             <div className="form-control space-y-1">
               <label className="label">
-                <span className="font-bold label-text">NIK</span>
+                <span className="label-text font-bold">NIK</span>
               </label>
               <input
                 type="text"
@@ -148,14 +173,14 @@ export function SignUp() {
                 value={formik.values.nik}
               />
               {formik.errors.nik ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.nik}</label>
                   </div>
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Nama Lengkap</span>
+                <span className="label-text font-bold">Nama Lengkap</span>
               </label>
               <input
                 type="text"
@@ -166,14 +191,14 @@ export function SignUp() {
                 value={formik.values.name}
               />
               {formik.errors.name ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.name}</label>
                   </div>
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Jenis Kelamin</span>
+                <span className="label-text font-bold">Jenis Kelamin</span>
               </label>
               <select
                 className="select select-bordered w-full"
@@ -187,15 +212,34 @@ export function SignUp() {
                 <option value="Female">Perempuan</option>
               </select>
               {formik.errors.gender ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.gender}</label>
                   </div>
                 </div>
               ) : null}
-
               <label className="label">
-                <span className="font-bold label-text">No. Telepon</span>
+                <span className="label-text font-bold">Tanggal Lahir</span>
+              </label>{" "}
+              <DatePicker
+                value={selectedDay}
+                onChange={handleDate}
+                inputClassName="input input-bordered w-full shadow-lg text-black font-bold"
+                calendarClassName="text-sm sm:text-base"
+                inputPlaceholder="Pilih Tanggal"
+                calendarPopperPosition="top"
+                locale={idLocalCalendar}
+                shouldHighlightWeekends
+              />
+              {formik.errors.birthday ? (
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
+                  <div className="flex-1">
+                    <label>{formik.errors.birthday}</label>
+                  </div>
+                </div>
+              ) : null}
+              <label className="label">
+                <span className="label-text font-bold">No. Telepon</span>
               </label>
               <input
                 type="text"
@@ -206,7 +250,7 @@ export function SignUp() {
                 value={formik.values.handphone_number}
               />
               {formik.errors.handphone_number ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.handphone_number}</label>
                   </div>
@@ -216,7 +260,7 @@ export function SignUp() {
           ) : (
             <div className="form-control space-y-1">
               <label className="label">
-                <span className="font-bold label-text">E-mail</span>
+                <span className="label-text font-bold">E-mail</span>
               </label>
               <input
                 type="text"
@@ -227,14 +271,14 @@ export function SignUp() {
                 value={formik.values.email}
               />
               {formik.errors.email ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.email}</label>
                   </div>
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Kata Sandi</span>
+                <span className="label-text font-bold">Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -245,14 +289,14 @@ export function SignUp() {
                 value={formik.values.password}
               />
               {formik.errors.password ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.password}</label>
                   </div>
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">
+                <span className="label-text font-bold">
                   Konfirmasi Kata Sandi
                 </span>
               </label>
@@ -265,7 +309,7 @@ export function SignUp() {
                 value={formik.values.confirmPassword}
               />
               {formik.errors.confirmPassword ? (
-                <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+                <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                   <div className="flex-1">
                     <label>{formik.errors.confirmPassword}</label>
                   </div>
@@ -294,8 +338,7 @@ export function SignUp() {
                     formik.isSubmitting ||
                     isDone ||
                     formik.errors.nik ||
-                    formik.errors.name ||
-                    formik.values.nik == ""
+                    formik.errors.name
                   }
                 />
               </div>
@@ -308,11 +351,7 @@ export function SignUp() {
               <button
                 className="btn btn-block btn-info"
                 onClick={handleNext}
-                disabled={
-                  formik.errors.email ||
-                  formik.errors.confirmPassword ||
-                  formik.values.password == ""
-                }
+                disabled={formik.errors.email || formik.errors.confirmPassword}
               >
                 Daftar
               </button>

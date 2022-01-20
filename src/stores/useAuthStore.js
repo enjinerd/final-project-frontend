@@ -62,7 +62,11 @@ const useAuthStore = createStore(
           });
       },
       logout: async () => {
-        set(() => ({ isAuthenticated: false }));
+        set(() => ({
+          isAuthenticated: false,
+          token:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MTc1NTg0OCwiZXhwIjoxNjQxNzU1MDAwfQ.Ln9NfWjO_PId8yHhv6IhUZzveRvQ1AG7xOJfJL5qZJs",
+        }));
       },
     })
   )
