@@ -141,9 +141,7 @@ export const Map = ({ latitude, longitude, data }) => {
             Lokasi Vaksinasi Terdekat
           </h1>
           {nearby?.map((f) => (
-            <Link
-              to={`/vaccination/session/${f.vaccine[0]?.health_facilitator_id}`}
-            >
+            <Link to={`/vaccination/${f.vaccine[0]?.health_facilitator_id}`}>
               <div className="flex flex-col px-6 py-4 transition-colors duration-200 bg-white rounded-lg shadow-lg text-dark hover:bg-gray-200">
                 <p className="font-bold">{f?.name} </p>
                 <p className="text-sm font-medium text-gray-700">
