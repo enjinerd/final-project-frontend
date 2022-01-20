@@ -1,7 +1,7 @@
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
-import { validateNotEmpty, validateValue } from "helpers";
+import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useCitizen from "hooks/user/useCitizen";
 import { useEffect, useState } from "react";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -83,12 +83,12 @@ export function UserProfile() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
+          <h1 className="text-2xl font-bold text-center font-primary sm:text-xl">
             Perbarui Data Diri
           </h1>
-          <div className="form-control space-y-1">
+          <div className="space-y-1 form-control">
             <label className="label">
-              <span className="label-text font-bold">NIK</span>
+              <span className="font-bold label-text">NIK</span>
             </label>
             <input
               type="text"
@@ -106,7 +106,7 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="label-text font-bold">Nama Lengkap</span>
+              <span className="font-bold label-text">Nama Lengkap</span>
             </label>
             <input
               type="text"
@@ -124,10 +124,10 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="label-text font-bold">Jenis Kelamin</span>
+              <span className="font-bold label-text">Jenis Kelamin</span>
             </label>
             <select
-              className="select select-bordered w-full"
+              className="w-full select select-bordered"
               onChange={formik.handleChange}
               name="gender"
             >
@@ -152,7 +152,7 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="label-text font-bold">Tanggal Lahir</span>
+              <span className="font-bold label-text">Tanggal Lahir</span>
             </label>{" "}
             <DatePicker
               value={selectedDay}
@@ -172,7 +172,7 @@ export function UserProfile() {
               </div>
             ) : null}
             <label className="label">
-              <span className="label-text font-bold">No. Telepon</span>
+              <span className="font-bold label-text">No. Telepon</span>
             </label>
             <input
               type="text"

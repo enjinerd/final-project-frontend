@@ -16,6 +16,7 @@ export function UserDashboard() {
   useEffect(async () => {
     const data = await userProfile(token, userId);
     setProfile(data);
+    console.log(data);
   }, []);
 
   return (
@@ -26,9 +27,15 @@ export function UserDashboard() {
             <p className="text-2xl font-primary sm:text-xl">
               Halo, <strong>{profile?.name}</strong>
             </p>
-            <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
-              <p>Belum Vaksinasi</p>
-            </div>
+            {profile?.citizen_family[0].status_vaccines == "" ? (
+              <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
+                <p>Belum Vaksinasi</p>
+              </div>
+            ) : (
+              <div className="py-1 font-semibold text-center alert-success font-secondary dark:bg-">
+                <p>Sudah Vaksinasi</p>
+              </div>
+            )}
             <UserMenus />
             <ConfirmDialog
               isOpen={isOpen}
