@@ -1,30 +1,18 @@
 import axios from "axios";
 import createStore from "zustand";
+import { useQuery } from "react-query";
 
 const api = import.meta.env.VITE_API_HOST;
 
 const useCitizen = createStore((set) => ({
   isLoading: true,
   error: undefined,
-  userProfile: async (token, id) => {
-    let data;
-    await axios
-      .get(`${api}/citizen/profile/${id}`, {
+  userProfile: (token, id) => {
+    return useQuery("userData", () =>
+      axios(`${api}/citizen/profile/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((val) => {
-        set(() => ({
-          isLoading: false,
-        }));
-        data = val.data.data;
-      })
-      .catch((error) => {
-        set(() => ({
-          isLoading: false,
-          error,
-        }));
-      });
-    return data;
+    );
   },
   updateProfile: async (val, token) => {
     await axios
