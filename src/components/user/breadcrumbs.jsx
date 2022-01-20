@@ -1,7 +1,6 @@
 import { HomeIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import { Item } from "@supabase/ui/dist/cjs/components/Menu/Menu";
 import { useHistory } from "react-router";
-const breadcrumbs = [{}];
+
 export const Breadcrumbs = ({ path }) => {
   const history = useHistory();
   let pathData = path.split("/");
