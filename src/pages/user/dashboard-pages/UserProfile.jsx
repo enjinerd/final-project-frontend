@@ -1,22 +1,21 @@
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
 import { useFormik } from "formik";
-import { validateNotEmpty, validateValue } from "helpers";
+import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useCitizen from "hooks/user/useCitizen";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router";
+import { Breadcrumbs } from "components/user";
 
 export function UserProfile() {
   const { token } = useAuthStore();
   const [selectedDay, setSelectedDay] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const dateEl = useRef(null);
   const { updateProfile, userProfile } = useCitizen();
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -24,7 +23,7 @@ export function UserProfile() {
       name: "",
       nik: "",
       gender: "",
-      handphone: "",
+      handphone_number: "",
       age: "",
     },
     validateOnBlur: true,
@@ -65,6 +64,7 @@ export function UserProfile() {
   };
   useEffect(async () => {
     const decode = jwt_decode(token);
+    console.log(history);
 
     const data = await userProfile(token, decode?.user_id);
     const birthday = new Date(data?.birthday);
@@ -75,10 +75,11 @@ export function UserProfile() {
     });
     formik.setValues({
       ...formik.values,
-      name: data?.name,
-      nik: data?.nik,
+      name: data.name,
+      nik: data.nik,
       address: data.address,
       birthday: data.birthday,
+      handphone_number: data.handphone_number,
     });
   }, []);
 
@@ -141,7 +142,7 @@ export function UserProfile() {
                 Laki - Laki
               </option>
               <option
-                value="Female "
+                value="Female"
                 selected={formik.values?.gender == "Female"}
               >
                 Perempuan
@@ -181,11 +182,11 @@ export function UserProfile() {
               type="text"
               placeholder="081273823xxxx"
               className="input input-bordered"
-              name="handphone"
+              name="handphone_number"
               onChange={formik.handleChange}
-              value={formik.values.handphone}
+              value={formik.values.handphone_number}
             />
-            {formik.errors.handphone ? (
+            {formik.errors.handphone_number ? (
               <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.handphone}</label>

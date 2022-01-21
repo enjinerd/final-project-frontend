@@ -12,11 +12,14 @@ export function UserDashboard() {
   const [profile, setProfile] = useState(null);
   const { userProfile } = useCitizen();
   const userId = jwtDecode(token).user_id;
+  const { data } = userProfile(token, userId);
 
   useEffect(async () => {
-    const data = await userProfile(token, userId);
-    setProfile(data);
-  }, []);
+    if (data) {
+      setProfile(data.data.data);
+    }
+    console.log(profile);
+  }, [data]);
 
   return (
     <Page>
@@ -26,9 +29,15 @@ export function UserDashboard() {
             <p className="text-2xl font-primary sm:text-xl">
               Halo, <strong>{profile?.name}</strong>
             </p>
-            <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
-              <p>Belum Vaksinasi</p>
-            </div>
+            {profile?.citizen_family[0].status_vaccines == "" ? (
+              <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
+                <p>Belum Vaksinasi</p>
+              </div>
+            ) : (
+              <div className="py-1 font-semibold text-center alert-success font-secondary dark:bg-">
+                <p>Sudah Vaksinasi</p>
+              </div>
+            )}
             <UserMenus />
             <ConfirmDialog
               isOpen={isOpen}
