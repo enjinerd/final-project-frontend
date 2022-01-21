@@ -5,6 +5,7 @@
     "user-dashboard",
     "family",
     "user-homepage",
-    "vaccination"
+    "vaccination",
+    "auth"
   ]
 }
