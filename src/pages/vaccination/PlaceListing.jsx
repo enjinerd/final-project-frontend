@@ -9,21 +9,17 @@ import useAuthStore from "stores/useAuthStore";
 export function PlaceListing({ match }) {
   const [isOpen, setOpen] = useState(false);
   const sessionId = match.params.sessionId;
-  const { token } = useAuthStore();
+  const { token, isAuthenticated } = useAuthStore();
+  const [isRegistered, setRegistered] = useState(false);
 
-  const { registerVaccination } = useCitizen();
-  console.log(
-    "🚀 ~ file: PlaceListing.jsx ~ line 38 ~ PlaceListing ~ sessionId",
-    sessionId
-  );
+  const { registerVaccination, vaccinationSession } = useCitizen();
+
   const { data, isLoading, error } = useFetchHFById({ id: sessionId });
   const handleRegisterSession = async (jwt, sessionId) => {
     console.log(jwt);
     await registerVaccination(jwt, sessionId);
   };
   const formatDate = (dateString) => {
-    console.log(typeof dateString);
-
     const options = {
       year: "numeric",
       month: "long",
@@ -34,10 +30,12 @@ export function PlaceListing({ match }) {
     return new Date(dateString).toLocaleDateString("id-ID", options);
   };
 
-  useEffect(() => {
-    console.log(sessionId);
-    console.log(token);
-  }, [sessionId]);
+  useEffect(async () => {
+    let data = await vaccinationSession(token);
+    if (data?.session.length > 0) {
+      setRegistered(true);
+    }
+  }, [data]);
 
   return (
     <Page>
@@ -72,17 +70,35 @@ export function PlaceListing({ match }) {
                       </p>
                       <p className="font-semibold">Kuota : {item.quota}</p>
                     </div>
-                    <ConfirmDialog
-                      isOpen={isOpen}
-                      setOpen={setOpen}
-                      title="Apakah anda yakin ingin mendaftar?"
-                      message="Konfirmasi jika anda ingin mendaftar, anda tidak bisa membatalkan sesi vaksinasi yang sudah terdaftar"
-                      handleConfirm={() =>
-                        handleRegisterSession(token, item.id)
-                      }
-                      titleAction="Daftar"
-                      className="btn btn-info"
-                    />
+                    {isAuthenticated && !isRegistered && (
+                      <ConfirmDialog
+                        isOpen={isOpen}
+                        setOpen={setOpen}
+                        title="Apakah anda yakin ingin mendaftar?"
+                        message="Konfirmasi jika anda ingin mendaftar, anda tidak bisa membatalkan sesi vaksinasi yang sudah terdaftar"
+                        handleConfirm={() =>
+                          handleRegisterSession(token, item.id)
+                        }
+                        titleAction="Daftar"
+                        className="btn btn-info"
+                      />
+                    )}
+                    {!isAuthenticated && (
+                      <div
+                        data-tip="Anda harus mendaftar akun dahulu"
+                        className="tooltip"
+                      >
+                        <button className="btn btn-disabled">Daftar</button>
+                      </div>
+                    )}
+                    {isRegistered && (
+                      <div
+                        data-tip="Anda sudah mendaftar sesi vaksinasi"
+                        className="tooltip"
+                      >
+                        <button className="btn btn-disabled">Daftar</button>
+                      </div>
+                    )}
                   </div>
                 </ExpandableArea>
               ))}
