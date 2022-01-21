@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Page, PageContent } from "components/layout/page";
 import { idLocalCalendar } from "components/ui";
 import DatePicker from "react-modern-calendar-datepicker";
@@ -7,13 +7,14 @@ import { useFormik } from "formik";
 import { validateNotEmpty, validateValue, validateNik } from "helpers";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
+import { useHistory } from "react-router-dom";
 
 export function AddFamilyMember() {
   const { token } = useAuthStore();
+  const history = useHistory();
 
   const [selectedDay, setSelectedDay] = useState(null);
-  const dateEl = useRef(null);
-  const { addFamily } = useCitizen();
+  const { addFamily, error } = useCitizen();
 
   const formik = useFormik({
     initialValues: {
@@ -49,6 +50,9 @@ export function AddFamilyMember() {
     },
     onSubmit: async (values) => {
       await addFamily(values, token);
+      if (!error) {
+        history.push("/user/family-member");
+      }
     },
   });
 
@@ -72,12 +76,12 @@ export function AddFamilyMember() {
     <Page>
       <PageContent>
         <div className="px-4 py-8 space-y-6 lg:px-8">
-          <h1 className="font-bold font-primary text-2xl text-center sm:text-xl">
+          <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
             Tambah Anggota Keluarga
           </h1>
           <div className="form-control space-y-1">
             <label className="label">
-              <span className="font-bold label-text">NIK</span>
+              <span className="label-text font-bold">NIK</span>
             </label>
             <input
               type="text"
@@ -88,14 +92,14 @@ export function AddFamilyMember() {
               value={formik.values.nik}
             />
             {formik.errors.nik ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.nik}</label>
                 </div>
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Nama Lengkap</span>
+              <span className="label-text font-bold">Nama Lengkap</span>
             </label>
             <input
               type="text"
@@ -106,14 +110,14 @@ export function AddFamilyMember() {
               value={formik.values.name}
             />
             {formik.errors.name ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.name}</label>
                 </div>
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Jenis Kelamin</span>
+              <span className="label-text font-bold">Jenis Kelamin</span>
             </label>
             <select
               className="select select-bordered w-full"
@@ -127,14 +131,14 @@ export function AddFamilyMember() {
               <option value="Female">Perempuan</option>
             </select>
             {formik.errors.gender ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.gender}</label>
                 </div>
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">Tanggal Lahir</span>
+              <span className="label-text font-bold">Tanggal Lahir</span>
             </label>{" "}
             <DatePicker
               value={selectedDay}
@@ -147,14 +151,14 @@ export function AddFamilyMember() {
               shouldHighlightWeekends
             />
             {formik.errors.birthday ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.birthday}</label>
                 </div>
               </div>
             ) : null}
             <label className="label">
-              <span className="font-bold label-text">No. Telepon</span>
+              <span className="label-text font-bold">No. Telepon</span>
             </label>
             <input
               type="text"
@@ -165,7 +169,7 @@ export function AddFamilyMember() {
               value={formik.values.handphone}
             />
             {formik.errors.handphone ? (
-              <div className="font-medium px-2 py-1 rounded-md text-red-600 text-sm">
+              <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
                 <div className="flex-1">
                   <label>{formik.errors.handphone}</label>
                 </div>

@@ -58,9 +58,9 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="bottom-nav">
+    <nav className="backdrop-blur-lg backdrop-filter bg-opacity-40 bottom-nav">
       <div className="bottom-nav_container">
-        <ul className="flex justify-evenly items-center w-full">
+        <ul className="flex items-center w-full justify-evenly">
           {navItems.map((item) => {
             const isActive = item.exact
               ? item.href === router.pathname

@@ -4,7 +4,8 @@ import useAuthStore from "stores/useAuthStore";
 
 function PrivateRoute(props) {
   const { isAuthenticated, isAuthenticating, token, logout } = useAuthStore();
-
+  console.log(token, "token");
+  console.log(isAuthenticated, "isAuthenticated");
   const { component: Component, ...rest } = props;
   if (isAuthenticating) {
     return (
@@ -15,7 +16,8 @@ function PrivateRoute(props) {
   }
   if (isAuthenticated) {
     const decoded = jwt_decode(token);
-    if (decoded.exp < Date.now() / 1000) {
+    console.log(decoded);
+    if (decoded.exp < Date.now() / 1000 || decoded.role !== "USER") {
       logout();
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
