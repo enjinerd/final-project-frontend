@@ -129,25 +129,12 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  vaccinationSession: async (token) => {
-    let data;
-    await axios
-      .get(`${api}/citizen/sessions`, {
+  vaccinationSession: (token) => {
+    return useQuery("userSessionData", () =>
+      axios(`${api}/citizen/sessions`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((val) => {
-        set(() => ({
-          isLoading: false,
-        }));
-        data = val.data.data;
-      })
-      .catch((error) => {
-        set(() => ({
-          isLoading: false,
-          error,
-        }));
-      });
-    return data;
+      }).then((val) => val.data.data?.session)
+    );
   },
 }));
 

@@ -17,8 +17,8 @@ export function UserDashboard() {
   useEffect(async () => {
     if (data) {
       setProfile(data.data.data);
+      console.log(profile);
     }
-    console.log(profile);
   }, [data]);
 
   return (
@@ -29,7 +29,7 @@ export function UserDashboard() {
             <p className="text-2xl font-primary sm:text-xl">
               Halo, <strong>{profile?.name}</strong>
             </p>
-            {profile?.citizen_family[0].status_vaccines == "" ? (
+            {profile?.citizen_family[0].status_vaccines == "BELUM VAKSIN" ? (
               <div className="py-1 font-semibold text-center alert-error font-secondary dark:bg-">
                 <p>Belum Vaksinasi</p>
               </div>
