@@ -5,11 +5,14 @@ import { useHistory } from "react-router-dom";
 import useAuthAdminStore from "stores/useAuthAdminStore";
 import jwt_decode from "jwt-decode";
 import "./styles.css";
+import useAdmin from "../../../hooks/admin/useAdmin";
+import moment from "moment";
 
 export function AddSession() {
   const api = import.meta.env.VITE_API_HOST;
   const history = useHistory();
   const { token } = useAuthAdminStore();
+  const { getVaccine, addVaccine, editVaccine, isLoading } = useAdmin();
   const [listVaccine, setListVaccine] = useState([]);
   const decoded = jwt_decode(token);
 
@@ -33,18 +36,9 @@ export function AddSession() {
     return errors;
   };
 
-  useEffect(() => {
-    async function fetchMyAPI() {
-      let response = await axios.get(`${api}/vaccines/${decoded.user_id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setListVaccine(response.data?.data);
-    }
-    fetchMyAPI();
-  }, []);
-
-  useEffect(() => {
-    console.log(history.location.state);
+  useEffect(async () => {
+    let vaccine = await getVaccine(token, decoded.user_id);
+    setListVaccine(vaccine);
   }, []);
 
   const formik = useFormik({
@@ -52,11 +46,15 @@ export function AddSession() {
       startDate:
         history.location?.state === undefined
           ? new Date().toISOString()
-          : history.location.state?.start_date,
+          : moment(new Date(history.location.state?.start_date)).format(
+              "YYYY-MM-DDTHH:mm"
+            ),
       endDate:
         history.location?.state === undefined
           ? new Date().toISOString()
-          : history.location.state?.end_date,
+          : moment(new Date(history.location.state?.end_date)).format(
+              "YYYY-MM-DDTHH:mm"
+            ),
       vaccine:
         history.location?.state === undefined
           ? 1
@@ -76,7 +74,9 @@ export function AddSession() {
         .post(
           `${api}/vaccine/sessions`,
           {
-            start_date: new Date(formik.values.startDate).toISOString(),
+            start_date: moment(new Date(formik.values.startDate)).format(
+              "YYYY-MM-DDTHH:mm"
+            ),
             end_date: new Date(formik.values.endDate).toISOString(),
             vaccine_id: parseInt(formik.values.vaccine),
             quota: formik.values.quota,
@@ -189,7 +189,7 @@ export function AddSession() {
             onChange={formik.handleChange}
             value={formik.values.vaccine}
           >
-            {history.location.state?.vaccine?.map((index, vaccine) => {
+            {listVaccine.map((vaccine, index) => {
               return (
                 <option key={index} value={vaccine.id}>
                   {vaccine.name}
@@ -241,8 +241,8 @@ export function AddSession() {
             onChange={formik.handleChange}
             value={formik.values.sessionType}
           >
-            <option value="SESI 1">1</option>
-            <option value="SESI 2">2</option>
+            <option value="SESI 1">SESI 1</option>
+            <option value="SESI 2">SESI 2</option>
           </select>
           {formik.errors.sessionType ? (
             <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
@@ -257,7 +257,7 @@ export function AddSession() {
           type="submit"
           className="btn"
           onClick={
-            history.location.state !== undefined
+            history.location.state
               ? () => handleEdit(history.location.state.id)
               : () => handleSubmit()
           }

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useAuthAdminStore from "stores/useAuthAdminStore";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import useAdmin from "../../hooks/admin/useAdmin";
 
 export default function TableSession() {
   const api = import.meta.env.VITE_API_HOST;
@@ -12,40 +13,21 @@ export default function TableSession() {
   const { token } = useAuthAdminStore();
   const { isAuthenticated } = useAuthAdminStore();
   const [data, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
   const [vaccines, setVaccines] = useState([]);
   const decoded = jwt_decode(token);
+  const { getSessionByHf, getVaccine, deleteSession, isLoading } = useAdmin();
 
-  useEffect(() => {
-    async function fetchSessions() {
-      let response = await axios.get(
-        `${api}/vaccine/session/owned/${decoded.user_id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setData(response.data.data);
-    }
-    async function fetchVaccines() {
-      let response = await axios.get(`${api}/vaccines/${decoded.user_id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+  useEffect(async () => {
+    let sessions = await getSessionByHf(token, decoded.user_id);
+    let vaccines = await getVaccine(token, decoded.user_id);
+    sessions.map((d, index) => {
+      let v = vaccines.filter((obj) => {
+        return obj.id === d["vaccine_id "];
       });
-      setVaccines(response.data.data);
-      data.map((d, index) => {
-        const v = response.data.data.filter((obj) => {
-          return obj.id === d["vaccine_id "];
-        });
-        d.vaccine = v[0]["name"];
-      });
-    }
-    fetchSessions();
-    fetchVaccines();
-  }, []);
-
-  const handleDelete = (id) => {
-    axios.delete(`${api}/vaccine/session/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      setNewData((prev) => [...prev, { ...d, vaccine: v[0]["name"] }]);
     });
-  };
+  }, []);
 
   // const custom_theme = createMuiTheme({
   //   palette: {
@@ -58,26 +40,45 @@ export default function TableSession() {
   //   }
   // });
 
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("id-ID", options);
+  };
+
   return (
     // <MuiThemeProvider theme={custom_theme}>
     <MaterialTable
+      onRowClick={(event, rowData) => {
+        history.push({
+          pathname: `${datum.pathname}/detail`,
+          state: {
+            id: rowData.id,
+          },
+        });
+      }}
       title="Positioning Actions Column Preview"
       columns={[
         {
           title: "Start Date",
           field: "start_date",
-          render: (row) => <span>{row["start_date"]}</span>,
+          render: (row) => <span>{formatDate(row["start_date"])}</span>,
         },
-        { title: "End Date", field: "end_date" },
-        { title: "Vaccine", field: "vaccine" },
-        { title: "Quota", field: "quota", type: "numeric" },
         {
-          title: "Session Type",
-          field: "session_type",
-          type: "numeric",
+          title: "End Date",
+          field: "end_date",
+          render: (row) => <span>{formatDate(row["end_date"])}</span>,
         },
+        { title: "Vaccine", field: "vaccine" },
+        { title: "Session Type", field: "session_type" },
+        { title: "Quota", field: "quota", type: "numeric" },
       ]}
-      data={data}
+      data={newData}
       actions={[
         {
           icon: () => (
@@ -104,7 +105,7 @@ export default function TableSession() {
               state: {
                 start_date: rowData.start_date,
                 end_date: rowData.end_date,
-                vaccine_id: rowData.vaccine_id,
+                vaccine_id: rowData["vaccine_id "],
                 quota: rowData.quota,
                 session_type: rowData.session_type,
               },
@@ -130,7 +131,7 @@ export default function TableSession() {
           position: "row",
           onClick: (event, rowData) => {
             confirm("You want to delete " + rowData.name);
-            handleDelete(rowData.id);
+            deleteSession(rowData.id, token);
           },
         },
         {
@@ -153,9 +154,6 @@ export default function TableSession() {
           onClick: () => {
             history.push({
               pathname: `${datum.pathname}/add`,
-              state: {
-                vaccines: vaccines,
-              },
             });
           },
         },
