@@ -11,6 +11,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import useAuthStore from "stores/useAuthStore";
 import useCitizen from "hooks/user/useCitizen";
 import { useHistory, Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export function DropdownFamilyMenu({ dataId, userData }) {
   userData.id = dataId;
@@ -30,6 +31,8 @@ export function DropdownFamilyMenu({ dataId, userData }) {
 
   async function handleConfirm() {
     await deleteFamily(dataId, token);
+    toast.success("Data berhasil dihapus.");
+    history.push("/user");
     closeModal();
     setCount(count++);
   }
@@ -42,6 +45,7 @@ export function DropdownFamilyMenu({ dataId, userData }) {
 
   return (
     <>
+      <Toaster />
       <Dropdown
         overlay={[
           <Dropdown.Item icon={<IconEdit stroke="green" />}>
@@ -73,10 +77,10 @@ export function DropdownFamilyMenu({ dataId, userData }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="overflow-y-auto fixed inset-0 z-10"
+          className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeModal}
         >
-          <div className="px-4 min-h-screen text-center">
+          <div className="min-h-screen px-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -105,7 +109,7 @@ export function DropdownFamilyMenu({ dataId, userData }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block overflow-hidden p-6 my-8 w-full max-w-md text-left align-middle bg-white rounded-2xl shadow-xl transition-all transform">
+              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-bold leading-6 text-gray-900"
