@@ -1,3 +1,9 @@
+/**
+ * If the value is valid, return true. Otherwise, return false.
+ * @param value - the value to validate
+ * @param validator - a function that takes a value and returns a boolean.
+ * @returns The function isValid is being returned.
+ */
 export function validateValue(value, validator) {
   let isValid = false;
   if (validator(value)) {
@@ -14,6 +20,11 @@ export function validateNotEmpty(value) {
   return error;
 }
 
+/**
+ * Validate an email address.
+ * @param email - The email address to validate.
+ * @returns The error message.
+ */
 export function validateEmail(email) {
   let error;
 

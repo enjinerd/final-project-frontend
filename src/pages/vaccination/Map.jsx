@@ -45,6 +45,10 @@ export const Map = ({ latitude, longitude, data }) => {
     [handleViewportChange]
   );
 
+  /**
+   * It takes in a list of faskes and returns the 3 closest faskes.
+   * @returns The function getNearbyFaskes is returning the 3 closest faskes.
+   */
   const getNearbyFaskes = (data) => {
     let threeClosest = [];
     const faksesLatitude = data?.map((f) => parseFloat(f.latitude));
