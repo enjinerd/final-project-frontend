@@ -8,11 +8,14 @@ import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import useAuthStore from "stores/useAuthStore";
 import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router";
+import { Breadcrumbs } from "components/user";
 
 export function UserProfile() {
   const { token } = useAuthStore();
   const [selectedDay, setSelectedDay] = useState(null);
   const { updateProfile, userProfile } = useCitizen();
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -61,6 +64,7 @@ export function UserProfile() {
   };
   useEffect(async () => {
     const decode = jwt_decode(token);
+    console.log(history);
 
     const data = await userProfile(token, decode?.user_id);
     const birthday = new Date(data?.birthday);

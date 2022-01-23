@@ -11,6 +11,12 @@ export function VaccinationHomepage() {
     longitude: 106.816666,
   });
 
+  /**
+   * If the browser doesn't support geolocation, set the status to "Geolocation is not supported by your
+   * browser". Otherwise, set the status to "Locating..." and get the user's position. If the position
+   * can't be retrieved, set the status to "Unable to retrieve your location".
+   * @returns None
+   */
   const handleLocation = () => {
     if (!navigator.geolocation) {
       setStatus("Geolocation is not supported by your browser");

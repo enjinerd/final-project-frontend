@@ -12,12 +12,14 @@ export function UserDashboard() {
   const [profile, setProfile] = useState(null);
   const { userProfile } = useCitizen();
   const userId = jwtDecode(token).user_id;
+  const { data } = userProfile(token, userId);
 
   useEffect(async () => {
-    const data = await userProfile(token, userId);
-    setProfile(data);
-    console.log(data);
-  }, []);
+    if (data) {
+      setProfile(data.data.data);
+    }
+    console.log(profile);
+  }, [data]);
 
   return (
     <Page>
