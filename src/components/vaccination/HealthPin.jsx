@@ -1,9 +1,18 @@
 import { Marker } from "react-map-gl";
 
+function validateMapData(val) {
+  const isLatitude = num => isFinite(num) && Math.abs(num) <= 90;
+  const isLongitude = num => isFinite(num) && Math.abs(num) <= 180;
+  if(!val) return false;
+  if(!isLatitude(val.latitude)) return false;
+  if(!isLongitude(val.longitude)) return false;
+  return true;
+}
+
 export function HealthPin({ data, onClick }) {
   return (
     <div>
-      {data?.map((loc, index) => (
+      {data?.filter(val => validateMapData(val)).map((loc, index) => (
         <Marker
           latitude={parseFloat(loc?.latitude)}
           longitude={parseFloat(loc?.longitude)}

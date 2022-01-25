@@ -16,6 +16,9 @@ export function UserProfile() {
   const [selectedDay, setSelectedDay] = useState(null);
   const { updateProfile, userProfile } = useCitizen();
   const history = useHistory();
+  const decode = jwt_decode(token);
+
+  const { data } = userProfile(token, decode?.user_id);
 
   const formik = useFormik({
     initialValues: {
@@ -63,25 +66,24 @@ export function UserProfile() {
     formik.setValues({ ...formik.values, birthday: date });
   };
   useEffect(async () => {
-    const decode = jwt_decode(token);
-    console.log(history);
-
-    const data = await userProfile(token, decode?.user_id);
-    const birthday = new Date(data?.birthday);
-    setSelectedDay({
-      year: birthday.getFullYear(),
-      month: birthday?.getMonth() + 1,
-      day: birthday?.getDate(),
-    });
-    formik.setValues({
-      ...formik.values,
-      name: data.name,
-      nik: data.nik,
-      address: data.address,
-      birthday: data.birthday,
-      handphone_number: data.handphone_number,
-    });
-  }, []);
+    if (data) {
+      const user = data.data.data;
+      const birthday = new Date(user?.birthday);
+      setSelectedDay({
+        year: birthday.getFullYear(),
+        month: birthday?.getMonth() + 1,
+        day: birthday?.getDate(),
+      });
+      formik.setValues({
+        ...formik.values,
+        name: user?.name,
+        nik: user?.nik,
+        address: user?.address,
+        birthday: user?.birthday,
+        handphone_number: user?.handphone_number,
+      });
+    }
+  }, [data]);
 
   return (
     <Page>

@@ -56,52 +56,55 @@ export function PlaceListing({ match }) {
               Sesi Vaksinasi{" "}
             </h2>
             <div className="flex flex-col w-full space-y-2">
-              {data?.vaccine_session.map((item) => (
-                <ExpandableArea
-                  title={
-                    data?.vaccine.filter((v) => v.id == item.vaccine_id)[0].name
-                  }
-                >
-                  <div className="flex flex-row items-center justify-between">
-                    <div className="flex flex-col justify-between">
-                      <p className="font-medium">
-                        {formatDate(item.start_date)} WIB -{" "}
-                        {formatDate(item.end_date)} WIB
-                      </p>
-                      <p className="font-semibold">Kuota : {item.quota}</p>
+              {typeof data?.session === "undefined" ? (<p className="alert alert-error">Belum ada Sesi Vaksinasi yang tersedia.</p>) : (
+                <>
+                {data?.vaccine_session.map((item) => (
+                  <ExpandableArea
+                    title={
+                      data?.vaccine.filter((v) => v.id == item.vaccine_id)[0].name
+                    }
+                  >
+                    <div className="flex flex-row items-center justify-between">
+                      <div className="flex flex-col justify-between">
+                        <p className="font-medium">
+                          {formatDate(item.start_date)} WIB -{" "}
+                          {formatDate(item.end_date)} WIB
+                        </p>
+                        <p className="font-semibold">Kuota : {item.quota}</p>
+                      </div>
+                      {isAuthenticated && !isRegistered && (
+                        <ConfirmDialog
+                          isOpen={isOpen}
+                          setOpen={setOpen}
+                          title="Apakah anda yakin ingin mendaftar?"
+                          message="Konfirmasi jika anda ingin mendaftar, anda tidak bisa membatalkan sesi vaksinasi yang sudah terdaftar"
+                          handleConfirm={() =>
+                            handleRegisterSession(token, item.id)
+                          }
+                          titleAction="Daftar"
+                          className="btn btn-info"
+                        />
+                      )}
+                      {!isAuthenticated && (
+                        <div
+                          data-tip="Anda harus mendaftar akun dahulu"
+                          className="tooltip"
+                        >
+                          <button className="btn btn-disabled">Daftar</button>
+                        </div>
+                      )}
+                      {isRegistered && (
+                        <div
+                          data-tip="Anda sudah mendaftar sesi vaksinasi"
+                          className="tooltip"
+                        >
+                          <button className="btn btn-disabled">Daftar</button>
+                        </div>
+                      )}
                     </div>
-                    {isAuthenticated && !isRegistered && (
-                      <ConfirmDialog
-                        isOpen={isOpen}
-                        setOpen={setOpen}
-                        title="Apakah anda yakin ingin mendaftar?"
-                        message="Konfirmasi jika anda ingin mendaftar, anda tidak bisa membatalkan sesi vaksinasi yang sudah terdaftar"
-                        handleConfirm={() =>
-                          handleRegisterSession(token, item.id)
-                        }
-                        titleAction="Daftar"
-                        className="btn btn-info"
-                      />
-                    )}
-                    {!isAuthenticated && (
-                      <div
-                        data-tip="Anda harus mendaftar akun dahulu"
-                        className="tooltip"
-                      >
-                        <button className="btn btn-disabled">Daftar</button>
-                      </div>
-                    )}
-                    {isRegistered && (
-                      <div
-                        data-tip="Anda sudah mendaftar sesi vaksinasi"
-                        className="tooltip"
-                      >
-                        <button className="btn btn-disabled">Daftar</button>
-                      </div>
-                    )}
-                  </div>
-                </ExpandableArea>
-              ))}
+                  </ExpandableArea>
+                ))}</>
+              )}
             </div>
           </div>
         )}

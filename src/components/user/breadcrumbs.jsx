@@ -6,6 +6,13 @@ export const Breadcrumbs = ({ path }) => {
   let pathData = path.split("/");
   pathData.shift();
   pathData.pop();
+  pathData.map((item, index) => {
+    if (item == "User") {
+      return "Profil";
+    } else if(item == "Vaccine") {
+      return "Vaksinasi";
+    }
+  })
   return (
     <div className="flex flex-row items-center justify-center px-3 py-3 space-x-2 bg-white rounded-md shadow-lg backdrop-blur-lg backdrop-filter bg-opacity-40">
       <HomeIcon
