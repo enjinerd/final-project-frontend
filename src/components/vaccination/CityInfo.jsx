@@ -6,7 +6,7 @@ function CityInfo(props) {
   return (
     <div className="flex flex-col space-y-1 rounded-md">
       <p className="text-sm font-medium">{info?.name}</p>
-      <Link to={`/vaccination/session/${info?.id}`}>
+      <Link to={`/vaccination/${info?.id}`}>
         {" "}
         <button className="btn btn-block btn-info btn-xs">
           Lihat Vaksinasi

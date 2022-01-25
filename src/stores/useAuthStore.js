@@ -9,12 +9,13 @@ const useAuthStore = createStore(
   persist(
     {
       key: "auth", // required, child key of storage
-      allowlist: ["isAuthenticated", "token"], // optional, will save everything if allowlist is undefined
+      allowlist: ["isAuthenticated", "token", "isTour"], // optional, will save everything if allowlist is undefined
       denylist: [], // optional, if allowlist set, denylist will be ignored
     },
     (set) => ({
       isAuthenticating: false,
       isAuthenticated: false,
+      isTour: false,
       token:
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MTc1NTg0OCwiZXhwIjoxNjQxNzU1MDAwfQ.Ln9NfWjO_PId8yHhv6IhUZzveRvQ1AG7xOJfJL5qZJs",
       email: undefined,
@@ -64,9 +65,13 @@ const useAuthStore = createStore(
       logout: async () => {
         set(() => ({
           isAuthenticated: false,
+          isTour: false,
           token:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTY0MTc1NTg0OCwiZXhwIjoxNjQxNzU1MDAwfQ.Ln9NfWjO_PId8yHhv6IhUZzveRvQ1AG7xOJfJL5qZJs",
         }));
+      },
+      setTour: () => {
+        set(() => ({ isTour: true }));
       },
     })
   )

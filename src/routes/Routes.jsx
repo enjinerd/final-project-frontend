@@ -1,9 +1,9 @@
 import User from "./User";
 import Admin from "./Admin";
 import Vaccination from "./Vaccination";
-import { LayoutRoot } from "components/layout/layout-root";
-import { Home } from "pages";
+import { Home, NotFound } from "pages";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { LayoutRoot } from "components/layout/layout-root";
 
 export default function Routes() {
   return (
@@ -17,6 +17,10 @@ export default function Routes() {
         <Route path="/user" component={User} />
         <Route path="/vaccination" component={Vaccination} />
         <Route path="/admin" component={Admin} />
+        <LayoutRoot>
+          {" "}
+          <Route path="*" component={NotFound} />
+        </LayoutRoot>
       </Switch>
     </Router>
   );
