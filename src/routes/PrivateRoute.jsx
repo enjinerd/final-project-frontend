@@ -2,11 +2,14 @@ import jwt_decode from "jwt-decode";
 import { Redirect, Route } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 
+/**
+ * If the user is authenticated, render the component. If not, redirect to the login page.
+ * @returns A Route component.
+ */
 function PrivateRoute(props) {
   const { isAuthenticated, isAuthenticating, token, logout } = useAuthStore();
-  console.log(token, "token");
-  console.log(isAuthenticated, "isAuthenticated");
   const { component: Component, ...rest } = props;
+
   if (isAuthenticating) {
     return (
       <div className="flex items-center justify-center p-12">
@@ -16,14 +19,14 @@ function PrivateRoute(props) {
   }
   if (isAuthenticated) {
     const decoded = jwt_decode(token);
-    console.log(decoded);
+
     if (decoded.exp < Date.now() / 1000 || decoded.role !== "USER") {
       logout();
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
-  return <Redirect to="/user/login" />;
 
-  //redirect if there is no user
+  return <Redirect to="/user/login" />;
 }
+
 export default PrivateRoute;

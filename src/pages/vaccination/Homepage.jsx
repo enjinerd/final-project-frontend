@@ -6,11 +6,16 @@ import { useFetchHF } from "hooks/vaccination";
 export function VaccinationHomepage() {
   const { data, isLoading } = useFetchHF();
   const [status, setStatus] = useState(null);
-  const [userPos, setUserPos] = useState({
-    latitude: -6.2,
-    longitude: 106.816666,
-  });
 
+  const [latitude, setLatitude] = useState(-6.2);
+  const [longitude, setLongitude] = useState(106.816666);
+
+  /**
+   * If the browser doesn't support geolocation, set the status to "Geolocation is not supported by your
+   * browser". Otherwise, set the status to "Locating..." and get the user's position. If the position
+   * can't be retrieved, set the status to "Unable to retrieve your location".
+   * @returns None
+   */
   const handleLocation = () => {
     if (!navigator.geolocation) {
       setStatus("Geolocation is not supported by your browser");
@@ -19,13 +24,12 @@ export function VaccinationHomepage() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setStatus(null);
-          setUserPos({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
         },
-        () => {
+        (err) => {
           setStatus("Unable to retrieve your location");
+          console.log(err);
         }
       );
     }
@@ -54,11 +58,7 @@ export function VaccinationHomepage() {
               </div>
             </div>
           ) : (
-            <Map
-              latitude={userPos.latitude}
-              longitude={userPos.longitude}
-              data={data}
-            />
+            <Map latitude={latitude} longitude={longitude} data={data} />
           )}
         </div>
       </PageContent>

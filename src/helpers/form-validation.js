@@ -14,6 +14,11 @@ export function validateNotEmpty(value) {
   return error;
 }
 
+/**
+ * Validate an email address.
+ * @param email - The email address to validate.
+ * @returns The error message.
+ */
 export function validateEmail(email) {
   let error;
 
