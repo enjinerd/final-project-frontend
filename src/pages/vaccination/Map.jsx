@@ -22,10 +22,19 @@ export const Map = ({ latitude, longitude, data }) => {
     longitude,
   });
   const [viewport, setViewport] = useState({
-    latitude: -6.2,
-    longitude: 106.816666,
+    latitude,
+    longitude,
     zoom: 14,
   });
+
+  if (!latitude && !longitude) {
+    setViewport({
+      latitude: -6.2,
+      longitude: 106.816666,
+      zoom: 14,
+    });
+  }
+
   const mapRef = useRef();
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),

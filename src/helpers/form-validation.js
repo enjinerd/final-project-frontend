@@ -1,9 +1,3 @@
-/**
- * If the value is valid, return true. Otherwise, return false.
- * @param value - the value to validate
- * @param validator - a function that takes a value and returns a boolean.
- * @returns The function isValid is being returned.
- */
 export function validateValue(value, validator) {
   let isValid = false;
   if (validator(value)) {
