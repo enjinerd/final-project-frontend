@@ -2,12 +2,14 @@ import { Page, PageContent } from "components/layout/page";
 import { HomepageNews } from "components/user";
 import { Link } from "react-router-dom";
 import { useFetchNews } from "hooks/user";
-
+import { useFetchVaccInfo } from "hooks/vaccination";
 import { useEffect, useState } from "react";
+import Typist from 'react-text-typist';
+
 export function Home() {
   const [news, setNews] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const { data: newsFetchData, isLoading } = useFetchNews();
+  const { data: vaccInfoFetchData } = useFetchVaccInfo();
 
   useEffect(() => {
     if (newsFetchData) {
@@ -30,7 +32,8 @@ export function Home() {
           <div className="w-full lg:px-8">
             <div className="w-full px-2 py-3 bg-gradient-to-r from-orange-400 to-rose-400">
               <p className="text-base font-semibold text-center text-transparent bg-clip-text bg-gradient-to-tr from-rose-100 to-teal-100 md:text-lg font-secondary">
-                180.150.000 Warga Telah divaksinasi
+              <Typist sentences={[vaccInfoFetchData?.vaksinasi1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")]} loop={true} cursorSmooth={true} typingSpeed={150} />
+              Warga telah divaksinasi
               </p>
             </div>
           </div>

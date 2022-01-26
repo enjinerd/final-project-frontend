@@ -1,16 +1,10 @@
 import { Page, PageContent } from "components/layout/page";
-import { NotFoundSvg } from "components/ui/svg";
-import { Link } from "react-router-dom";
 import { useFetchVaccInfo } from "hooks/vaccination";
 import { useEffect } from "react";
 
 export function About() {
   const { data, isLoading, error } = useFetchVaccInfo();
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
+
   return (
     <Page>
       <PageContent>

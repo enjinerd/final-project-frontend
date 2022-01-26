@@ -6299,6 +6299,11 @@ react-test-renderer@^17.0.2:
     react-shallow-renderer "^16.13.1"
     scheduler "^0.20.2"
 
+react-text-typist@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-text-typist/-/react-text-typist-1.0.9.tgz#c735262a899d142bdafdd4d8423ab14d34efa45c"
+  integrity sha512-NiBY/TWOoHlRkamPV4atmrLUDt8MYiK+omSWPzhpmTyQLCePWc/KogC44/j5YjltUQ8VvUTod5TE3rmVANnOyA==
+
 react-to-print@^2.8.0:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.14.2.tgz#99aa1da0b1d0221397c0d380ca96cb34848932c9"
