@@ -6,7 +6,7 @@
 
 # Demo
 
- [Demo Link](https://vaksinasi.obi.code)
+ [Demo Link](https://vaksinasi.obi.codes)
 
 # Tech Stack
 
