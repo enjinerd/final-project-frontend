@@ -14,6 +14,8 @@ import { Redirect } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 import DatePicker from "react-modern-calendar-datepicker";
 import { useHistory } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
 
 export function SignUp() {
   const { register, error, isAuthenticated } = useAuthStore();
@@ -82,9 +84,12 @@ export function SignUp() {
     onSubmit: async (values) => {
       setDone(false);
       await register(values);
-      history.push("/user/login");
+      toast.success("Akun berhasil dibuat, anda sudah bisa masuk dan login.")
     },
   });
+  /**
+   * The function sets the next variable to the opposite of its current value.
+   */
   const handleNext = () => {
     setNext(!isNext);
   };
@@ -108,6 +113,7 @@ export function SignUp() {
   return (
     <Page>
       <PageContent>
+        <Toaster/>
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
@@ -118,11 +124,11 @@ export function SignUp() {
             </span>
           </h1>
           {isDone && (
-            <div className="alert alert-success font-medium">
+            <div className="font-medium alert alert-success">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -140,11 +146,11 @@ export function SignUp() {
             </div>
           )}
           {error && (
-            <div className="alert alert-error font-medium">
+            <div className="font-medium alert alert-error">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-2 w-6 h-6"
+                  className="w-6 h-6 mx-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -160,9 +166,9 @@ export function SignUp() {
           )}
 
           {isNext ? (
-            <div className="form-control space-y-1">
+            <div className="space-y-1 form-control">
               <label className="label">
-                <span className="label-text font-bold">NIK</span>
+                <span className="font-bold label-text">NIK</span>
               </label>
               <input
                 type="text"
@@ -180,7 +186,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Nama Lengkap</span>
+                <span className="font-bold label-text">Nama Lengkap</span>
               </label>
               <input
                 type="text"
@@ -198,10 +204,10 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Jenis Kelamin</span>
+                <span className="font-bold label-text">Jenis Kelamin</span>
               </label>
               <select
-                className="select select-bordered w-full"
+                className="w-full select select-bordered"
                 onChange={formik.handleChange}
                 name="gender"
               >
@@ -219,7 +225,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Tanggal Lahir</span>
+                <span className="font-bold label-text">Tanggal Lahir</span>
               </label>{" "}
               <DatePicker
                 value={selectedDay}
@@ -239,7 +245,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">No. Telepon</span>
+                <span className="font-bold label-text">No. Telepon</span>
               </label>
               <input
                 type="text"
@@ -258,9 +264,9 @@ export function SignUp() {
               ) : null}
             </div>
           ) : (
-            <div className="form-control space-y-1">
+            <div className="space-y-1 form-control">
               <label className="label">
-                <span className="label-text font-bold">E-mail</span>
+                <span className="font-bold label-text">E-mail</span>
               </label>
               <input
                 type="text"
@@ -278,7 +284,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">Kata Sandi</span>
+                <span className="font-bold label-text">Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -296,7 +302,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="label-text font-bold">
+                <span className="font-bold label-text">
                   Konfirmasi Kata Sandi
                 </span>
               </label>
@@ -324,7 +330,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                className="tooltip w-full"
+                className="w-full tooltip"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -346,7 +352,7 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              className="tooltip w-full"
+              className="w-full tooltip"
             >
               <button
                 className="btn btn-block btn-info"

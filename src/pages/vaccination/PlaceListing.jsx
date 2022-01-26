@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useCitizen } from "hooks/user";
 import { useFetchHFById } from "hooks/vaccination";
 import useAuthStore from "stores/useAuthStore";
+import { toGmapURL } from "helpers";
 
 export function PlaceListing({ match }) {
   const [isOpen, setOpen] = useState(false);
@@ -34,6 +35,7 @@ export function PlaceListing({ match }) {
     let data = await vaccinationSession(token);
     if (data?.session.length > 0) {
       setRegistered(true);
+      console.log(data);
     }
   }, [data]);
 
@@ -48,15 +50,16 @@ export function PlaceListing({ match }) {
           </div>
         ) : (
           <div className="flex flex-col items-center px-3 py-8 space-y-8 lg:px-16">
-            <div className="flex flex-col w-full h-auto px-10 py-6 bg-blue-500 border-b-4 border-blue-800 rounded-lg shadow-md">
+            <div className="flex flex-col w-full h-auto px-10 py-6 space-y-1 bg-blue-500 border-b-4 border-blue-800 rounded-lg shadow-md">
               <p className="text-2xl font-bold font-primary">{data?.name}</p>
               <p className="text-gray-200 font-primary">{data?.address}</p>
+              <a href={toGmapURL(data?.latitude, data?.longitude)} target="_blank" className="btn"> Lokasi </a>
             </div>
             <h2 className="text-xl font-semibold font-primary">
               Sesi Vaksinasi{" "}
             </h2>
             <div className="flex flex-col w-full space-y-2">
-              {typeof data?.session === "undefined" ? (<p className="alert alert-error">Belum ada Sesi Vaksinasi yang tersedia.</p>) : (
+              {data?.vaccine_session.length == 0 ? (<p className="alert alert-error">Belum ada Sesi Vaksinasi yang tersedia.</p>) : (
                 <>
                 {data?.vaccine_session.map((item) => (
                   <ExpandableArea
