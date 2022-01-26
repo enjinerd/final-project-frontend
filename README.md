@@ -4,6 +4,10 @@
 
 ![cover](https://i.ibb.co/6BJbCF3/Figma-Cover.png)
 
+# Demo
+
+ [Demo Link](https://vaksinasi.obi.code)
+
 # Tech Stack
 
 ![tailwindcss](https://badges.aleen42.com/src/tailwindcss.svg) ![react](https://badges.aleen42.com/src/react.svg) ![vite](https://badges.aleen42.com/src/vitejs.svg) ![vscode](https://badges.aleen42.com/src/visual_studio_code.svg) ![javascript](https://badges.aleen42.com/src/javascript.svg)
