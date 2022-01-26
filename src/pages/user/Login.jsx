@@ -111,14 +111,6 @@ export function Login() {
                 </div>
               </div>
             ) : null}
-            <label className="label">
-              <a
-                href="#"
-                className="font-semibold text-gray-400 label-text-alt"
-              >
-                Lupa kata sandi?
-              </a>
-            </label>
           </div>
           <button
             type="submit"

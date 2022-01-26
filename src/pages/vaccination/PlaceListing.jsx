@@ -56,7 +56,7 @@ export function PlaceListing({ match }) {
               Sesi Vaksinasi{" "}
             </h2>
             <div className="flex flex-col w-full space-y-2">
-              {typeof data?.session === "undefined" ? (<p className="alert alert-error">Belum ada Sesi Vaksinasi yang tersedia.</p>) : (
+              {data?.vaccine_session.length == 0 ? (<p className="alert alert-error">Belum ada Sesi Vaksinasi yang tersedia.</p>) : (
                 <>
                 {data?.vaccine_session.map((item) => (
                   <ExpandableArea
