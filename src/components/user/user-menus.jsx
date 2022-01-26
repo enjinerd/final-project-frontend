@@ -87,9 +87,9 @@ export function UserMenus() {
                 className: "h-6 w-6 text-white",
               })}
             </div>
-            <a className="mt-3 text-xs font-medium text-gray-900 helper-link-cover">
+            <div className="mt-3 text-xs font-medium text-gray-900 helper-link-cover">
               {item.name}
-            </a>
+            </div>
           </Link>
         </li>
       ))}

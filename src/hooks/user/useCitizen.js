@@ -104,11 +104,6 @@ const useCitizen = createStore((set) => ({
       });
   },
   registerVaccination: async (token, bookingId) => {
-    console.log(
-      "🚀 ~ file: useCitizen.js ~ line 132 ~ registerVaccination: ~ token",
-      token
-    );
-
     await axios
       .post(
         `${api}/session/bookings/${bookingId}`,

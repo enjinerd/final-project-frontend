@@ -2,6 +2,8 @@ import { Page, PageContent } from "components/layout/page";
 import { useState, useEffect } from "react";
 import { useCitizen } from "hooks/user";
 import useAuthStore from "stores/useAuthStore";
+import { ExpandableArea } from "components/ui";
+import { Link } from "react-router-dom";
 
 export function VaccinationSession() {
   const { token } = useAuthStore();
@@ -17,7 +19,6 @@ export function VaccinationSession() {
     }
     if (family) {
       setFamilies(family);
-      console.log(family);
     }
   }, [data, family]);
 
@@ -44,6 +45,21 @@ export function VaccinationSession() {
                   </p>
                 </div>
               </div>
+              <ExpandableArea title="Lokasi Vaksinasi">
+                <div className="flex flex-col space-y-2">
+                  <p className="font-bold font-primary">
+                    {session.health_facilitator.name}
+                  </p>
+                  <p className="text-sm font-primary">
+                    {session.health_facilitator.address}
+                  </p>
+                  <Link to={`/vaccination/${session.health_facilitator_id}`}>
+                  <button className="btn btn-info btn-sm">
+                    Detail Lokasi
+                  </button>
+                  </Link>
+                </div>
+              </ExpandableArea>
               <h2 className="text-xl font-semibold font-primary">
                 Daftar Anggota Keluarga
               </h2>

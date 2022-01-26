@@ -27,15 +27,15 @@ export function HomepageNews({ allNews, data }) {
       ) : (
         <>
           <div className="space-y-2">
-            {news?.map((item) => (
+            {news?.map((item, idx) => (
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={item.link}
                 className="flex flex-col p-3 space-y-1 transition-colors duration-200 bg-white rounded-lg shadow-lg hover:bg-gray-200"
-                key={item.id}
+                key={idx}
               >
-                <div className="flex items-center">
+                <div className="flex items-center"       key={idx}>
                   <img
                     src={item.image?.medium}
                     alt={item.title}

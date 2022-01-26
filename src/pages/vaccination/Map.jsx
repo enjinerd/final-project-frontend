@@ -15,25 +15,18 @@ const MAPBOX_TOKEN =
 
 export const Map = ({ latitude, longitude, data }) => {
   const [popupInfo, setPopupInfo] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const [nearby, setNearby] = useState();
   const [userPos, setUserPos] = useState({
-    latitude,
-    longitude,
+    latitude: -6.2,
+    longitude: 106.816666,
   });
   const [viewport, setViewport] = useState({
-    latitude,
-    longitude,
+    latitude: -6.2,
+    longitude: 106.816666,
     zoom: 14,
   });
-
-  if (!latitude && !longitude) {
-    setViewport({
-      latitude: -6.2,
-      longitude: 106.816666,
-      zoom: 14,
-    });
-  }
 
   const mapRef = useRef();
   const handleViewportChange = useCallback(
@@ -58,13 +51,13 @@ export const Map = ({ latitude, longitude, data }) => {
    * It takes in a list of faskes and returns the 3 closest faskes.
    * @returns The function getNearbyFaskes is returning the 3 closest faskes.
    */
-  const getNearbyFaskes = (data) => {
+  const getNearbyFaskes = (data, userLatitude, userLongitude) => {
     let threeClosest = [];
     const faksesLatitude = data?.map((f) => parseFloat(f.latitude));
     const faksesLongitude = data?.map((f) => parseFloat(f.longitude));
     const distanceFaskes = faksesLatitude.map((lat, idx) => {
       const log = faksesLongitude[idx];
-      return distancePlace(userPos.latitude, userPos.longitude, lat, log);
+      return distancePlace(userLatitude, userLongitude, lat, log);
     });
 
     // find 3 closest faskes using Math.min
@@ -77,15 +70,55 @@ export const Map = ({ latitude, longitude, data }) => {
     setNearby(threeClosest);
     return threeClosest;
   };
+  /**
+   * If the browser doesn't support geolocation, set the status to "Geolocation is not supported by your
+   * browser". Otherwise, set the status to "Locating..." and get the user's position. If the position
+   * can't be retrieved, set the status to "Unable to retrieve your location".
+   * @returns None
+   */
+  const handleLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        setStatus(null);
+        setUserPos({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        setViewport({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          zoom: 14,
+        });
+        await getNearbyFaskes(
+          data,
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      },
+      (err) => {
+        setStatus(
+          "Lokasi tidak bisa dideteksi, pastikan anda mengijinkan akses lokasi, atau cari lokasi anda secara manual"
+        );
+      }
+    );
+  };
+
   useEffect(async () => {
-    if (data) {
-      await getNearbyFaskes(data);
+    if (data || userPos) {
+      await getNearbyFaskes(data, userPos.latitude, userPos.longitude);
     }
-  }, [userPos, data]);
+  }, [data, userPos]);
 
   return (
     <>
       <div className="flex flex-col space-y-4">
+        <button
+          className="btn btn-block btn-primary capitalize"
+          onClick={handleLocation}
+        >
+          Klik untuk otomatis mendeteksi lokasi anda Sekarang
+        </button>
+        {status && <div className="alert alert-error text-lg">{status}</div>}
         <div className="h-72">
           <MapGL
             ref={mapRef}
@@ -145,12 +178,12 @@ export const Map = ({ latitude, longitude, data }) => {
           </MapGL>
         </div>
         <div className="flex flex-col space-y-4">
-          <h1 className="text-lg font-semibold text-center font-primary sm:text-xl">
+          <h1 className="font-primary text-lg font-semibold text-center sm:text-xl">
             Lokasi Vaksinasi Terdekat
           </h1>
           {nearby?.map((f) => (
             <Link to={`/vaccination/${f.id}`}>
-              <div className="flex flex-col px-6 py-4 transition-colors duration-200 bg-white rounded-lg shadow-lg text-dark hover:bg-gray-200">
+              <div className="text-dark flex flex-col px-6 py-4 bg-white rounded-lg shadow-lg transition-colors duration-200 hover:bg-gray-200">
                 <p className="font-bold">{f?.name} </p>
                 <p className="text-sm font-medium text-gray-700">
                   {f?.address}{" "}

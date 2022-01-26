@@ -29,7 +29,7 @@ const navItems = [
   },
   {
     name: "Tentang",
-    href: "/tentang",
+    href: "/about",
     icon: InformationCircleIcon,
   },
 ];
@@ -70,11 +70,10 @@ export function BottomNav() {
               <li key={item.name} className="relative">
                 <Link
                   to={item.href}
-                  onClick={() => console.log(location.pathname)}
                 >
-                  <a className={clsx(...navigationClasses(isActive))}>
+                  <div className={clsx(...navigationClasses(isActive))}>
                     {renderItem(item)}
-                  </a>
+                  </div>
                 </Link>
               </li>
             );

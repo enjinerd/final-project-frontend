@@ -14,6 +14,7 @@ import { Redirect } from "react-router-dom";
 import useAuthStore from "stores/useAuthStore";
 import DatePicker from "react-modern-calendar-datepicker";
 import { useHistory } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export function SignUp() {
   const { register, error, isAuthenticated } = useAuthStore();
@@ -82,9 +83,12 @@ export function SignUp() {
     onSubmit: async (values) => {
       setDone(false);
       await register(values);
-      history.push("/user/login");
+      toast.success("Akun berhasil dibuat, anda sudah bisa masuk dan login.");
     },
   });
+  /**
+   * The function sets the next variable to the opposite of its current value.
+   */
   const handleNext = () => {
     setNext(!isNext);
   };
@@ -102,12 +106,12 @@ export function SignUp() {
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
     formik.setValues({ ...formik.values, birthday: date, age });
-    console.log(formik.values.birthday);
   };
 
   return (
     <Page>
       <PageContent>
+        <Toaster />
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
