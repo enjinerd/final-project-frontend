@@ -1,3 +1,12 @@
+/**
+ * Given two points on the Earth's surface, calculate the distance between them.
+ * @param lat1 - latitude of the first point
+ * @param lon1 - Longitude of the first point
+ * @param lat2 - latitude of the second point
+ * @param lon2 - Longitude of the second point
+ * @param unit - The unit you want the distance in.
+ * @returns The closest distances.
+ */
 export function distancePlace(lat1, lon1, lat2, lon2, unit) {
   if (lat1 == lat2 && lon1 == lon2) {
     return 0;

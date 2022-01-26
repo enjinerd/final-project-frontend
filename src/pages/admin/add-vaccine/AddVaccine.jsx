@@ -21,10 +21,6 @@ export function AddVaccine() {
     return errors;
   };
 
-  useEffect(() => {
-    console.log(history.location.state);
-  }, []);
-
   const formik = useFormik({
     initialValues: {
       name:

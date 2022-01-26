@@ -6,8 +6,17 @@ export const Breadcrumbs = ({ path }) => {
   let pathData = path.split("/");
   pathData.shift();
   pathData.pop();
+  let data = pathData?.map((item) => {
+    if (item == "user") {
+      return "profil";
+    } else if (item == "vaccination") {
+      return "vaksinasi";
+    }
+    return item;
+  });
+
   return (
-    <div className="flex flex-row items-center justify-center px-3 py-3 space-x-2 bg-white rounded-md shadow-lg backdrop-blur-lg backdrop-filter bg-opacity-40">
+    <div className="flex flex-row items-center justify-center px-3 py-3 space-x-2 bg-white rounded-md shadow-lg bg-opacity-40 backdrop-filter backdrop-blur-lg">
       <HomeIcon
         className="w-6 h-6 cursor-pointer hover:text-emerald-600"
         onClick={() => history.push("/")}
@@ -16,8 +25,9 @@ export const Breadcrumbs = ({ path }) => {
         <p
           className="flex flex-row space-x-1 font-medium text-gray-600 capitalize cursor-pointer hover:text-emerald-600"
           onClick={() => history.push(`/${item}`)}
+          key={index}
         >
-          <ChevronRightIcon className="w-6 h-6" /> {item}
+          <ChevronRightIcon className="w-6 h-6" /> {data[index]}
         </p>
       ))}
     </div>

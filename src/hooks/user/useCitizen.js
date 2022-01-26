@@ -57,25 +57,12 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  familyMember: async (token) => {
-    let data;
-    await axios
-      .get(`${api}/family/citizens`, {
+  familyMember: (token) => {
+    return useQuery("familyData", () =>
+      axios(`${api}/family/citizens`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((val) => {
-        set(() => ({
-          isLoading: false,
-        }));
-        data = val.data.data;
-      })
-      .catch((error) => {
-        set(() => ({
-          isLoading: false,
-          error,
-        }));
-      });
-    return data;
+      }).then((val) => val.data.data)
+    );
   },
   updateFamilyMember: async (val, token) => {
     set(() => ({ isAuthenticating: true }));
@@ -117,11 +104,6 @@ const useCitizen = createStore((set) => ({
       });
   },
   registerVaccination: async (token, bookingId) => {
-    console.log(
-      "🚀 ~ file: useCitizen.js ~ line 132 ~ registerVaccination: ~ token",
-      token
-    );
-
     await axios
       .post(
         `${api}/session/bookings/${bookingId}`,
@@ -142,25 +124,12 @@ const useCitizen = createStore((set) => ({
         }));
       });
   },
-  vaccinationSession: async (token) => {
-    let data;
-    await axios
-      .get(`${api}/citizen/sessions`, {
+  vaccinationSession: (token) => {
+    return useQuery("userSessionData", () =>
+      axios(`${api}/citizen/sessions`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((val) => {
-        set(() => ({
-          isLoading: false,
-        }));
-        data = val.data.data;
-      })
-      .catch((error) => {
-        set(() => ({
-          isLoading: false,
-          error,
-        }));
-      });
-    return data;
+      }).then((val) => val.data.data?.session)
+    );
   },
 }));
 
