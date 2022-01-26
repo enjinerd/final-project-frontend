@@ -96,13 +96,14 @@ export default function TableSession() {
               />
             </svg>
           ),
-          tooltip: "Edit Vaccine",
+          tooltip: "Edit Session",
           position: "row",
           onClick: (event, rowData) => {
             alert("You edit " + rowData.name);
             history.push({
               pathname: `${datum.pathname}/add`,
               state: {
+                id: rowData.id,
                 start_date: rowData.start_date,
                 end_date: rowData.end_date,
                 vaccine_id: rowData["vaccine_id "],

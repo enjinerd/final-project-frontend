@@ -4,6 +4,7 @@ import TableSession from "../components/table-session/TableSession";
 import TableUser from "../components/table-user/TableUser";
 import { AddSession } from "../pages/admin/add-session/AddSession";
 import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
+import { AddHealthFacilitator } from "../pages/admin/add-hf/AddHealthFacilitator";
 import { Login } from "../pages/admin/login/Login";
 import { SignUp } from "../pages/admin/signup/SignUp";
 import { Profile } from "../pages/admin/profile/Profile";
@@ -57,7 +58,7 @@ export default function User() {
           exact
         />
         <Route path={`${path}/logins`} component={Login} />
-        <Route path={`${path}/signup`} component={SignUp} />
+        <Route path={`${path}/signup`} component={AddHealthFacilitator} />
       </Switch>
     </LayoutAdmin>
   );
