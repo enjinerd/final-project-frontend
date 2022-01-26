@@ -18,22 +18,15 @@ export const Map = ({ latitude, longitude, data }) => {
 
   const [nearby, setNearby] = useState();
   const [userPos, setUserPos] = useState({
-    latitude,
-    longitude,
+    latitude: -6.2,
+    longitude: 106.816666,
   });
   const [viewport, setViewport] = useState({
-    latitude,
-    longitude,
+    latitude: -6.2,
+    longitude: 106.816666,
     zoom: 14,
   });
 
-  if (!latitude && !longitude) {
-    setViewport({
-      latitude: -6.2,
-      longitude: 106.816666,
-      zoom: 14,
-    });
-  }
 
   const mapRef = useRef();
   const handleViewportChange = useCallback(
@@ -58,13 +51,13 @@ export const Map = ({ latitude, longitude, data }) => {
    * It takes in a list of faskes and returns the 3 closest faskes.
    * @returns The function getNearbyFaskes is returning the 3 closest faskes.
    */
-  const getNearbyFaskes = (data) => {
+  const getNearbyFaskes = (data, userLatitude, userLongitude) => {
     let threeClosest = [];
     const faksesLatitude = data?.map((f) => parseFloat(f.latitude));
     const faksesLongitude = data?.map((f) => parseFloat(f.longitude));
     const distanceFaskes = faksesLatitude.map((lat, idx) => {
       const log = faksesLongitude[idx];
-      return distancePlace(userPos.latitude, userPos.longitude, lat, log);
+      return distancePlace(userLatitude, userLongitude, lat, log);
     });
 
     // find 3 closest faskes using Math.min
@@ -77,15 +70,49 @@ export const Map = ({ latitude, longitude, data }) => {
     setNearby(threeClosest);
     return threeClosest;
   };
+  /**
+   * If the browser doesn't support geolocation, set the status to "Geolocation is not supported by your
+   * browser". Otherwise, set the status to "Locating..." and get the user's position. If the position
+   * can't be retrieved, set the status to "Unable to retrieve your location".
+   * @returns None
+   */
+  const handleLocation =  () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        // setStatus(null);
+        setUserPos({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        setViewport({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          zoom: 14,
+        });
+        await getNearbyFaskes(data, position.coords.latitude, position.coords.longitude);
+      },
+      (err) => {
+        // setStatus("Unable to retrieve your location");
+        console.log(err);
+      }
+    );
+  };
+
   useEffect(async () => {
-    if (data) {
-      await getNearbyFaskes(data);
+    if (data || userPos) {
+      await getNearbyFaskes(data, userPos.latitude, userPos.longitude);
     }
-  }, [userPos, data]);
+  }, [data, userPos]);
 
   return (
     <>
       <div className="flex flex-col space-y-4">
+        <button
+          className="capitalize btn btn-block btn-primary"
+          onClick={handleLocation}
+        >
+          Klik untuk otomatis mendeteksi lokasi anda Sekarang
+        </button>
         <div className="h-72">
           <MapGL
             ref={mapRef}
