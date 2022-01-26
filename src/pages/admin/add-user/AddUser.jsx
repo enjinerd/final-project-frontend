@@ -8,6 +8,7 @@ import {
   validateValue,
 } from "helpers";
 import useAuthStore from "stores/useAuthStore";
+import "./styles.css";
 
 export function AddUser() {
   const { register } = useAuthStore();
@@ -71,11 +72,14 @@ export function AddUser() {
           <h1 className="label label-text font-bold">Add User</h1>
         </div>
       </header>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="name" className="label label-text font-bold">
+      <form className="form-users">
+        <label
+          htmlFor="name"
+          className="label label-text label-users font-bold"
+        >
           User Name
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-users">
           <input
             id="name"
             name="name"
@@ -92,10 +96,10 @@ export function AddUser() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="nik" className="label label-text font-bold">
+        <label htmlFor="nik" className="label label-text label-users font-bold">
           NIK
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-users">
           <input
             id="nik"
             name="nik"
@@ -112,14 +116,14 @@ export function AddUser() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="dob" className="label label-text font-bold">
+        <label htmlFor="dob" className="label label-text label-users font-bold">
           Date of Birth
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-users">
           <input
             id="dob"
             name="dob"
-            type="text"
+            type="date"
             className="input input-bordered"
             onChange={formik.handleChange}
             value={formik.values.dob}
@@ -132,10 +136,13 @@ export function AddUser() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="address" className="label label-text font-bold">
+        <label
+          htmlFor="address"
+          className="label label-text label-users font-bold"
+        >
           Address
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-users">
           <input
             id="address"
             name="address"
@@ -152,10 +159,13 @@ export function AddUser() {
             </div>
           ) : null}
         </div>
-        <label htmlFor="phoneNumber" className="label label-text font-bold">
+        <label
+          htmlFor="phoneNumber"
+          className="label label-text label-users font-bold"
+        >
           Phone Number
         </label>
-        <div className="input-wrapper">
+        <div className="input-wrapper-users">
           <input
             id="phoneNumber"
             name="phoneNumber"

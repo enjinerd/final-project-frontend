@@ -1,0 +1,80 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants; */
+
+.header {
+  @apply flex fixed z-40 justify-start items-center h-16 bg-emerald-500 shadow-md;
+}
+
+.header__container {
+  @apply flex justify-between items-center px-4 py-3 mx-auto h-full sm:max-w-xl;
+}
+
+.header__container h1 {
+  color: white;
+  text-transform: uppercase;
+}
+
+.form-users {
+  display: grid;
+  grid-template-areas:
+    "labelName inputName"
+    "labelNIK inputNIK"
+    "labelDob inputDob"
+    "labelAddress inputAddress"
+    "labelPhoneNumber inputPhoneNumber"
+    "button button";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 30px 10px;
+  padding: 100px 50px;
+  justify-items: start;
+  align-items: center;
+  width: 70%;
+}
+
+.label-users:nth-of-type(1) {
+  grid-area: labelName;
+}
+
+.label-users:nth-of-type(2) {
+  grid-area: labelNIK;
+}
+
+.label-users:nth-of-type(3) {
+  grid-area: labelDob;
+}
+
+.label-users:nth-of-type(4) {
+  grid-area: labelAddress;
+}
+
+.label-users:nth-of-type(5) {
+  grid-area: labelPhoneNumber;
+}
+
+.input-wrapper-users:nth-of-type(1) {
+  grid-area: inputName;
+}
+
+.input-wrapper-users:nth-of-type(2) {
+  grid-area: inputNIK;
+}
+
+.input-wrapper-users:nth-of-type(3) {
+  grid-area: inputDob;
+}
+
+.input-wrapper-users:nth-of-type(4) {
+  grid-area: inputAddress;
+}
+
+.input-wrapper-users:nth-of-type(5) {
+  grid-area: inputPhoneNumber;
+}
+
+button {
+  grid-area: button;
+  justify-self: center;
+}

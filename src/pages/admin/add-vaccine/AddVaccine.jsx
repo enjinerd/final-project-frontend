@@ -4,12 +4,13 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import useAuthAdminStore from "stores/useAuthAdminStore";
+import useAdmin from "../../../hooks/admin/useAdmin";
 
 export function AddVaccine() {
   const api = import.meta.env.VITE_API_HOST;
   const history = useHistory();
   const { token } = useAuthAdminStore();
-
+  const { addVaccine, editVaccine, isLoading } = useAdmin();
   const validate = (values) => {
     const errors = {};
     if (!values.name) {

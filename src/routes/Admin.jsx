@@ -4,11 +4,15 @@ import TableSession from "../components/table-session/TableSession";
 import TableUser from "../components/table-user/TableUser";
 import { AddSession } from "../pages/admin/add-session/AddSession";
 import { AddVaccine } from "../pages/admin/add-vaccine/AddVaccine";
+import { AddHealthFacilitator } from "../pages/admin/add-hf/AddHealthFacilitator";
 import { Login } from "../pages/admin/login/Login";
 import { SignUp } from "../pages/admin/signup/SignUp";
+import { Profile } from "../pages/admin/profile/Profile";
 import { LayoutAdmin } from "components/layout/layout-admin";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { AddUser } from "../pages/admin/add-user/AddUser";
+import { EditFamily } from "../pages/admin/edit-family/EditFamily";
+import { SessionDetail } from "../pages/admin/session-detail/SessionDetail";
 
 export default function User() {
   const { path } = useRouteMatch();
@@ -16,6 +20,7 @@ export default function User() {
   return (
     <LayoutAdmin>
       <Switch>
+        <PrivateRouteAdmin path={`${path}`} component={Profile} exact />
         <PrivateRouteAdmin
           path={`${path}/vaccine`}
           component={TableVaccine}
@@ -42,8 +47,18 @@ export default function User() {
           component={AddUser}
           exact
         />
+        <PrivateRouteAdmin
+          path={`${path}/session/detail`}
+          component={SessionDetail}
+          exact
+        />
+        <PrivateRouteAdmin
+          path={`${path}/session/detail/edit`}
+          component={EditFamily}
+          exact
+        />
         <Route path={`${path}/logins`} component={Login} />
-        <Route path={`${path}/signup`} component={SignUp} />
+        <Route path={`${path}/signup`} component={AddHealthFacilitator} />
       </Switch>
     </LayoutAdmin>
   );

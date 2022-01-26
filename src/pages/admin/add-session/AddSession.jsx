@@ -1,42 +1,72 @@
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import useAuthAdminStore from "stores/useAuthAdminStore";
+import jwt_decode from "jwt-decode";
 import "./styles.css";
+import useAdmin from "../../../hooks/admin/useAdmin";
+import moment from "moment";
 
 export function AddSession() {
   const api = import.meta.env.VITE_API_HOST;
   const history = useHistory();
   const { token } = useAuthAdminStore();
+  const { getVaccine, addVaccine, editVaccine, isLoading } = useAdmin();
+  const [listVaccine, setListVaccine] = useState([]);
+  const decoded = jwt_decode(token);
 
   const validate = (values) => {
     const errors = {};
     if (!values.startDate) {
-      errors.name = "Start date can not be empty";
+      errors.startDate = "Start date can not be empty";
     }
     if (!values.endDate) {
-      errors.stock = "End date can not be empty";
+      errors.endDate = "End date can not be empty";
     }
     if (!values.vaccine) {
-      errors.stock = "Vaccine can not be empty";
+      errors.vaccine = "Vaccine can not be empty";
     }
     if (!values.quota) {
-      errors.stock = "Quota can not be empty";
+      errors.quota = "Quota can not be empty";
     }
     if (!values.sessionType) {
-      errors.stock = "Session Type can not be empty";
+      errors.sessionType = "Session Type can not be empty";
     }
     return errors;
   };
 
+  useEffect(async () => {
+    let vaccine = await getVaccine(token, decoded.user_id);
+    setListVaccine(vaccine);
+  }, []);
+
   const formik = useFormik({
     initialValues: {
-      startDate: new Date(),
-      endDate: new Date(),
-      vaccine: 1,
-      quota: 0,
-      sessionType: 1,
+      startDate:
+        history.location?.state === undefined
+          ? new Date().toISOString()
+          : moment(new Date(history.location.state?.start_date)).format(
+              "YYYY-MM-DDTHH:mm"
+            ),
+      endDate:
+        history.location?.state === undefined
+          ? new Date().toISOString()
+          : moment(new Date(history.location.state?.end_date)).format(
+              "YYYY-MM-DDTHH:mm"
+            ),
+      vaccine:
+        history.location?.state === undefined
+          ? 1
+          : history.location.state?.vaccine_id,
+      quota:
+        history.location?.state === undefined
+          ? 0
+          : history.location.state?.quota,
+      sessionType:
+        history.location?.state === undefined
+          ? ""
+          : history.location.state?.session_type,
     },
     validate,
     onSubmit: async () => {
@@ -44,9 +74,9 @@ export function AddSession() {
         .post(
           `${api}/vaccine/sessions`,
           {
-            start_date: formik.values.startDate,
-            end_date: formik.values.endDate,
-            vaccine_id: formik.values.vaccine,
+            start_date: formatDate(formik.values.startDate),
+            end_date: formatDate(formik.values.endDate),
+            vaccine_id: parseInt(formik.values.vaccine),
             quota: formik.values.quota,
             session_type: formik.values.sessionType,
           },
@@ -67,6 +97,35 @@ export function AddSession() {
     formik.handleSubmit();
   };
 
+  const formatDate = (dateString) => {
+    let a = moment(dateString);
+    return a.format();
+  };
+
+  const handleEdit = (e, id) => {
+    e.preventDefault();
+    axios
+      .put(
+        `${api}/vaccine/session/${id}`,
+        {
+          start_date: formatDate(formik.values.startDate),
+          end_date: formatDate(formik.values.endDate),
+          vaccine_id: parseInt(formik.values.vaccine),
+          quota: formik.values.quota,
+          session_type: formik.values.sessionType,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(() => {
+        history.push("/admin/session");
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+
   return (
     <section className="flex-1">
       <header className="header">
@@ -85,7 +144,7 @@ export function AddSession() {
           <input
             id="startDate"
             name="startDate"
-            type="date"
+            type="datetime-local"
             className="input input-bordered"
             onChange={formik.handleChange}
             value={formik.values.startDate}
@@ -108,7 +167,7 @@ export function AddSession() {
           <input
             id="endDate"
             name="endDate"
-            type="date"
+            type="datetime-local"
             className="input input-bordered"
             onChange={formik.handleChange}
             value={formik.values.endDate}
@@ -134,9 +193,13 @@ export function AddSession() {
             onChange={formik.handleChange}
             value={formik.values.vaccine}
           >
-            <option value="1">Sinovac</option>
-            <option value="2">Astra</option>
-            <option value="3">Moderna</option>
+            {listVaccine.map((vaccine, index) => {
+              return (
+                <option key={index} value={vaccine.id}>
+                  {vaccine.name}
+                </option>
+              );
+            })}
           </select>
           {formik.errors.vaccine ? (
             <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
@@ -182,8 +245,8 @@ export function AddSession() {
             onChange={formik.handleChange}
             value={formik.values.sessionType}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="SESI 1">SESI 1</option>
+            <option value="SESI 2">SESI 2</option>
           </select>
           {formik.errors.sessionType ? (
             <div className="px-2 py-1 text-sm font-medium text-red-600 rounded-md">
@@ -197,7 +260,11 @@ export function AddSession() {
         <button
           type="submit"
           className="btn"
-          onClick={() => handleSubmit()}
+          onClick={
+            history.location.state
+              ? (e) => handleEdit(e, history.location.state.id)
+              : () => handleSubmit()
+          }
           disabled={
             formik.errors.startDate == "" ||
             formik.values.endDate == "" ||
