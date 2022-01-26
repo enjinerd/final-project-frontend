@@ -42,28 +42,27 @@ export function PlaceListing({ match }) {
       <PageContent>
         {isLoading ? (
           <div className="text-center">
-            <div className="flex justify-center items-center p-12">
-              <div className="w-20 h-20 rounded-full border-b-2 border-gray-900 animate-spin dark:border-white"></div>
+            <div className="flex items-center justify-center p-12">
+              <div className="w-20 h-20 border-b-2 border-gray-900 rounded-full animate-spin dark:border-white"></div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col items-center px-3 py-8 space-y-8 lg:px-16">
-            <div className="flex flex-col px-10 py-6 space-y-1 w-full h-auto bg-blue-500 rounded-lg border-b-4 border-blue-800 shadow-md">
-              <p className="font-primary text-2xl font-bold">{data?.name}</p>
-              <p className="font-primary text-gray-200">{data?.address}</p>
+            <div className="flex flex-col w-full h-auto px-10 py-6 space-y-1 bg-blue-500 border-b-4 border-blue-800 rounded-lg shadow-md">
+              <p className="text-2xl font-bold font-primary">{data?.name}</p>
+              <p className="text-gray-200 font-primary">{data?.address}</p>
               <a
                 href={toGmapURL(data?.latitude, data?.longitude)}
                 target="_blank"
-                className="btn"
+                className="btn btn-sm"
               >
-                {" "}
-                Lokasi{" "}
+                Lokasi Google Map
               </a>
             </div>
-            <h2 className="font-primary text-xl font-semibold">
+            <h2 className="text-xl font-semibold font-primary">
               Sesi Vaksinasi{" "}
             </h2>
-            <div className="flex flex-col space-y-2 w-full">
+            <div className="flex flex-col w-full space-y-2">
               {data?.vaccine_session.length == 0 ? (
                 <p className="alert alert-error">
                   Belum ada Sesi Vaksinasi yang tersedia.
@@ -77,7 +76,7 @@ export function PlaceListing({ match }) {
                           .name
                       }
                     >
-                      <div className="flex flex-row justify-between items-center">
+                      <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-col justify-between">
                           <p className="font-medium">
                             {formatDate(item.start_date)} WIB -{" "}

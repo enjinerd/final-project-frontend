@@ -71,9 +71,9 @@ export function BottomNav() {
                 <Link
                   to={item.href}
                 >
-                  <a className={clsx(...navigationClasses(isActive))}>
+                  <div className={clsx(...navigationClasses(isActive))}>
                     {renderItem(item)}
-                  </a>
+                  </div>
                 </Link>
               </li>
             );
