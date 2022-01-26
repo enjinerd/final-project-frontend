@@ -29,7 +29,7 @@ const navItems = [
   },
   {
     name: "Tentang",
-    href: "/tentang",
+    href: "/about",
     icon: InformationCircleIcon,
   },
 ];

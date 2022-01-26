@@ -1,7 +1,7 @@
 import User from "./User";
 import Admin from "./Admin";
 import Vaccination from "./Vaccination";
-import { Home, NotFound } from "pages";
+import { Home, NotFound, About } from "pages";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { LayoutRoot } from "components/layout/layout-root";
 
@@ -18,7 +18,9 @@ export default function Routes() {
         <Route path="/vaccination" component={Vaccination} />
         <Route path="/admin" component={Admin} />
         <LayoutRoot>
-          {" "}
+          <Route path="/about" component={About} />
+        </LayoutRoot>
+        <LayoutRoot>
           <Route path="*" component={NotFound} />
         </LayoutRoot>
       </Switch>
