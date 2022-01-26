@@ -8,11 +8,7 @@ import useCitizen from "hooks/user/useCitizen";
 export function FamilyMembers() {
   const { token } = useAuthStore();
   const { familyMember } = useCitizen();
-  const [families, setFamilies] = useState(null);
-  useEffect(async () => {
-    const data = await familyMember(token);
-    setFamilies(data?.slice(1, data.length));
-  }, []);
+  let { data, isLoading } = familyMember(token);
 
   return (
     <Page>
@@ -21,7 +17,7 @@ export function FamilyMembers() {
           <h1 className="font-primary text-2xl font-bold text-center sm:text-xl">
             Anggota Keluarga
           </h1>
-          {!families ? (
+          {isLoading ? (
             <div className="text-center">
               <div className="flex justify-center items-center p-12">
                 <div className="w-20 h-20 rounded-full border-b-2 border-gray-900 animate-spin dark:border-white">
@@ -31,7 +27,7 @@ export function FamilyMembers() {
             </div>
           ) : (
             <ul className="space-y-2">
-              {families?.map((family) => (
+              {data?.slice(1, data.length).map((family) => (
                 <li key={family.id}>
                   <div className="alert alert-sm flex flex-row justify-between px-3 py-2">
                     <Link to={`/user/dashboard/family-members/${family.id}`}>
@@ -43,8 +39,10 @@ export function FamilyMembers() {
               ))}
             </ul>
           )}
-          <div className="btn btn-block btn-info">
-            <Link to="/user/family-member/add">Tambah Baru</Link>
+          <div>
+            <Link to="/user/family-member/add">
+              <button className="btn btn-block btn-info">Tambah Baru</button>
+            </Link>
           </div>
         </div>
       </PageContent>

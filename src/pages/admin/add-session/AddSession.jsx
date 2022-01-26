@@ -93,10 +93,6 @@ export function AddSession() {
     },
   });
 
-  useEffect(async () => {
-    console.log(formatDate(formik.values.startDate));
-  }, [formik.values.startDate]);
-
   const handleSubmit = () => {
     formik.handleSubmit();
   };

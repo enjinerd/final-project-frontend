@@ -7,7 +7,9 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "intro.js/introjs.css";
-import { Steps, Hints } from "intro.js-react";
+import { Steps } from "intro.js-react";
+import useAuthStore from "stores/useAuthStore";
+
 const tourStep = [
   {
     element: ".user-session",
@@ -56,14 +58,21 @@ const userMenuItems = [
 
 export function UserMenus() {
   const [isStep, setStep] = useState(true);
+  const { isTour, setTour } = useAuthStore();
+  const handleClose = () => {
+    setStep(false);
+    setTour();
+  };
   return (
     <ul className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-4">
-      <Steps
-        enabled={isStep}
-        steps={tourStep}
-        initialStep={0}
-        onExit={() => setStep(false)}
-      />
+      {!isTour && (
+        <Steps
+          enabled={isStep}
+          steps={tourStep}
+          initialStep={0}
+          onExit={handleClose}
+        />
+      )}
       {userMenuItems.map((item) => (
         <li key={item.name} className="inline-flex flex-col">
           <Link
@@ -78,9 +87,9 @@ export function UserMenus() {
                 className: "h-6 w-6 text-white",
               })}
             </div>
-            <a className="mt-3 text-xs font-medium text-gray-900 helper-link-cover">
+            <div className="mt-3 text-xs font-medium text-gray-900 helper-link-cover">
               {item.name}
-            </a>
+            </div>
           </Link>
         </li>
       ))}

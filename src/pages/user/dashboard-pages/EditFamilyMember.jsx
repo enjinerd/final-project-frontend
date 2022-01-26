@@ -73,7 +73,6 @@ export function EditFamilyMember(props) {
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
     formik.setValues({ ...formik.values, birthday: date, age });
-    console.log(formik.values.birthday);
   };
 
   return (
