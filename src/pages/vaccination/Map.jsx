@@ -15,6 +15,7 @@ const MAPBOX_TOKEN =
 
 export const Map = ({ latitude, longitude, data }) => {
   const [popupInfo, setPopupInfo] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const [nearby, setNearby] = useState();
   const [userPos, setUserPos] = useState({
@@ -79,7 +80,7 @@ export const Map = ({ latitude, longitude, data }) => {
   const handleLocation =  () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        // setStatus(null);
+        setStatus(null);
         setUserPos({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -92,7 +93,7 @@ export const Map = ({ latitude, longitude, data }) => {
         await getNearbyFaskes(data, position.coords.latitude, position.coords.longitude);
       },
       (err) => {
-        // setStatus("Unable to retrieve your location");
+        setStatus("Lokasi tidak bisa dideteksi, pastikan anda mengijinkan akses lokasi, atau cari lokasi anda secara manual");
         console.log(err);
       }
     );
@@ -113,6 +114,7 @@ export const Map = ({ latitude, longitude, data }) => {
         >
           Klik untuk otomatis mendeteksi lokasi anda Sekarang
         </button>
+        {status && <div className="text-lg alert alert-error">{status}</div>}
         <div className="h-72">
           <MapGL
             ref={mapRef}
