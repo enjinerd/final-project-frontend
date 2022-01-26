@@ -16,7 +16,6 @@ import DatePicker from "react-modern-calendar-datepicker";
 import { useHistory } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-
 export function SignUp() {
   const { register, error, isAuthenticated } = useAuthStore();
   const [selectedDay, setSelectedDay] = useState(null);
@@ -84,7 +83,7 @@ export function SignUp() {
     onSubmit: async (values) => {
       setDone(false);
       await register(values);
-      toast.success("Akun berhasil dibuat, anda sudah bisa masuk dan login.")
+      toast.success("Akun berhasil dibuat, anda sudah bisa masuk dan login.");
     },
   });
   /**
@@ -107,13 +106,12 @@ export function SignUp() {
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
     formik.setValues({ ...formik.values, birthday: date, age });
-    console.log(formik.values.birthday);
   };
 
   return (
     <Page>
       <PageContent>
-        <Toaster/>
+        <Toaster />
         <div className="px-4 py-8 space-y-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center sm:text-xl">Daftar</h1>
           <h1 className="text-base text-center sm:text-xl">
@@ -124,11 +122,11 @@ export function SignUp() {
             </span>
           </h1>
           {isDone && (
-            <div className="font-medium alert alert-success">
+            <div className="alert alert-success font-medium">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 mx-2"
+                  className="mx-2 w-6 h-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -146,11 +144,11 @@ export function SignUp() {
             </div>
           )}
           {error && (
-            <div className="font-medium alert alert-error">
+            <div className="alert alert-error font-medium">
               <div className="flex-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 mx-2"
+                  className="mx-2 w-6 h-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -166,9 +164,9 @@ export function SignUp() {
           )}
 
           {isNext ? (
-            <div className="space-y-1 form-control">
+            <div className="form-control space-y-1">
               <label className="label">
-                <span className="font-bold label-text">NIK</span>
+                <span className="label-text font-bold">NIK</span>
               </label>
               <input
                 type="text"
@@ -186,7 +184,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Nama Lengkap</span>
+                <span className="label-text font-bold">Nama Lengkap</span>
               </label>
               <input
                 type="text"
@@ -204,10 +202,10 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Jenis Kelamin</span>
+                <span className="label-text font-bold">Jenis Kelamin</span>
               </label>
               <select
-                className="w-full select select-bordered"
+                className="select select-bordered w-full"
                 onChange={formik.handleChange}
                 name="gender"
               >
@@ -225,7 +223,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Tanggal Lahir</span>
+                <span className="label-text font-bold">Tanggal Lahir</span>
               </label>{" "}
               <DatePicker
                 value={selectedDay}
@@ -245,7 +243,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">No. Telepon</span>
+                <span className="label-text font-bold">No. Telepon</span>
               </label>
               <input
                 type="text"
@@ -264,9 +262,9 @@ export function SignUp() {
               ) : null}
             </div>
           ) : (
-            <div className="space-y-1 form-control">
+            <div className="form-control space-y-1">
               <label className="label">
-                <span className="font-bold label-text">E-mail</span>
+                <span className="label-text font-bold">E-mail</span>
               </label>
               <input
                 type="text"
@@ -284,7 +282,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">Kata Sandi</span>
+                <span className="label-text font-bold">Kata Sandi</span>
               </label>
               <input
                 type="password"
@@ -302,7 +300,7 @@ export function SignUp() {
                 </div>
               ) : null}
               <label className="label">
-                <span className="font-bold label-text">
+                <span className="label-text font-bold">
                   Konfirmasi Kata Sandi
                 </span>
               </label>
@@ -330,7 +328,7 @@ export function SignUp() {
               </button>
               <div
                 data-tip="Pastikan semua data terisi dengan benar"
-                className="w-full tooltip"
+                className="tooltip w-full"
               >
                 <ConfirmDialog
                   isOpen={isOpen}
@@ -352,7 +350,7 @@ export function SignUp() {
           ) : (
             <div
               data-tip="Pastikan semua data terisi dengan benar"
-              className="w-full tooltip"
+              className="tooltip w-full"
             >
               <button
                 className="btn btn-block btn-info"

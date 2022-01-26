@@ -7,16 +7,16 @@ export const Breadcrumbs = ({ path }) => {
   pathData.shift();
   pathData.pop();
   let data = pathData?.map((item) => {
-    if(item == "user") {
+    if (item == "user") {
       return "profil";
-    } else if(item == "vaccination") {
-      return "vaksinasi"
+    } else if (item == "vaccination") {
+      return "vaksinasi";
     }
-    return item
-  })
-  console.log(data)
+    return item;
+  });
+
   return (
-    <div className="flex flex-row items-center justify-center px-3 py-3 space-x-2 bg-white rounded-md shadow-lg backdrop-blur-lg backdrop-filter bg-opacity-40">
+    <div className="flex flex-row justify-center items-center px-3 py-3 space-x-2 bg-white bg-opacity-40 rounded-md shadow-lg backdrop-filter backdrop-blur-lg">
       <HomeIcon
         className="w-6 h-6 cursor-pointer hover:text-emerald-600"
         onClick={() => history.push("/")}

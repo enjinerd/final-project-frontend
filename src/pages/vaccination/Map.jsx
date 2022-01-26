@@ -28,7 +28,6 @@ export const Map = ({ latitude, longitude, data }) => {
     zoom: 14,
   });
 
-
   const mapRef = useRef();
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
@@ -77,7 +76,7 @@ export const Map = ({ latitude, longitude, data }) => {
    * can't be retrieved, set the status to "Unable to retrieve your location".
    * @returns None
    */
-  const handleLocation =  () => {
+  const handleLocation = () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         setStatus(null);
@@ -90,11 +89,16 @@ export const Map = ({ latitude, longitude, data }) => {
           longitude: position.coords.longitude,
           zoom: 14,
         });
-        await getNearbyFaskes(data, position.coords.latitude, position.coords.longitude);
+        await getNearbyFaskes(
+          data,
+          position.coords.latitude,
+          position.coords.longitude
+        );
       },
       (err) => {
-        setStatus("Lokasi tidak bisa dideteksi, pastikan anda mengijinkan akses lokasi, atau cari lokasi anda secara manual");
-        console.log(err);
+        setStatus(
+          "Lokasi tidak bisa dideteksi, pastikan anda mengijinkan akses lokasi, atau cari lokasi anda secara manual"
+        );
       }
     );
   };
@@ -109,12 +113,12 @@ export const Map = ({ latitude, longitude, data }) => {
     <>
       <div className="flex flex-col space-y-4">
         <button
-          className="capitalize btn btn-block btn-primary"
+          className="btn btn-block btn-primary capitalize"
           onClick={handleLocation}
         >
           Klik untuk otomatis mendeteksi lokasi anda Sekarang
         </button>
-        {status && <div className="text-lg alert alert-error">{status}</div>}
+        {status && <div className="alert alert-error text-lg">{status}</div>}
         <div className="h-72">
           <MapGL
             ref={mapRef}
@@ -174,12 +178,12 @@ export const Map = ({ latitude, longitude, data }) => {
           </MapGL>
         </div>
         <div className="flex flex-col space-y-4">
-          <h1 className="text-lg font-semibold text-center font-primary sm:text-xl">
+          <h1 className="font-primary text-lg font-semibold text-center sm:text-xl">
             Lokasi Vaksinasi Terdekat
           </h1>
           {nearby?.map((f) => (
             <Link to={`/vaccination/${f.id}`}>
-              <div className="flex flex-col px-6 py-4 transition-colors duration-200 bg-white rounded-lg shadow-lg text-dark hover:bg-gray-200">
+              <div className="text-dark flex flex-col px-6 py-4 bg-white rounded-lg shadow-lg transition-colors duration-200 hover:bg-gray-200">
                 <p className="font-bold">{f?.name} </p>
                 <p className="text-sm font-medium text-gray-700">
                   {f?.address}{" "}
