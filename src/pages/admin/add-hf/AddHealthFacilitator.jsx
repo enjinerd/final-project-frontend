@@ -32,13 +32,13 @@ export function AddHealthFacilitator() {
     if (!values.longitude) {
       errors.longitude = "Longtitude can not be empty";
     }
-    if (isLongitude(values.longitude)) {
+    if (isValidLatLong(values.longitude)) {
       errors.longitude = "Longtitude must be a number between -180 and 180";
     }
     if (!values.latitude) {
       errors.latitude = "Latitude can not be empty";
     }
-    if (isLatitude(values.latitude)) {
+    if (isValidLatLong(values.latitude)) {
       errors.latitude = "Latitude must be a number between -90 and 90";
     }
     if (!values.type) {
@@ -47,6 +47,10 @@ export function AddHealthFacilitator() {
     return errors;
   };
 
+  const isValidLatLong = (pos) =>
+    /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi.test(
+      pos.toString()
+    );
   const isLatitude = (num) => isFinite(num) && Math.abs(num) <= 90;
   const isLongitude = (num) => isFinite(num) && Math.abs(num) <= 180;
 
@@ -251,7 +255,7 @@ export function AddHealthFacilitator() {
           <input
             id="longitude"
             name="longitude"
-            type="text"
+            type="number"
             className="input input-bordered"
             onChange={formik.handleChange}
             value={formik.values.longitude}
@@ -275,7 +279,7 @@ export function AddHealthFacilitator() {
           <input
             id="latitude"
             name="latitude"
-            type="text"
+            type="number"
             className="input input-bordered"
             onChange={formik.handleChange}
             value={formik.values.latitude}
